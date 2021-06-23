@@ -25,16 +25,16 @@ namespace Assigments_School
                     switch (choice)
                     {
                         case "c":
-                            ImportCourse();
+                            TerminalImportCourse();
                             break;
                         case "a":
-                            ImportAssignment();
+                            TerminalImportAssignment();
                             break;
                         case "t":
-                            ImportTrainer();
+                            TerminalImportTrainer();
                             break;
                         case "s":
-                            ImportStudent();
+                            TerminalImportStudent();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");
@@ -109,19 +109,18 @@ namespace Assigments_School
 
 
 
-
-
-        // Import Functions
-        public static void ImportCourse()
+        // Import Front Functions
+        public static void TerminalImportCourse()
         {
             try
             {
                 String title = "";
-                DateTime end_date = DateTime.Today;
+                DateTime enddate = DateTime.Today;
                 DateTime startdate = DateTime.Today;
                 List<Trainer> trainers = new List<Trainer>();
                 List<Student> students = new List<Student>();
                 List<Assignment> assignments = new List<Assignment>();
+
                 Console.WriteLine("Creating New Course.");
                 Console.WriteLine("Give a Title: ");
                 title = Console.ReadLine();
@@ -130,10 +129,10 @@ namespace Assigments_School
                 {
                     Console.WriteLine("Set the End Date:");
                     Console.WriteLine($"example: {DateTime.Today.ToString("dd/MM/yyyy")}");
-                    end_date = DateTime.ParseExact(Console.ReadLine(),
+                    enddate = DateTime.ParseExact(Console.ReadLine(),
                                                                 "dd/MM/yyyy",
                                                                 null);
-                    if (end_date > DateTime.Today)
+                    if (enddate > DateTime.Today)
                     {
                         check = false;
                     }
@@ -142,6 +141,7 @@ namespace Assigments_School
                         Console.WriteLine("Enter a Valid End Date!");
                     }
                 }
+
                 // Add Trainers
                 Console.WriteLine("Add Trainers!");
                 Boolean check_choice = true;
@@ -190,7 +190,7 @@ namespace Assigments_School
                             choice = Console.ReadLine();
                             if (choice.Equals("y"))
                             {
-                                ImportTrainer();
+                                TerminalImportTrainer();
                             }
                             else if (choice.Equals("n"))
                             {
@@ -207,6 +207,7 @@ namespace Assigments_School
                         Console.WriteLine("Answare < y > for YES AND < n > for NO");
                     }
                 }
+
                 // Add Students
                 Console.WriteLine("Add Students!");
                 check_choice = true;
@@ -255,7 +256,7 @@ namespace Assigments_School
                             choice = Console.ReadLine();
                             if (choice.Equals("y"))
                             {
-                                ImportStudent();
+                                TerminalImportStudent();
                             }
                             else if (choice.Equals("n"))
                             {
@@ -272,6 +273,7 @@ namespace Assigments_School
                         Console.WriteLine("Answare < y > for YES AND < n > for NO");
                     }
                 }
+
                 // Add Assignment
                 Console.WriteLine("Add Assignments!");
                 check_choice = true;
@@ -320,7 +322,7 @@ namespace Assigments_School
                             choice = Console.ReadLine();
                             if (choice.Equals("y"))
                             {
-                                ImportAssignment();
+                                TerminalImportAssignment();
                             }
                             else if (choice.Equals("n"))
                             {
@@ -338,32 +340,66 @@ namespace Assigments_School
                     }
                 }
                 // Create The Course Object
-                Course course = new Course();
-                course.title = title;
-                course.endDate = end_date;
-                course.startDate = startdate;
-                course.trainers = trainers;
-                course.students = students;
-                course.assignments = assignments;
-                // Save It To DB
-                ///
+                ImportCourse(title, enddate, startdate);
             }
             catch (System.FormatException ex)
             {
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
             }
         }
-        public static void ImportAssignment()
+        public static void TerminalImportAssignment()
         {
-            Console.WriteLine("Imported Assignment.");
+
         }
-        public static void ImportTrainer()
+        public static void TerminalImportTrainer()
         {
-            Console.WriteLine("Imported Trainer.");
+
         }
-        public static void ImportStudent()
+        public static void TerminalImportStudent()
         {
-            Console.WriteLine("Imported Student.");
+
+        }
+
+
+
+
+
+
+
+        // Import Back Functions
+        public static void ImportCourse(string title, DateTime enddate, DateTime startdate)
+        {
+            Console.WriteLine("Importint Cource.");
+            Course course = new Course();
+            course.title = title;
+            course.endDate = enddate;
+            course.startDate = startdate;
+            // Save It To DB
+                ///
+        }
+        public static void ImportAssignment(string title, DateTime startdate, DateTime enddate)
+        {
+            Console.WriteLine("Importing Assignment.");
+            Assignment assignment = new Assignment();
+            assignment.title = title;
+            assignment.startDate = startdate;
+            assignment.endDate = enddate;
+            // Save It To DB
+                ///
+        }
+        public static void ImportTrainer(string firstname, string lastname, int age, string gender, DateTime startdate)
+        {
+            Console.WriteLine("Importing Trainer.");
+            Trainer trainer = new Trainer(firstname, lastname, age, gender, startdate);
+            // Save It To DB
+                ///
+        }
+        public static void ImportStudent(string firstname, string lastname, int age, string gender, DateTime startdate)
+        {
+            Console.WriteLine("Importing Student.");
+            Student student = new Student(firstname, lastname, age, gender, startdate);
+            // Save It To DB
+                ///
         }
 
 
