@@ -109,7 +109,7 @@ namespace Assigments_School
 
 
 
-        // Import Front Functions
+        // Add Student
         public static void TerminalImportCourse()
         {
             try
@@ -117,226 +117,30 @@ namespace Assigments_School
                 String title = "";
                 DateTime enddate = DateTime.Today;
                 DateTime startdate = DateTime.Today;
-                List<Trainer> trainers = new List<Trainer>();
-                List<Student> students = new List<Student>();
-                List<Assignment> assignments = new List<Assignment>();
 
                 Console.WriteLine("Creating New Course.");
-                Console.WriteLine("Give a Title: ");
-                title = Console.ReadLine();
                 bool check = true;
                 while (check)
                 {
-                    Console.WriteLine("Set the End Date:");
-                    Console.WriteLine($"example: {DateTime.Today.ToString("dd/MM/yyyy")}");
-                    enddate = DateTime.ParseExact(Console.ReadLine(),
-                                                                "dd/MM/yyyy",
-                                                                null);
-                    if (enddate > DateTime.Today)
+                    Console.WriteLine("Give a Title: ");
+                    title = Console.ReadLine();
+                    if (title.Length > 0)
                     {
-                        check = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid End Date!");
-                    }
-                }
-
-                // Add Trainers
-                Console.WriteLine("Add Trainers!");
-                Boolean check_choice = true;
-                while (check_choice)
-                {
-                    Console.WriteLine("Add Existing Trainers ? y/n");
-                    String choice = Console.ReadLine();
-                    if (choice.Equals("y"))
-                    {
-                        check_choice = false;
-                        if (Trainer.trainers.Count > 0)
+                        Console.WriteLine("Set the End Date:");
+                        Console.WriteLine($"example: {DateTime.Today.ToString("dd/MM/yyyy")}");
+                        enddate = DateTime.ParseExact(Console.ReadLine(),"dd/MM/yyyy",null);
+                        if (enddate > DateTime.Today)
                         {
-                            foreach (Trainer tr in Trainer.trainers)
-                            {
-                                Console.Write($"Add Trainer: {tr.lastname}  {tr.lastname} ? y/n");
-                                choice = Console.ReadLine();
-                                if (choice.Equals("y"))
-                                {
-                                    trainers.Add(tr);
-                                    Console.WriteLine("Trainer Added to the Course.");
-                                }
-                                else if (choice.Equals("n"))
-                                {
-
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Answare < y > for YES AND < n > for NO");
-                                    check_choice = true;
-                                }
-                            }
+                            check = false;
                         }
                         else
                         {
-                            check_choice = true;
-                            Console.WriteLine("No Existing Trainers On System.");
-                        }
-                    }
-                    else if (choice.Equals("n"))
-                    {
-                        check_choice = false;
-                        bool check_choice_tow = true;
-                        while (check_choice_tow)
-                        {
-                            Console.WriteLine("Do you want to create a new Trainer y/n?");
-                            choice = Console.ReadLine();
-                            if (choice.Equals("y"))
-                            {
-                                TerminalImportTrainer();
-                            }
-                            else if (choice.Equals("n"))
-                            {
-                                check_choice_tow = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("No Traines Added on this Course.");
-                            }
+                            Console.WriteLine("Enter a Valid End Date!\n");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Answare < y > for YES AND < n > for NO");
-                    }
-                }
-
-                // Add Students
-                Console.WriteLine("Add Students!");
-                check_choice = true;
-                while (check_choice)
-                {
-                    Console.WriteLine("Add Existing Studets ? y/n");
-                    String choice = Console.ReadLine();
-                    if (choice.Equals("y"))
-                    {
-                        check_choice = false;
-                        if (Student.students.Count > 0)
-                        {
-                            foreach (Student st in Student.students)
-                            {
-                                Console.Write($"Add Student: {st.lastname}  {st.lastname} ? y/n");
-                                choice = Console.ReadLine();
-                                if (choice.Equals("y"))
-                                {
-                                    students.Add(st);
-                                    Console.WriteLine("Student Added to the Course.");
-                                }
-                                else if (choice.Equals("n"))
-                                {
-
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Answare < y > for YES AND < n > for NO");
-                                    check_choice = true;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            check_choice = true;
-                            Console.WriteLine("No Existing Students On System.");
-                        }
-                    }
-                    else if (choice.Equals("n"))
-                    {
-                        check_choice = false;
-                        bool check_choice_tow = true;
-                        while (check_choice_tow)
-                        {
-                            Console.WriteLine("Do you want to create a new Student y/n?");
-                            choice = Console.ReadLine();
-                            if (choice.Equals("y"))
-                            {
-                                TerminalImportStudent();
-                            }
-                            else if (choice.Equals("n"))
-                            {
-                                check_choice_tow = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("No Students Added on this Course.");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Answare < y > for YES AND < n > for NO");
-                    }
-                }
-
-                // Add Assignment
-                Console.WriteLine("Add Assignments!");
-                check_choice = true;
-                while (check_choice)
-                {
-                    Console.WriteLine("Add Existing Assignments ? y/n");
-                    String choice = Console.ReadLine();
-                    if (choice.Equals("y"))
-                    {
-                        check_choice = false;
-                        if (Assignment.assignments.Count > 0)
-                        {
-                            foreach (Assignment asi in Assignment.assignments)
-                            {
-                                Console.Write($"Add Assignment: {asi.title}  End Date: {asi.endDate} ? y/n");
-                                choice = Console.ReadLine();
-                                if (choice.Equals("y"))
-                                {
-                                    assignments.Add(asi);
-                                    Console.WriteLine("Assignment Added to the Course.");
-                                }
-                                else if (choice.Equals("n"))
-                                {
-
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Answare < y > for YES AND < n > for NO");
-                                    check_choice = true;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            check_choice = true;
-                            Console.WriteLine("No Existing Assignments On System.");
-                        }
-                    }
-                    else if (choice.Equals("n"))
-                    {
-                        check_choice = false;
-                        bool check_choice_tow = true;
-                        while (check_choice_tow)
-                        {
-                            Console.WriteLine("Do you want to create a new Assignment y/n?");
-                            choice = Console.ReadLine();
-                            if (choice.Equals("y"))
-                            {
-                                TerminalImportAssignment();
-                            }
-                            else if (choice.Equals("n"))
-                            {
-                                check_choice_tow = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("No Assignment Added on this Course.");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Answare < y > for YES AND < n > for NO");
+                        Console.WriteLine("Enter a Valid Title!\n");
                     }
                 }
                 // Create The Course Object
@@ -347,17 +151,175 @@ namespace Assigments_School
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
             }
         }
+        // Add Assignment
         public static void TerminalImportAssignment()
         {
+            try
+            {
+                String title = "";
+                DateTime enddate = DateTime.Today;
+                DateTime startdate = DateTime.Today;
 
+                Console.WriteLine("Creating New Assignment.");
+                bool check = true;
+                while (check)
+                {
+                    Console.WriteLine("Give a Title: ");
+                    title = Console.ReadLine();
+                    if (title.Length > 0)
+                    {
+                        Console.WriteLine("Set the End Date:");
+                        Console.WriteLine($"example: {DateTime.Today.ToString("dd/MM/yyyy")}");
+                        enddate = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
+                        if (enddate > DateTime.Today)
+                        {
+                            check = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter a Valid End Date!\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter a Valid Title!\n");
+                    }
+                }
+                // Create The Course Object
+                ImportAssignment(title, enddate, startdate);
+            }
+            catch (System.FormatException ex)
+            {
+                Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+            }
         }
+        // Add Trainer
         public static void TerminalImportTrainer()
         {
+            try
+            {
+                String firstname = "";
+                String lastname = "";
+                int age = 0;
+                String gender = "";
+                DateTime startdate = DateTime.Today;
 
+                Console.WriteLine("Creating New Trainer.");
+                bool check = true;
+                while (check)
+                {
+                    Console.WriteLine("FirstName: ");
+                    firstname = Console.ReadLine();
+                    if (firstname.Length > 0)
+                    {
+                        Console.WriteLine("LastName: ");
+                        lastname = Console.ReadLine();
+                        if (!(lastname.Length > 0))
+                        {
+                            Console.WriteLine("Enter a Valid LastName!\n");
+                        }
+                        check = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter a Valid FirstName!\n");
+                    }
+                }
+                check = true;
+                while (check)
+                {
+                    Console.WriteLine("Age: ");
+                    age = int.Parse(Console.ReadLine());
+                    if(age > 0)
+                    {
+                        Console.WriteLine("Gender: Male(m) Femaile(f)");
+                        string gen = Console.ReadLine();
+                        if(gen == "m" || gen == "f")
+                        {
+                            gender = gen;
+                            check = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter a Valid Gender!\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter a Valid Age!\n");
+                    }
+                }
+                // Create The Course Object
+                ImportTrainer(firstname, lastname, age, gender, startdate);
+            }
+            catch (System.FormatException ex)
+            {
+                Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+            }
         }
+        // Add Studnt
         public static void TerminalImportStudent()
         {
+            try
+            {
+                String firstname = "";
+                String lastname = "";
+                int age = 0;
+                String gender = "";
+                DateTime startdate = DateTime.Today;
 
+                Console.WriteLine("Creating New Student.");
+                bool check = true;
+                while (check)
+                {
+                    Console.WriteLine("FirstName: ");
+                    firstname = Console.ReadLine();
+                    if (firstname.Length > 0)
+                    {
+                        Console.WriteLine("LastName: ");
+                        lastname = Console.ReadLine();
+                        if (!(lastname.Length > 0))
+                        {
+                            Console.WriteLine("Enter a Valid LastName!\n");
+                        }
+                        check = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter a Valid FirstName!\n");
+                    }
+                }
+                check = true;
+                while (check)
+                {
+                    Console.WriteLine("Age: ");
+                    age = int.Parse(Console.ReadLine());
+                    if (age > 0)
+                    {
+                        Console.WriteLine("Gender: Male(m) Femaile(f)");
+                        string gen = Console.ReadLine();
+                        if (gen == "m" || gen == "f")
+                        {
+                            gender = gen;
+                            check = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter a Valid Gender!\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter a Valid Age!\n");
+                    }
+                }
+                // Create The Course Object
+                ImportStudent(firstname, lastname, age, gender, startdate);
+            }
+            catch (System.FormatException ex)
+            {
+                Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+            }
         }
 
 
