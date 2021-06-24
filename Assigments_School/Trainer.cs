@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assigments_School
 {
@@ -34,8 +35,20 @@ namespace Assigments_School
                 ///
         }
 
+        
+        // Get Trainer
+        public static Trainer Get(string firstname, string lastname, int age, string gender, DateTime startdate)
+        {
+            return (Trainer)from trainer in Trainer.Trainers 
+                                            where trainer.FirstName == firstname 
+                                            where trainer.LastName == lastname 
+                                            where trainer.Age == age
+                                            where trainer.Gender == gender 
+                                            where trainer.StartDate == startdate select trainer;
+        }
+        
         // Terminal Add Trainer
-        public static void TerminalAdd()
+        public static Trainer TerminalAdd()
         {
             try
             {
@@ -92,10 +105,12 @@ namespace Assigments_School
                 }
                 // Create The Course Object
                 Trainer.Add(firstname, lastname, age, gender, startdate);
+                return Trainer.Get(firstname, lastname, age, gender, startdate);
             }
             catch (System.FormatException ex)
             {
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+                return null;
             }
         }
 

@@ -118,7 +118,7 @@ namespace Assigments_School
                             Student.TerminalEdit();
                             break;
                         default:
-                            Console.WriteLine("Enter a Valid Choice.");
+                            Console.WriteLine("Enter a Valid Choice!");
                             break;
                     }
                 }

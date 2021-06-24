@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assigments_School
 {
@@ -38,8 +39,18 @@ namespace Assigments_School
                 ///
         }
 
+        // Get Assignment
+        public static Assignment Get(string title, DateTime startdate, DateTime enddate)
+        {
+            return (Assignment) from assignment in Assignment.Assignments
+                                                    where assignment.Title == title
+                                                    where assignment.StartDate == startdate
+                                                    where assignment.EndDate == enddate
+                                                    select assignment;
+        }
+
         // Terminal Add Assignment
-        public static void TerminalAdd()
+        public static Assignment TerminalAdd()
         {
             try
             {
@@ -74,10 +85,12 @@ namespace Assigments_School
                 }
                 // Create The Course Object
                 Assignment.Add(title, enddate, startdate);
+                return Assignment.Get(title, enddate, startdate);
             }
             catch (System.FormatException ex)
             {
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+                return null;
             }
         }
 

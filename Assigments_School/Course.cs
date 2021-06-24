@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assigments_School
 {
@@ -42,8 +43,18 @@ namespace Assigments_School
                 ///
         }
 
+        // Get Course
+        public static Course Get(string title, DateTime startdate, DateTime enddate)
+        {
+            return (Course) from course in Course.Courses
+                                           where course.Title == title
+                                           where course.StartDate == startdate
+                                           where course.EndDate == enddate
+                                           select course;
+        }
+
         // Terminal Add Course
-        public static void TerminalAdd()
+        public static Course TerminalAdd()
         {
             try
             {
@@ -78,17 +89,54 @@ namespace Assigments_School
                 }
                 // Create The Course Object
                 Course.Add(title, enddate, startdate);
+                return Course.Get(title, enddate, startdate);
             }
             catch (System.FormatException ex)
             {
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+                return null;
             }
         }
 
         // Terminal Edit a Course
         public static void TerminalEdit()
         {
+            Console.WriteLine("Add: Trainers(t) ? Students(s) ? Assignments(a) ? Edit Main Imfo(m)");
+            String choice = Console.ReadLine();
+            switch(choice)
+            {
+                case "t":
+                    Console.WriteLine("Add Existing Trainer: (ex) ? Add New Trainer: (new)");
+                    String choice_t = Console.ReadLine();
+                    switch (choice_t)
+                    {
+                        case "ex":
+                            break;
+                        case "new":
+                            /*
+                            Trainer trainer = Trainer.TerminalAdd();
+                            if(trainer != null)
+                            {
+                                this.Trainers.Add(trainer);
+                            }
+                            */
+                            break;
+                        default:
+                            Console.WriteLine("Enter a Valid Choice!");
+                            break;
+                    }
+                    break;
+                case "s":
+                    break;
+                case "a":
+                    break;
+                case "m":
+                    break;
+                default:
+                    Console.WriteLine("Enter a Valid Choice!");
+                    break;
 
+            }
         }
 
         // Get All Course On Terminal

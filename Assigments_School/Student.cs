@@ -39,8 +39,20 @@ namespace Assigments_School
                 ///
         }
 
+        // Get Student
+        public static Student Get(string firstname, string lastname, int age, string gender, DateTime startdate)
+        {
+            return (Student)from student in Student.Students
+                            where student.FirstName == firstname
+                            where student.LastName == lastname
+                            where student.Age == age
+                            where student.Gender == gender
+                            where student.StartDate == startdate
+                            select student;
+        }
+
         // Terminal Add Student
-        public static void TerminalAdd()
+        public static Student TerminalAdd()
         {
             try
             {
@@ -97,10 +109,12 @@ namespace Assigments_School
                 }
                 // Create The Course Object
                 Student.Add(firstname, lastname, age, gender, startdate);
+                return Student.Get(firstname, lastname, age, gender, startdate);
             }
             catch (System.FormatException ex)
             {
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+                return null;
             }
         }
 
