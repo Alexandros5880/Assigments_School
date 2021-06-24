@@ -60,6 +60,7 @@ namespace Assigments_School
                             + "(lsd)  -->  [ A List of all the students who need to submit one or more assigment on the same calendar week. ]\n\t"
                     );
                     choice = Console.ReadLine();
+                    Console.WriteLine("\n");
                     switch (choice)
                     {
                         case "ls":

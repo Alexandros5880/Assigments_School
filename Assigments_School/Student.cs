@@ -11,16 +11,12 @@ namespace Assigments_School
 
         public List<Assignment> Assignments { get; set; }
         public List<Course> Courses { get; set; }
-        public static List<Student> Students { get; set; }
+        public static List<Student> Students = new List<Student>();
 
         public Student(String firstname, String lastname,
                             int age, String gender, DateTime startdate) :
                             base(firstname, lastname, age, gender, startdate)
         {
-            if(Student.Students == null)
-            {
-                Student.Students = new List<Student>();
-            }
             this.Assignments = new List<Assignment>();
             this.Courses = new List<Course>();
             Student.Students.Add(this);
@@ -42,13 +38,22 @@ namespace Assigments_School
         // Get Student
         public static Student Get(string firstname, string lastname, int age, string gender, DateTime startdate)
         {
-            return (Student)from student in Student.Students
-                            where student.FirstName == firstname
-                            where student.LastName == lastname
-                            where student.Age == age
-                            where student.Gender == gender
-                            where student.StartDate == startdate
-                            select student;
+            try
+            {
+                IEnumerable<Student> students = from student in Student.Students where
+                                                            student.FirstName == firstname &&
+                                                            student.LastName == lastname &&
+                                                            student.Age == age &&
+                                                            student.Gender == gender &&
+                                                            student.StartDate == startdate
+                                                            select student;
+                return (Student) students.ToList().First();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n\n {ex.Message} \n\n");
+                return null;
+            }
         }
 
         // Terminal Add Student
@@ -125,13 +130,30 @@ namespace Assigments_School
         }
 
         // Get All Students On Terminal
-        public static new void GetAllTerminal()
+        public static new bool GetAllTerminal()
         {
-            foreach (Student student in Student.Students)
+            try
             {
-                Console.WriteLine($"Student FirstName: [{student.FirstName}]  LastName: [{student.LastName}]  " +
-                    $"Age: [{student.Age}]  Gende: [{student.Gender}]  StartDate: [{student.StartDate}]");
+                if(Student.Students.Count > 0)
+                {
+                    foreach (Student student in Student.Students)
+                    {
+                        Console.WriteLine($"Student FirstName: [{student.FirstName}]  LastName: [{student.LastName}]  " +
+                                            $"Age: [{student.Age}]  Gende: [{student.Gender}]  StartDate: [{student.StartDate}]");
+                    }
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("No Students Found!");
+                    return false;
+                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex}");
+                return false;
+            }     
         }
 
     }

@@ -8,17 +8,13 @@ namespace Assigments_School
     {
 
         public List<Course> Courses { get; set; }
-        public static List<Trainer> Trainers { get; set; }
+        public static List<Trainer> Trainers = new List<Trainer>();
 
         public Trainer(String firstname, String lastname,
                             int age, String gender, DateTime startdate) :
                             base(firstname, lastname, age, gender, startdate)
         {
             this.Courses = new List<Course>();
-            if(Trainer.Trainers == null)
-            {
-                Trainer.Trainers = new List<Trainer>();
-            }
             Trainer.Trainers.Add(this);
         }
         ~Trainer()
@@ -39,12 +35,23 @@ namespace Assigments_School
         // Get Trainer
         public static Trainer Get(string firstname, string lastname, int age, string gender, DateTime startdate)
         {
-            return (Trainer)from trainer in Trainer.Trainers 
-                                            where trainer.FirstName == firstname 
-                                            where trainer.LastName == lastname 
-                                            where trainer.Age == age
-                                            where trainer.Gender == gender 
-                                            where trainer.StartDate == startdate select trainer;
+            try
+            {
+                IEnumerable<Trainer> traners = from trainer in Trainer.Trainers where
+                                               trainer.FirstName == firstname &&
+                                               trainer.LastName == lastname &&
+                                               trainer.Age == age &&
+                                               trainer.Gender == gender &&
+                                               trainer.StartDate == startdate
+                                               select trainer;
+
+                return (Trainer) traners.ToList().First();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n\n {ex.Message} \n\n");
+                return null;
+            }
         }
         
         // Terminal Add Trainer
@@ -121,12 +128,30 @@ namespace Assigments_School
         }
 
         // Get All Traines On Terminal
-        public static new void GetAllTerminal()
+        public static new bool GetAllTerminal()
         {
-            foreach (Trainer trainer in Trainer.Trainers)
+            try
             {
-                Console.WriteLine($"Trainer FirstName: [{trainer.FirstName}]  LastName: [{trainer.LastName}]  " +
-                    $"Age: [{trainer.Age}]  Gende: [{trainer.Gender}]  StartDate: [{trainer.StartDate}]");
+                if(Trainer.Trainers.Count > 0)
+                {
+                    int counter = 0;
+                    foreach (Trainer trainer in Trainer.Trainers)
+                    {
+                        Console.WriteLine($"Trainer: Id: {counter} FirstName: [{trainer.FirstName}]  LastName: [{trainer.LastName}]  " +
+                            $"Age: [{trainer.Age}]  Gende: [{trainer.Gender}]  StartDate: [{trainer.StartDate}]");
+                    }
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("No Trainer Found!");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex}");
+                return false;
             }
         }
 

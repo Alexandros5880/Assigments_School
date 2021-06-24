@@ -11,15 +11,11 @@ namespace Assigments_School
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<Student> Students { get; set; }
-        public static List<Assignment> Assignments { get; set; }
+        public static List<Assignment> Assignments = new List<Assignment>();
 
         public Assignment()
         {
             this.Students = new List<Student>();
-            if(Assignment.Assignments == null)
-            {
-                Assignment.Assignments = new List<Assignment>();
-            }
             Assignment.Assignments.Add(this);
         }
         ~Assignment()
@@ -40,14 +36,22 @@ namespace Assigments_School
         }
 
         // Get Assignment
-        public static Assignment Get(string title, DateTime startdate, DateTime enddate)
+        public static Assignment Get(string title)
         {
-            return (Assignment) from assignment in Assignment.Assignments
-                                                    where assignment.Title == title
-                                                    where assignment.StartDate == startdate
-                                                    where assignment.EndDate == enddate
-                                                    select assignment;
+            try
+            {
+                IEnumerable<Assignment> assignments = from assignment in Assignment.Assignments
+                                                      where assignment.Title == title
+                                                      select assignment;
+                return (Assignment) assignments.ToList().First();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n\n {ex.Message} \n\n");
+                return null;
+            }
         }
+            
 
         // Terminal Add Assignment
         public static Assignment TerminalAdd()
@@ -85,7 +89,7 @@ namespace Assigments_School
                 }
                 // Create The Course Object
                 Assignment.Add(title, enddate, startdate);
-                return Assignment.Get(title, enddate, startdate);
+                return Assignment.Get(title);
             }
             catch (System.FormatException ex)
             {
@@ -101,11 +105,28 @@ namespace Assigments_School
         }
 
         // Get All Assignments On Terminal
-        public static void GetAllTerminal()
+        public static new bool GetAllTerminal()
         {
-            foreach (Assignment assignment in Assignment.Assignments)
+            try
             {
-                Console.WriteLine($"Assignment Title: [{assignment.Title}]  StartDate: [{assignment.StartDate}]  EndDate: [{assignment.EndDate}]");
+                if(Assignment.Assignments.Count > 0)
+                {
+                    foreach (Assignment assignment in Assignment.Assignments)
+                    {
+                        Console.WriteLine($"Assignment Title: [{assignment.Title}]  StartDate: [{assignment.StartDate}]  EndDate: [{assignment.EndDate}]");
+                    }
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("No Assignments Found!");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex}");
+                return false;
             }
         }
 

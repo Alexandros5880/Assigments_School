@@ -13,17 +13,13 @@ namespace Assigments_School
         public List<Trainer> Trainers { get; set; }
         public List<Student> Students { get; set; }
         public List<Assignment> Assignments { get; set; }
-        public static List<Course> Courses { get; set; }
+        public static List<Course> Courses = new List<Course>();
 
         public Course()
         {
             this.Trainers = new List<Trainer>();
             this.Students = new List<Student>();
             this.Assignments = new List<Assignment>();
-            if(Course.Courses == null)
-            {
-                Course.Courses = new List<Course>();
-            }
             Course.Courses.Add(this);
         }
         ~Course()
@@ -44,13 +40,21 @@ namespace Assigments_School
         }
 
         // Get Course
-        public static Course Get(string title, DateTime startdate, DateTime enddate)
+        public static Course Get(string title)
         {
-            return (Course) from course in Course.Courses
-                                           where course.Title == title
-                                           where course.StartDate == startdate
-                                           where course.EndDate == enddate
-                                           select course;
+            try
+            {
+                IEnumerable<Course> courses = from course in Course.Courses
+                                       where course.Title == title
+                                       select course;
+                
+                return (Course)courses.ToList().First();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"\n\n {ex.Message} \n\n");
+                return null;
+            }   
         }
 
         // Terminal Add Course
@@ -89,7 +93,7 @@ namespace Assigments_School
                 }
                 // Create The Course Object
                 Course.Add(title, enddate, startdate);
-                return Course.Get(title, enddate, startdate);
+                return Course.Get(title);
             }
             catch (System.FormatException ex)
             {
@@ -101,6 +105,11 @@ namespace Assigments_School
         // Terminal Edit a Course
         public static void TerminalEdit()
         {
+            // Select Course
+            Console.Write("Please Enter Course Title:");
+            String title = Console.ReadLine();
+            Course course = Course.Get(title);
+            // Select What to Edit On Course
             Console.WriteLine("Add: Trainers(t) ? Students(s) ? Assignments(a) ? Edit Main Imfo(m)");
             String choice = Console.ReadLine();
             switch(choice)
@@ -108,22 +117,37 @@ namespace Assigments_School
                 case "t":
                     Console.WriteLine("Add Existing Trainer: (ex) ? Add New Trainer: (new)");
                     String choice_t = Console.ReadLine();
+                    Trainer trainer;
                     switch (choice_t)
                     {
                         case "ex":
+                            if (Trainer.GetAllTerminal())
+                            {
+                                Console.WriteLine("Select Trainer By Id:");
+                                int id = int.Parse(Console.ReadLine());
+                                trainer = Trainer.Trainers[id];
+                            }
+                            else
+                            {
+                                trainer = null;
+                            }
                             break;
                         case "new":
-                            /*
-                            Trainer trainer = Trainer.TerminalAdd();
-                            if(trainer != null)
-                            {
-                                this.Trainers.Add(trainer);
-                            }
-                            */
+                            trainer = Trainer.TerminalAdd();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice!");
+                            trainer = null;
                             break;
+                    }
+                    // Add Trainer
+                    if (trainer != null)
+                    {
+                        course.Trainers.Add(trainer);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please Try Again!");
                     }
                     break;
                 case "s":
@@ -140,11 +164,28 @@ namespace Assigments_School
         }
 
         // Get All Course On Terminal
-        public static void GetAllTerminal()
+        public static new bool GetAllTerminal()
         {
-            foreach(Course course in Course.Courses)
+            try
             {
-                Console.WriteLine($"Course Title: [{course.Title}]  StartDate: [{course.StartDate}]  EndDate: [{course.EndDate}]");
+                if(Course.Courses.Count > 0)
+                {
+                    foreach (Course course in Course.Courses)
+                    {
+                        Console.WriteLine($"Course Title: [{course.Title}]  StartDate: [{course.StartDate}]  EndDate: [{course.EndDate}]");
+                    }
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("No Courses Found!");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex}");
+                return false;
             }
         }
 

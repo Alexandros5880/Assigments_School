@@ -24,10 +24,6 @@ namespace Assigments_School
             this.Age = age;
             this.Gender = gender;
             this.StartDate = startdate;
-            if(People.MyPeople == null)
-            {
-                People.MyPeople = new List<People>();
-            }
             People.MyPeople.Add(this);
         }
         ~People()
@@ -36,12 +32,29 @@ namespace Assigments_School
         }
 
         // Get All People On Terminal
-        public static void GetAllTerminal()
+        public static bool GetAllTerminal()
         {
-            foreach (People people in People.MyPeople)
+            try
             {
-                Console.WriteLine($"People FirstName: [{people.FirstName}]  LastName: [{people.LastName}]  " +
-                    $"Age: [{people.Age}]  Gende: [{people.Gender}]  StartDate: [{people.StartDate}]");
+                if(People.MyPeople.Count > 0)
+                {
+                    foreach (People people in People.MyPeople)
+                    {
+                        Console.WriteLine($"People FirstName: [{people.FirstName}]  LastName: [{people.LastName}]  " +
+                            $"Age: [{people.Age}]  Gende: [{people.Gender}]  StartDate: [{people.StartDate}]");
+                    }
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("No Peaple Found!");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex}");
+                return false;
             }
         }
 
