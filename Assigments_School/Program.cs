@@ -8,6 +8,7 @@ namespace Assigments_School
 {
     class Program
     {
+
         static void Main(string[] args)
         {
 
@@ -25,16 +26,16 @@ namespace Assigments_School
                     switch (choice)
                     {
                         case "c":
-                            TerminalImportCourse();
+                            Course.TerminalAdd();
                             break;
                         case "a":
-                            TerminalImportAssignment();
+                            Assignment.TerminalAdd();
                             break;
                         case "t":
-                            TerminalImportTrainer();
+                            Trainer.TerminalAdd();
                             break;
                         case "s":
-                            TerminalImportStudent();
+                            Student.TerminalAdd();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");
@@ -104,265 +105,7 @@ namespace Assigments_School
                 Console.WriteLine("\n\n");
             }
         }
-
-
-
-
-
-        // Add Student
-        public static void TerminalImportCourse()
-        {
-            try
-            {
-                String title = "";
-                DateTime enddate = DateTime.Today;
-                DateTime startdate = DateTime.Today;
-
-                Console.WriteLine("Creating New Course.");
-                bool check = true;
-                while (check)
-                {
-                    Console.WriteLine("Give a Title: ");
-                    title = Console.ReadLine();
-                    if (title.Length > 0)
-                    {
-                        Console.WriteLine("Set the End Date:");
-                        Console.WriteLine($"example: {DateTime.Today.ToString("dd/MM/yyyy")}");
-                        enddate = DateTime.ParseExact(Console.ReadLine(),"dd/MM/yyyy",null);
-                        if (enddate > DateTime.Today)
-                        {
-                            check = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter a Valid End Date!\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid Title!\n");
-                    }
-                }
-                // Create The Course Object
-                ImportCourse(title, enddate, startdate);
-            }
-            catch (System.FormatException ex)
-            {
-                Console.WriteLine($"\n\nException: {ex.Message}\n\n");
-            }
-        }
-        // Add Assignment
-        public static void TerminalImportAssignment()
-        {
-            try
-            {
-                String title = "";
-                DateTime enddate = DateTime.Today;
-                DateTime startdate = DateTime.Today;
-
-                Console.WriteLine("Creating New Assignment.");
-                bool check = true;
-                while (check)
-                {
-                    Console.WriteLine("Give a Title: ");
-                    title = Console.ReadLine();
-                    if (title.Length > 0)
-                    {
-                        Console.WriteLine("Set the End Date:");
-                        Console.WriteLine($"example: {DateTime.Today.ToString("dd/MM/yyyy")}");
-                        enddate = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
-                        if (enddate > DateTime.Today)
-                        {
-                            check = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter a Valid End Date!\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid Title!\n");
-                    }
-                }
-                // Create The Course Object
-                ImportAssignment(title, enddate, startdate);
-            }
-            catch (System.FormatException ex)
-            {
-                Console.WriteLine($"\n\nException: {ex.Message}\n\n");
-            }
-        }
-        // Add Trainer
-        public static void TerminalImportTrainer()
-        {
-            try
-            {
-                String firstname = "";
-                String lastname = "";
-                int age = 0;
-                String gender = "";
-                DateTime startdate = DateTime.Today;
-
-                Console.WriteLine("Creating New Trainer.");
-                bool check = true;
-                while (check)
-                {
-                    Console.WriteLine("FirstName: ");
-                    firstname = Console.ReadLine();
-                    if (firstname.Length > 0)
-                    {
-                        Console.WriteLine("LastName: ");
-                        lastname = Console.ReadLine();
-                        if (!(lastname.Length > 0))
-                        {
-                            Console.WriteLine("Enter a Valid LastName!\n");
-                        }
-                        check = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid FirstName!\n");
-                    }
-                }
-                check = true;
-                while (check)
-                {
-                    Console.WriteLine("Age: ");
-                    age = int.Parse(Console.ReadLine());
-                    if(age > 0)
-                    {
-                        Console.WriteLine("Gender: Male(m) Femaile(f)");
-                        string gen = Console.ReadLine();
-                        if(gen == "m" || gen == "f")
-                        {
-                            gender = gen;
-                            check = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter a Valid Gender!\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid Age!\n");
-                    }
-                }
-                // Create The Course Object
-                ImportTrainer(firstname, lastname, age, gender, startdate);
-            }
-            catch (System.FormatException ex)
-            {
-                Console.WriteLine($"\n\nException: {ex.Message}\n\n");
-            }
-        }
-        // Add Studnt
-        public static void TerminalImportStudent()
-        {
-            try
-            {
-                String firstname = "";
-                String lastname = "";
-                int age = 0;
-                String gender = "";
-                DateTime startdate = DateTime.Today;
-
-                Console.WriteLine("Creating New Student.");
-                bool check = true;
-                while (check)
-                {
-                    Console.WriteLine("FirstName: ");
-                    firstname = Console.ReadLine();
-                    if (firstname.Length > 0)
-                    {
-                        Console.WriteLine("LastName: ");
-                        lastname = Console.ReadLine();
-                        if (!(lastname.Length > 0))
-                        {
-                            Console.WriteLine("Enter a Valid LastName!\n");
-                        }
-                        check = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid FirstName!\n");
-                    }
-                }
-                check = true;
-                while (check)
-                {
-                    Console.WriteLine("Age: ");
-                    age = int.Parse(Console.ReadLine());
-                    if (age > 0)
-                    {
-                        Console.WriteLine("Gender: Male(m) Femaile(f)");
-                        string gen = Console.ReadLine();
-                        if (gen == "m" || gen == "f")
-                        {
-                            gender = gen;
-                            check = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter a Valid Gender!\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter a Valid Age!\n");
-                    }
-                }
-                // Create The Course Object
-                ImportStudent(firstname, lastname, age, gender, startdate);
-            }
-            catch (System.FormatException ex)
-            {
-                Console.WriteLine($"\n\nException: {ex.Message}\n\n");
-            }
-        }
-
-
-
-
-
-
-
-        // Import Back Functions
-        public static void ImportCourse(string title, DateTime enddate, DateTime startdate)
-        {
-            Console.WriteLine("Importint Cource.");
-            Course course = new Course();
-            course.title = title;
-            course.endDate = enddate;
-            course.startDate = startdate;
-            // Save It To DB
-                ///
-        }
-        public static void ImportAssignment(string title, DateTime startdate, DateTime enddate)
-        {
-            Console.WriteLine("Importing Assignment.");
-            Assignment assignment = new Assignment();
-            assignment.title = title;
-            assignment.startDate = startdate;
-            assignment.endDate = enddate;
-            // Save It To DB
-                ///
-        }
-        public static void ImportTrainer(string firstname, string lastname, int age, string gender, DateTime startdate)
-        {
-            Console.WriteLine("Importing Trainer.");
-            Trainer trainer = new Trainer(firstname, lastname, age, gender, startdate);
-            // Save It To DB
-                ///
-        }
-        public static void ImportStudent(string firstname, string lastname, int age, string gender, DateTime startdate)
-        {
-            Console.WriteLine("Importing Student.");
-            Student student = new Student(firstname, lastname, age, gender, startdate);
-            // Save It To DB
-                ///
-        }
+ 
 
 
 
@@ -407,5 +150,6 @@ namespace Assigments_School
         {
             Console.WriteLine("Exporting All Students Who Need To Submit To Assignments On The Same Week.");
         }
+
     }
 }
