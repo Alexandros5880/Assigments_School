@@ -114,47 +114,76 @@ namespace Assigments_School
             String choice = Console.ReadLine();
             switch(choice)
             {
-                case "t":
-                    Console.WriteLine("Add Existing Trainer: (ex) ? Add New Trainer: (new)");
-                    String choice_t = Console.ReadLine();
+                case "t": // Edit Trainers
+                    Console.WriteLine("Add Trainer(a) ? Remove Trainer(r)");
+                    String choice_t_ar = Console.ReadLine();
                     Trainer trainer;
-                    switch (choice_t)
+                    switch (choice_t_ar)
                     {
-                        case "ex":
-                            if (Trainer.GetAllTerminal())
+                        case "a": // Add Trainer
+                            Console.WriteLine("Add Existing Trainer: (ex) ? Add New Trainer: (new)");
+                            String choice_t = Console.ReadLine();
+                            switch (choice_t)
                             {
-                                Console.WriteLine("Select Trainer By Id:");
-                                int id = int.Parse(Console.ReadLine());
-                                trainer = Trainer.Trainers[id];
+                                case "ex":
+                                    if (Trainer.GetAllTerminal())
+                                    {
+                                        Console.WriteLine("Select Trainer By Id:");
+                                        int id = int.Parse(Console.ReadLine());
+                                        trainer = Trainer.Trainers[id];
+                                    }
+                                    else
+                                    {
+                                        trainer = null;
+                                    }
+                                    break;
+                                case "new":
+                                    trainer = Trainer.TerminalAdd();
+                                    break;
+                                default:
+                                    Console.WriteLine("Enter a Valid Choice!");
+                                    trainer = null;
+                                    break;
+                            }
+                            if (trainer != null)
+                            {
+                                course.Trainers.Add(trainer);
                             }
                             else
                             {
-                                trainer = null;
+                                Console.WriteLine("Please Try Again!");
                             }
                             break;
-                        case "new":
-                            trainer = Trainer.TerminalAdd();
+                        case "r": // Remove Trainer
+                            if (course.Trainers.Count > 0)
+                            {
+                                int count = 0;
+                                foreach(Trainer train in course.Trainers)
+                                {
+                                    Console.WriteLine($"Trainer: Id: [{count}] FirstName: [{train.FirstName}]  LastName: [{train.LastName}]  " +
+                                                                            $"Age: [{train.Age}]  Gende: [{train.Gender}]  StartDate: [{train.StartDate}]");
+                                    count++;
+                                }
+                                Console.WriteLine("Select Trainer By Id:");
+                                int id = int.Parse(Console.ReadLine());
+                                trainer = course.Trainers[id];
+                                Console.WriteLine($"Course Thrainers: {course.Trainers.Count}");
+                                Console.WriteLine($"Removing Trainer: {trainer.FirstName} {trainer.LastName}");
+                                course.Trainers.Remove(trainer);
+                                Console.WriteLine($"Course Thrainers: {course.Trainers.Count}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("No Trainers Exists in this Course!");
+                            }
                             break;
-                        default:
-                            Console.WriteLine("Enter a Valid Choice!");
-                            trainer = null;
-                            break;
-                    }
-                    // Add Trainer
-                    if (trainer != null)
-                    {
-                        course.Trainers.Add(trainer);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please Try Again!");
                     }
                     break;
-                case "s":
+                case "s": // Edit Students
                     break;
-                case "a":
+                case "a": // Edit Assignments
                     break;
-                case "m":
+                case "m": // Edit Main Imfo
                     break;
                 default:
                     Console.WriteLine("Enter a Valid Choice!");

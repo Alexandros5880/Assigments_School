@@ -23,6 +23,20 @@ namespace Assigments_School
         }
         ~Student()
         {
+            foreach (Course course in Course.Courses)
+            {
+                if (course.Students.Contains(this))
+                {
+                    course.Students.Remove(this);
+                }
+            }
+            foreach (Assignment assignment in Assignment.Assignments)
+            {
+                if (assignment.Students.Contains(this))
+                {
+                    assignment.Students.Remove(this);
+                }
+            }
             Student.Students.Remove(this);
         }
 

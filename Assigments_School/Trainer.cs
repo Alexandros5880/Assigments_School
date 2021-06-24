@@ -19,6 +19,13 @@ namespace Assigments_School
         }
         ~Trainer()
         {
+            foreach(Course course in Course.Courses)
+            {
+                if (course.Trainers.Contains(this))
+                {
+                    course.Trainers.Remove(this);
+                }
+            }
             Trainer.Trainers.Remove(this);
         }
 
@@ -137,7 +144,7 @@ namespace Assigments_School
                     int counter = 0;
                     foreach (Trainer trainer in Trainer.Trainers)
                     {
-                        Console.WriteLine($"Trainer: Id: {counter} FirstName: [{trainer.FirstName}]  LastName: [{trainer.LastName}]  " +
+                        Console.WriteLine($"Trainer: Id: [{counter}] FirstName: [{trainer.FirstName}]  LastName: [{trainer.LastName}]  " +
                             $"Age: [{trainer.Age}]  Gende: [{trainer.Gender}]  StartDate: [{trainer.StartDate}]");
                     }
                     return true;

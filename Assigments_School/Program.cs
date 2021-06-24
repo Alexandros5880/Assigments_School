@@ -16,6 +16,7 @@ namespace Assigments_School
             {
                 Console.WriteLine("Import(i) ? Export(e) ? Edit(ed) ? Quit(q):");
                 string choice = Console.ReadLine();
+                Console.WriteLine("\n");
 
                 // Importing
                 if (choice.Equals("i") || choice.Equals("Import"))
@@ -23,6 +24,7 @@ namespace Assigments_School
                     Console.WriteLine("Example Enter: t  'to import a Trainer'.");
                     Console.WriteLine("Import: Course(c) ? Assignment(a) ? Trainer(t) ? Student(s)");
                     choice = Console.ReadLine();
+                    Console.WriteLine("\n");
                     switch (choice)
                     {
                         case "c":
@@ -104,6 +106,7 @@ namespace Assigments_School
                     Console.WriteLine("Example Enter: c  'to edit a Course'.");
                     Console.WriteLine("Edit: Course(c) ? Assignment(a) ? Trainer(t) ? Student(s)");
                     choice = Console.ReadLine();
+                    Console.WriteLine("\n");
                     switch (choice)
                     {
                         case "c":
