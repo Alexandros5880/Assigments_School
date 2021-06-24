@@ -14,13 +14,13 @@ namespace Assigments_School
 
             while (true)
             {
-                Console.WriteLine("Import(i) ? Export(e) ? Quit(q):");
+                Console.WriteLine("Import(i) ? Export(e) ? Edit(ed) ? Quit(q):");
                 string choice = Console.ReadLine();
 
                 // Importing
                 if (choice.Equals("i") || choice.Equals("Import"))
                 {
-                    Console.WriteLine("Example for Enter: t  'to import a trainer'.");
+                    Console.WriteLine("Example Enter: t  'to import a Trainer'.");
                     Console.WriteLine("Import: Course(c) ? Assignment(a) ? Trainer(t) ? Student(s)");
                     choice = Console.ReadLine();
                     switch (choice)
@@ -91,6 +91,31 @@ namespace Assigments_School
                             break;
                         case "lsd":
                             GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek();
+                            break;
+                        default:
+                            Console.WriteLine("Enter a Valid Choice.");
+                            break;
+                    }
+                }
+                // Edit Data
+                else if (choice.Equals("ed") || choice.Equals("Edit"))
+                {
+                    Console.WriteLine("Example Enter: c  'to edit a Course'.");
+                    Console.WriteLine("Edit: Course(c) ? Assignment(a) ? Trainer(t) ? Student(s)");
+                    choice = Console.ReadLine();
+                    switch (choice)
+                    {
+                        case "c":
+                            Course.TerminalEdit();
+                            break;
+                        case "a":
+                            Assignment.TerminalEdit();
+                            break;
+                        case "t":
+                            Trainer.TerminalEdit();
+                            break;
+                        case "s":
+                            Student.TerminalEdit();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");

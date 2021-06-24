@@ -85,6 +85,11 @@ namespace Assigments_School
             }
         }
 
+        // Terminal Edit a Course
+        public static void TerminalEdit()
+        {
+
+        }
 
         // Get All Course On Terminal
         public static void GetAllTerminal()

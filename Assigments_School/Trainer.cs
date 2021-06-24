@@ -99,9 +99,14 @@ namespace Assigments_School
             }
         }
 
+        // Terminal Edit a Trainer
+        public static void TerminalEdit()
+        {
+
+        }
 
         // Get All Traines On Terminal
-        public static void GetAllTerminal()
+        public static new void GetAllTerminal()
         {
             foreach (Trainer trainer in Trainer.Trainers)
             {

@@ -104,8 +104,14 @@ namespace Assigments_School
             }
         }
 
+        // Terminal Edit a Student
+        public static void TerminalEdit()
+        {
+
+        }
+
         // Get All Students On Terminal
-        public static void GetAllTerminal()
+        public static new void GetAllTerminal()
         {
             foreach (Student student in Student.Students)
             {
