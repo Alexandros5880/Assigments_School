@@ -63,16 +63,16 @@ namespace Assigments_School
                     switch (choice)
                     {
                         case "ls":
-                            GetAllStudents();
+                            Student.GetAllTerminal();
                             break;
                         case "lt":
-                            GetAllTrainers();
+                            Trainer.GetAllTerminal();
                             break;
                         case "la":
-                            GetAllAssignments();
+                            Assignment.GetAllTerminal();
                             break;
                         case "lc":
-                            GetAllCourses();
+                            Course.GetAllTerminal();
                             break;
                         case "lsc":
                             GetAllStudentsPerCourse();
@@ -110,22 +110,6 @@ namespace Assigments_School
 
 
         // Export Functions
-        public static void GetAllStudents()
-        {
-            Console.WriteLine("Exporting All Students.");
-        }
-        public static void GetAllTrainers()
-        {
-            Console.WriteLine("Exporting All Trainers.");
-        }
-        public static void GetAllAssignments()
-        {
-            Console.WriteLine("Exporting All Assignments.");
-        }
-        public static void GetAllCourses()
-        {
-            Console.WriteLine("Exporting All Courses.");
-        }
         public static void GetAllStudentsPerCourse()
         {
             Console.WriteLine("Exporting All Students Per Course.");

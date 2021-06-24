@@ -6,21 +6,28 @@ namespace Assigments_School
     class Course
     {
 
-        public String title = "";
-        public DateTime startDate;
-        public DateTime endDate;
-        public List<Trainer> trainers = new List<Trainer>();
-        public List<Student> students = new List<Student>();
-        public List<Assignment> assignments = new List<Assignment>();
-        public static List<Course> courses = new List<Course>();
+        public String Title { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public List<Trainer> Trainers { get; set; }
+        public List<Student> Students { get; set; }
+        public List<Assignment> Assignments { get; set; }
+        public static List<Course> Courses { get; set; }
 
         public Course()
         {
-            Course.courses.Add(this);
+            this.Trainers = new List<Trainer>();
+            this.Students = new List<Student>();
+            this.Assignments = new List<Assignment>();
+            if(Course.Courses == null)
+            {
+                Course.Courses = new List<Course>();
+            }
+            Course.Courses.Add(this);
         }
         ~Course()
         {
-            Course.courses.Remove(this);
+            Course.Courses.Remove(this);
         }
 
         // Add Course
@@ -28,9 +35,9 @@ namespace Assigments_School
         {
             Console.WriteLine("Importint Cource.");
             Course course = new Course();
-            course.title = title;
-            course.endDate = enddate;
-            course.startDate = startdate;
+            course.Title = title;
+            course.EndDate = enddate;
+            course.StartDate = startdate;
             // Save It To DB
                 ///
         }
@@ -75,6 +82,16 @@ namespace Assigments_School
             catch (System.FormatException ex)
             {
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+            }
+        }
+
+
+        // Get All Course On Terminal
+        public static void GetAllTerminal()
+        {
+            foreach(Course course in Course.Courses)
+            {
+                Console.WriteLine($"Course Title: [{course.Title}]  StartDate: [{course.StartDate}]  EndDate: [{course.EndDate}]");
             }
         }
 

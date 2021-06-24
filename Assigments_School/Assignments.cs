@@ -6,19 +6,24 @@ namespace Assigments_School
     class Assignment
     {
 
-        public String title = "";
-        public DateTime startDate;
-        public DateTime endDate;
-        public List<Student> students = new List<Student>();
-        public static List<Assignment> assignments = new List<Assignment>();
+        public String Title { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public List<Student> Students { get; set; }
+        public static List<Assignment> Assignments { get; set; }
 
         public Assignment()
         {
-            Assignment.assignments.Add(this);
+            this.Students = new List<Student>();
+            if(Assignment.Assignments == null)
+            {
+                Assignment.Assignments = new List<Assignment>();
+            }
+            Assignment.Assignments.Add(this);
         }
         ~Assignment()
         {
-            Assignment.assignments.Remove(this);
+            Assignment.Assignments.Remove(this);
         }
 
         // Add Assignment
@@ -26,9 +31,9 @@ namespace Assigments_School
         {
             Console.WriteLine("Importing Assignment.");
             Assignment assignment = new Assignment();
-            assignment.title = title;
-            assignment.startDate = startdate;
-            assignment.endDate = enddate;
+            assignment.Title = title;
+            assignment.StartDate = startdate;
+            assignment.EndDate = enddate;
             // Save It To DB
                 ///
         }
@@ -73,6 +78,15 @@ namespace Assigments_School
             catch (System.FormatException ex)
             {
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+            }
+        }
+
+        // Get All Assignments On Terminal
+        public static void GetAllTerminal()
+        {
+            foreach (Assignment assignment in Assignment.Assignments)
+            {
+                Console.WriteLine($"Assignment Title: [{assignment.Title}]  StartDate: [{assignment.StartDate}]  EndDate: [{assignment.EndDate}]");
             }
         }
 

@@ -9,28 +9,41 @@ namespace Assigments_School
     class People
     {
 
-        public String firstname { get; set; }
-        public String lastname { get; set; }
-        public int age { get; set; }
-        public String gender { get; set; }
-        public DateTime startdate { get; set; }
-        public static List<People> myPeople = new List<People>();
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+        public int Age { get; set; }
+        public String Gender { get; set; }
+        public DateTime StartDate { get; set; }
+        public static List<People> MyPeople = new List<People>();
 
         public People(String firstname, String lastname,
                             int age, String gender, DateTime startdate)
         {
-            this.firstname = firstname;
-            this.lastname = lastname;
-            this.age = age;
-            this.gender = gender;
-            this.startdate = startdate;
-            People.myPeople.Add(this);
+            this.FirstName = firstname;
+            this.LastName = lastname;
+            this.Age = age;
+            this.Gender = gender;
+            this.StartDate = startdate;
+            if(People.MyPeople == null)
+            {
+                People.MyPeople = new List<People>();
+            }
+            People.MyPeople.Add(this);
         }
         ~People()
         {
-            People.myPeople.Remove(this);
+            People.MyPeople.Remove(this);
         }
 
+        // Get All People On Terminal
+        public static void GetAllTerminal()
+        {
+            foreach (People people in People.MyPeople)
+            {
+                Console.WriteLine($"People FirstName: [{people.FirstName}]  LastName: [{people.LastName}]  " +
+                    $"Age: [{people.Age}]  Gende: [{people.Gender}]  StartDate: [{people.StartDate}]");
+            }
+        }
 
     }
 }

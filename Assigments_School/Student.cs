@@ -9,19 +9,25 @@ namespace Assigments_School
     class Student : People
     {
 
-        public List<Assignment> assignments = new List<Assignment>();
-        public List<Course> courses = new List<Course>();
-        public static List<Student> students = new List<Student>();
+        public List<Assignment> Assignments { get; set; }
+        public List<Course> Courses { get; set; }
+        public static List<Student> Students { get; set; }
 
         public Student(String firstname, String lastname,
                             int age, String gender, DateTime startdate) :
                             base(firstname, lastname, age, gender, startdate)
         {
-            Student.students.Add(this);
+            if(Student.Students == null)
+            {
+                Student.Students = new List<Student>();
+            }
+            this.Assignments = new List<Assignment>();
+            this.Courses = new List<Course>();
+            Student.Students.Add(this);
         }
         ~Student()
         {
-            Student.students.Remove(this);
+            Student.Students.Remove(this);
         }
 
         // Add Student
@@ -95,6 +101,16 @@ namespace Assigments_School
             catch (System.FormatException ex)
             {
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
+            }
+        }
+
+        // Get All Students On Terminal
+        public static void GetAllTerminal()
+        {
+            foreach (Student student in Student.Students)
+            {
+                Console.WriteLine($"Student FirstName: [{student.FirstName}]  LastName: [{student.LastName}]  " +
+                    $"Age: [{student.Age}]  Gende: [{student.Gender}]  StartDate: [{student.StartDate}]");
             }
         }
 

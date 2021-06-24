@@ -6,18 +6,23 @@ namespace Assigments_School
     class Trainer : People
     {
 
-        public List<Course> courses = new List<Course>();
-        public static List<Trainer> trainers = new List<Trainer>();
+        public List<Course> Courses { get; set; }
+        public static List<Trainer> Trainers { get; set; }
 
         public Trainer(String firstname, String lastname,
                             int age, String gender, DateTime startdate) :
                             base(firstname, lastname, age, gender, startdate)
         {
-            Trainer.trainers.Add(this);
+            this.Courses = new List<Course>();
+            if(Trainer.Trainers == null)
+            {
+                Trainer.Trainers = new List<Trainer>();
+            }
+            Trainer.Trainers.Add(this);
         }
         ~Trainer()
         {
-            Trainer.trainers.Remove(this);
+            Trainer.Trainers.Remove(this);
         }
 
         // Add Trainer
@@ -93,5 +98,18 @@ namespace Assigments_School
                 Console.WriteLine($"\n\nException: {ex.Message}\n\n");
             }
         }
+
+
+        // Get All Traines On Terminal
+        public static void GetAllTerminal()
+        {
+            foreach (Trainer trainer in Trainer.Trainers)
+            {
+                Console.WriteLine($"Trainer FirstName: [{trainer.FirstName}]  LastName: [{trainer.LastName}]  " +
+                    $"Age: [{trainer.Age}]  Gende: [{trainer.Gender}]  StartDate: [{trainer.StartDate}]");
+            }
+        }
+
+
     }
 }
