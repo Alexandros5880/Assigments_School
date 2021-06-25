@@ -19,11 +19,12 @@ namespace Assigments_School
 
         static void Main(string[] args)
         {
-            /*
+            
+            // Connecte to server
             DB_connection_string = $"server={db_url};port={db_port};uid={db_user_name};pwd={db_user_password};database={db_name};" +
                                                 $"Charset=utf8;Integrated Security=True";
             MySqlConnection conn = new MySqlConnection(DB_connection_string);
-            */
+            
 
             while (true)
             {
