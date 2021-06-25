@@ -107,7 +107,7 @@ namespace Assigments_School
             String title = Console.ReadLine();
             Assignment myassignment = Assignment.Get(title);
             // Select What to Edit On Course
-            Console.WriteLine("Quit(q) Add: Students(s) ? Assignments(a) ? Edit Main Imfo(m)");
+            Console.WriteLine("Quit(q) Add: Students(s) ? Course(c) ? Edit Main Imfo(m)");
             String choice = Console.ReadLine();
             switch (choice)
             {
@@ -117,7 +117,7 @@ namespace Assigments_School
                     Student student;
                     switch (choice_s_ar)
                     {
-                        case "a": // Add Studentr
+                        case "s": // Add Studentr
                             Console.WriteLine("Add Existing Student: (ex) ? Add New Student: (new)");
                             String choice_t = Console.ReadLine();
                             switch (choice_t)
@@ -180,19 +180,19 @@ namespace Assigments_School
                             break;
                     }
                     break;
-                case "a": // Edit Course
+                case "c": // Edit Course
                     Console.WriteLine("Quit(q) Add Course(a) ? Remove Course(r)");
                     String choice_a_ar = Console.ReadLine();
                     Course course;
                     switch (choice_a_ar)
                     {
                         case "a": // Add Course
-                            Console.WriteLine("Add Existing Assignment: (ex) ? Add New Assignment: (new)");
+                            Console.WriteLine("Add Existing Course: (ex) ? Add New Course: (new)");
                             String choice_t = Console.ReadLine();
                             switch (choice_t)
                             {
                                 case "ex":
-                                    if (Assignment.GetAllTerminal())
+                                    if (Course.GetAllTerminal())
                                     {
                                         Console.WriteLine("Select Course By Id:");
                                         int id = int.Parse(Console.ReadLine());
