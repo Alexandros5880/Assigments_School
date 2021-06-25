@@ -146,6 +146,7 @@ namespace Assigments_School
                     {
                         Console.WriteLine($"Trainer: Id: [{counter}] FirstName: [{trainer.FirstName}]  LastName: [{trainer.LastName}]  " +
                             $"Age: [{trainer.Age}]  Gende: [{trainer.Gender}]  StartDate: [{trainer.StartDate}]");
+                        counter++;
                     }
                     return true;
                 }

@@ -148,6 +148,7 @@ namespace Assigments_School
                             if (trainer != null)
                             {
                                 course.Trainers.Add(trainer);
+                                trainer.Courses.Add(course);
                             }
                             else
                             {
@@ -169,6 +170,7 @@ namespace Assigments_School
                                 trainer = course.Trainers[id];
                                 Console.WriteLine($"Course Thrainers: {course.Trainers.Count}");
                                 Console.WriteLine($"Removing Trainer: {trainer.FirstName} {trainer.LastName}");
+                                trainer.Courses.Remove(course);
                                 course.Trainers.Remove(trainer);
                                 Console.WriteLine($"Course Thrainers: {course.Trainers.Count}");
                             }
@@ -180,6 +182,71 @@ namespace Assigments_School
                     }
                     break;
                 case "s": // Edit Students
+                    Console.WriteLine("Add Student(a) ? Remove Student(r)");
+                    String choice_s_ar = Console.ReadLine();
+                    Student student;
+                    switch (choice_s_ar)
+                    {
+                        case "a": // Add Studentr
+                            Console.WriteLine("Add Existing Student: (ex) ? Add New Student: (new)");
+                            String choice_t = Console.ReadLine();
+                            switch (choice_t)
+                            {
+                                case "ex":
+                                    if (Trainer.GetAllTerminal())
+                                    {
+                                        Console.WriteLine("Select Student By Id:");
+                                        int id = int.Parse(Console.ReadLine());
+                                        student = Student.Students[id];
+                                    }
+                                    else
+                                    {
+                                        student = null;
+                                    }
+                                    break;
+                                case "new":
+                                    student = Student.TerminalAdd();
+                                    break;
+                                default:
+                                    Console.WriteLine("Enter a Valid Choice!");
+                                    student = null;
+                                    break;
+                            }
+                            if (student != null)
+                            {
+                                course.Students.Add(student);
+                                student.Courses.Add(course);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please Try Again!");
+                            }
+                            break;
+                        case "r": // Remove Student
+                            if (course.Students.Count > 0)
+                            {
+                                int count = 0;
+                                foreach (Student stdn in course.Students)
+                                {
+                                    Console.WriteLine($"Student: Id: [{count}] FirstName: [{stdn.FirstName}]  LastName: [{stdn.LastName}]  " +
+                                                                            $"Age: [{stdn.Age}]  Gende: [{stdn.Gender}]  StartDate: [{stdn.StartDate}]");
+                                    count++;
+                                }
+                                Console.WriteLine("Select Student By Id:");
+                                int id = int.Parse(Console.ReadLine());
+                                student = course.Students[id];
+                                Console.WriteLine($"Course Students: {course.Students.Count}");
+                                Console.WriteLine($"Removing Student: {student.FirstName} {student.LastName}");
+                                student.Courses.Remove(course);
+                                course.Students.Remove(student);
+                                Console.WriteLine($"Course Studetns: {course.Students.Count}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("No Students Exists in this Course!");
+                            }
+                            break;
+                    }
                     break;
                 case "a": // Edit Assignments
                     break;

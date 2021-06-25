@@ -150,10 +150,12 @@ namespace Assigments_School
             {
                 if(Student.Students.Count > 0)
                 {
+                    int counter = 0;
                     foreach (Student student in Student.Students)
                     {
-                        Console.WriteLine($"Student FirstName: [{student.FirstName}]  LastName: [{student.LastName}]  " +
+                        Console.WriteLine($"Student: Id: [{counter}] FirstName: [{student.FirstName}]  LastName: [{student.LastName}]  " +
                                             $"Age: [{student.Age}]  Gende: [{student.Gender}]  StartDate: [{student.StartDate}]");
+                        counter++;
                     }
                     return true;
                 }
