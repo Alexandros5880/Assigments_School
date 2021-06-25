@@ -225,7 +225,30 @@ namespace Assigments_School
         // Exporting All Students Who Need To Submit To Assignments On The Same Week.
         public static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
         {
-            Console.WriteLine("Exporting All Students Who Need To Submit To Assignments On The Same Week.");
+            List<Student> students = new List<Student>();
+            foreach (Student student in Student.Students)
+            {
+                if(student.Assignments.Count > 0)
+                {
+                    foreach(Assignment assignment in student.Assignments)
+                    {
+                        DateTime enddate = assignment.EndDate;
+                        DateTime currentdate = DateTime.Today;
+
+                        var cal = System.Globalization.DateTimeFormatInfo.CurrentInfo.Calendar;
+                        var d1 = enddate.Date.AddDays(-1 * (int)cal.GetDayOfWeek(enddate));
+                        var d2 = currentdate.Date.AddDays(-1 * (int)cal.GetDayOfWeek(currentdate));
+
+                        if (d1 == d2)
+                        {
+                            if (!students.Contains(student))
+                            {
+                                students.Add(student);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // Get All Students On Terminal
