@@ -110,12 +110,12 @@ namespace Assigments_School
             String title = Console.ReadLine();
             Course course = Course.Get(title);
             // Select What to Edit On Course
-            Console.WriteLine("Add: Trainers(t) ? Students(s) ? Assignments(a) ? Edit Main Imfo(m)");
+            Console.WriteLine("Quit(q) Add: Trainers(t) ? Students(s) ? Assignments(a) ? Edit Main Imfo(m)");
             String choice = Console.ReadLine();
             switch(choice)
             {
                 case "t": // Edit Trainers
-                    Console.WriteLine("Add Trainer(a) ? Remove Trainer(r)");
+                    Console.WriteLine("Quit(q) Add Trainer(a) ? Remove Trainer(r)");
                     String choice_t_ar = Console.ReadLine();
                     Trainer trainer;
                     switch (choice_t_ar)
@@ -179,10 +179,12 @@ namespace Assigments_School
                                 Console.WriteLine("No Trainers Exists in this Course!");
                             }
                             break;
+                        case "q":
+                            break;
                     }
                     break;
                 case "s": // Edit Students
-                    Console.WriteLine("Add Student(a) ? Remove Student(r)");
+                    Console.WriteLine("Quit(q) Add Student(a) ? Remove Student(r)");
                     String choice_s_ar = Console.ReadLine();
                     Student student;
                     switch (choice_s_ar)
@@ -246,11 +248,112 @@ namespace Assigments_School
                                 Console.WriteLine("No Students Exists in this Course!");
                             }
                             break;
+                        case "q":
+                            break;
                     }
                     break;
                 case "a": // Edit Assignments
+                    Console.WriteLine("Quit(q) Add Assignment(a) ? Remove Assignment(r)");
+                    String choice_a_ar = Console.ReadLine();
+                    Assignment assignment;
+                    switch (choice_a_ar)
+                    {
+                        case "a": // Add Studentr
+                            Console.WriteLine("Add Existing Assignment: (ex) ? Add New Assignment: (new)");
+                            String choice_t = Console.ReadLine();
+                            switch (choice_t)
+                            {
+                                case "ex":
+                                    if (Assignment.GetAllTerminal())
+                                    {
+                                        Console.WriteLine("Select Assignment By Id:");
+                                        int id = int.Parse(Console.ReadLine());
+                                        assignment = Assignment.Assignments[id];
+                                    }
+                                    else
+                                    {
+                                        assignment = null;
+                                    }
+                                    break;
+                                case "new":
+                                    assignment = Assignment.TerminalAdd();
+                                    break;
+                                default:
+                                    Console.WriteLine("Enter a Valid Choice!");
+                                    assignment = null;
+                                    break;
+                            }
+                            if (assignment != null)
+                            {
+                                course.Assignments.Add(assignment);
+                                assignment.Courses.Add(course);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please Try Again!");
+                            }
+                            break;
+                        case "r": // Remove Student
+                            if (course.Assignments.Count > 0)
+                            {
+                                int count = 0;
+                                foreach (Assignment asgn in course.Assignments)
+                                {
+                                    Console.WriteLine($"Assignment: Id: [{count}] Title: [{asgn.Title}]  StartDate: [{asgn.StartDate}]  EndDate: [{asgn.EndDate}]");
+                                    count++;
+                                }
+                                Console.WriteLine("Select Assignment By Id:");
+                                int id = int.Parse(Console.ReadLine());
+                                assignment = course.Assignments[id];
+                                Console.WriteLine($"Course Assignments: {course.Assignments.Count}");
+                                Console.WriteLine($"Removing Assignment: {assignment.Title}");
+                                assignment.Courses.Remove(course);
+                                course.Assignments.Remove(assignment);
+                                Console.WriteLine($"Course Assignments: {course.Assignments.Count}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("No Assignments Exists in this Course!");
+                            }
+                            break;
+                        case "q":
+                            break;
+                    }
                     break;
                 case "m": // Edit Main Imfo
+                    Console.WriteLine("Quit(q) Do you wont to change Title(t) or EndDate(ed):");
+                    string choice_m = Console.ReadLine();
+                    switch (choice_m)
+                    {
+                        case "t":
+                            Console.Write("Enter New Title: ");
+                            string c_title = Console.ReadLine();
+                            if(c_title.Length > 0)
+                            {
+                                course.Title = c_title;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Enter a Valid Choice!");
+                            }
+                            break;
+                        case "ed":
+                            Console.Write("Enter a Date Like (27/07/2021):");
+                            DateTime enddate = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
+                            if(enddate > DateTime.Today)
+                            {
+                                course.EndDate = enddate;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Enter a Valid Choice!");
+                            }
+                            break;
+                        case "q":
+                            break;
+                    }
+                    break;
+                case "q":
                     break;
                 default:
                     Console.WriteLine("Enter a Valid Choice!");
@@ -260,7 +363,7 @@ namespace Assigments_School
         }
 
         // Get All Course On Terminal
-        public static new bool GetAllTerminal()
+        public static bool GetAllTerminal()
         {
             try
             {

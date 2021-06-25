@@ -11,6 +11,7 @@ namespace Assigments_School
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<Student> Students { get; set; }
+        public List<Course> Courses = new List<Course>();
         public static List<Assignment> Assignments = new List<Assignment>();
 
         public Assignment()
@@ -105,7 +106,7 @@ namespace Assigments_School
         }
 
         // Get All Assignments On Terminal
-        public static new bool GetAllTerminal()
+        public static bool GetAllTerminal()
         {
             try
             {
