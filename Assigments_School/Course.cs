@@ -189,13 +189,13 @@ namespace Assigments_School
                     Student student;
                     switch (choice_s_ar)
                     {
-                        case "a": // Add Studentr
+                        case "a": // Add Student
                             Console.WriteLine("Add Existing Student: (ex) ? Add New Student: (new)");
                             String choice_t = Console.ReadLine();
                             switch (choice_t)
                             {
                                 case "ex":
-                                    if (Trainer.GetAllTerminal())
+                                    if (Student.GetAllTerminal())
                                     {
                                         Console.WriteLine("Select Student By Id:");
                                         int id = int.Parse(Console.ReadLine());
@@ -258,7 +258,7 @@ namespace Assigments_School
                     Assignment assignment;
                     switch (choice_a_ar)
                     {
-                        case "a": // Add Studentr
+                        case "a": // Add Assignment
                             Console.WriteLine("Add Existing Assignment: (ex) ? Add New Assignment: (new)");
                             String choice_t = Console.ReadLine();
                             switch (choice_t)
@@ -293,7 +293,7 @@ namespace Assigments_School
                                 Console.WriteLine("Please Try Again!");
                             }
                             break;
-                        case "r": // Remove Student
+                        case "r": // Remove Assignment
                             if (course.Assignments.Count > 0)
                             {
                                 int count = 0;
