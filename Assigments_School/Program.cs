@@ -78,22 +78,22 @@ namespace Assigments_School
                             Course.GetAllTerminal();
                             break;
                         case "lsc":
-                            GetAllStudentsPerCourse();
+                            Course.GetAllStudentsTerminal();
                             break;
                         case "ltc":
-                            GetAllTrainersPerCourse();
+                            Course.GetAllTrainersTerminal();
                             break;
                         case "lac":
-                            GetAllAssignmentsPerCourse();
+                            Course.GetAllAssignmentsTerminal();
                             break;
                         case "las":
-                            GetAllAssignmentsPerStudent();
+                            Student.GetAllAssignmentsTerminal();
                             break;
                         case "lscm":
-                            GetAllStudentsThatBelongToMoreThatOneCourse();
+                            Student.GetAllStudentsThatBelongToMoreThatOneCourse();
                             break;
                         case "lsd":
-                            GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek();
+                            Student.GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");
@@ -133,35 +133,6 @@ namespace Assigments_School
                 }
                 Console.WriteLine("\n\n");
             }
-        }
- 
-
-
-
-        // Export Functions
-        public static void GetAllStudentsPerCourse()
-        {
-            Console.WriteLine("Exporting All Students Per Course.");
-        }
-        public static void GetAllTrainersPerCourse()
-        {
-            Console.WriteLine("Exporting All Trainers Per Course.");
-        }
-        public static void GetAllAssignmentsPerCourse()
-        {
-            Console.WriteLine("Exporting All Assignments Per Course.");
-        }
-        public static void GetAllAssignmentsPerStudent()
-        {
-            Console.WriteLine("Exporting All Assignments Per Student.");
-        }
-        public static void GetAllStudentsThatBelongToMoreThatOneCourse()
-        {
-            Console.WriteLine("Exporting All Students That Belong To More That One Course.");
-        }
-        public static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
-        {
-            Console.WriteLine("Exporting All Students Who Need To Submit To Assignments On The Same Week.");
         }
 
     }

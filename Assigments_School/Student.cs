@@ -50,16 +50,13 @@ namespace Assigments_School
         }
 
         // Get Student
-        public static Student Get(string firstname, string lastname, int age, string gender, DateTime startdate)
+        public static Student Get(string firstname, string lastname)
         {
             try
             {
                 IEnumerable<Student> students = from student in Student.Students where
                                                             student.FirstName == firstname &&
-                                                            student.LastName == lastname &&
-                                                            student.Age == age &&
-                                                            student.Gender == gender &&
-                                                            student.StartDate == startdate
+                                                            student.LastName == lastname
                                                             select student;
                 return (Student) students.ToList().First();
             }
@@ -128,7 +125,7 @@ namespace Assigments_School
                 }
                 // Create The Course Object
                 Student.Add(firstname, lastname, age, gender, startdate);
-                return Student.Get(firstname, lastname, age, gender, startdate);
+                return Student.Get(firstname, lastname);
             }
             catch (System.FormatException ex)
             {
@@ -140,7 +137,95 @@ namespace Assigments_School
         // Terminal Edit a Student
         public static void TerminalEdit()
         {
+            Console.Write("\nPlease Enter Students FirstName: ");
+            string firstname = Console.ReadLine();
+            Console.Write("\nPlease Enter Students LastName: ");
+            string lastname = Console.ReadLine();
+            int age = 0;
+            string gender = "";
+            if (firstname.Length > 0 && lastname.Length > 0)
+            {
+                Student student = Student.Get(firstname, lastname);
+                age = student.Age;
+                gender = student.Gender;
+                string edit_choice = "";
+                while (!edit_choice.Equals("q"))
+                {
+                    Console.Write("Quit(q) Edit: FirstName(f) ? LastName(l) ? Age(a) ? Gender(g): ");
+                    edit_choice = Console.ReadLine();
+                    switch (edit_choice)
+                    {
+                        case "q":
+                            break;
+                        case "f":
+                            Console.Write("New FirstName: ");
+                            firstname = Console.ReadLine();
+                            break;
+                        case "l":
+                            Console.Write("New LastName: ");
+                            lastname = Console.ReadLine();
+                            break;
+                        case "a":
+                            Console.Write("New Age: ");
+                            age = int.Parse(Console.ReadLine());
+                            break;
+                        case "g":
+                            Console.Write("New FirstName: Gender: ");
+                            gender = Console.ReadLine();
+                            break;
+                    }
+                }
+                student.FirstName = firstname;
+                student.LastName = lastname;
+                student.Age = age;
+                student.Gender = gender;
+            }
+            else
+            {
+                Console.WriteLine("Enter FirstName AND LastName Please!");
+            }
+        }
 
+        // Get All Assignments on Terminal
+        public static void GetAllAssignmentsTerminal()
+        {
+            Console.WriteLine("\nGet All Assignments");
+            Console.Write("Students FirstName: ");
+            string firstname = Console.ReadLine();
+            Console.Write("Students LastName: ");
+            string lastname = Console.ReadLine();
+            if(firstname.Length > 0 && lastname.Length > 0)
+            {
+                Student student = Student.Get(firstname, lastname);
+                foreach(Assignment assignment in student.Assignments)
+                {
+                    Console.WriteLine($"Assignment Title: [{assignment.Title}]  StartDate: [{assignment.StartDate}]  EndDate: [{assignment.EndDate}]");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please Enter FistName AND LastName!");
+            }
+        }
+
+        // Get All Students That Belong To More That One Course
+        public static void GetAllStudentsThatBelongToMoreThatOneCourse()
+        {
+            Console.WriteLine("\nGet All Students That Belong To More That One Course");
+            foreach(Student student in Student.Students)
+            {
+                if(student.Courses.Count > 1)
+                {
+                    Console.WriteLine($"Student: FirstName: [{student.FirstName}]  LastName: [{student.LastName}]  " +
+                                            $"Age: [{student.Age}]  Gende: [{student.Gender}]  StartDate: [{student.StartDate}]");
+                }
+            }
+        }
+
+        // Exporting All Students Who Need To Submit To Assignments On The Same Week.
+        public static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
+        {
+            Console.WriteLine("Exporting All Students Who Need To Submit To Assignments On The Same Week.");
         }
 
         // Get All Students On Terminal

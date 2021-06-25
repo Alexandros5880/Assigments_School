@@ -362,6 +362,68 @@ namespace Assigments_School
             }
         }
 
+        // Get All Students On Terminal
+        public static void GetAllStudentsTerminal()
+        {
+            Console.WriteLine("\nGet Course Students:");
+            Console.Write("Course Title: ");
+            string title = Console.ReadLine();
+            if(title.Length > 0)
+            {
+                Course course = Course.Get(title);
+                foreach(Student student in course.Students)
+                {
+                    Console.WriteLine($"Student: FirstName: [{student.FirstName}]  LastName: [{student.LastName}]  " +
+                                            $"Age: [{student.Age}]  Gende: [{student.Gender}]  StartDate: [{student.StartDate}]");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Enter a Title Please!");
+            }
+        }
+
+        // Get All Trainers On Terminal
+        public static void GetAllTrainersTerminal()
+        {
+            Console.WriteLine("\nGet Course Trainers:");
+            Console.Write("Course Title: ");
+            string title = Console.ReadLine();
+            if (title.Length > 0)
+            {
+                Course course = Course.Get(title);
+                foreach (Trainer trainer in course.Trainers)
+                {
+                    Console.WriteLine($"Trainer: FirstName: [{trainer.FirstName}]  LastName: [{trainer.LastName}]  " +
+                                            $"Age: [{trainer.Age}]  Gende: [{trainer.Gender}]  StartDate: [{trainer.StartDate}]");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Enter a Title Please!");
+            }
+        }
+
+        // Get All Assignments On Terminal
+        public static void GetAllAssignmentsTerminal()
+        {
+            Console.WriteLine("\nGet Course Assignments:");
+            Console.Write("Course Title: ");
+            string title = Console.ReadLine();
+            if (title.Length > 0)
+            {
+                Course course = Course.Get(title);
+                foreach (Assignment assignment in course.Assignments)
+                {
+                    Console.WriteLine($"Assignment Title: [{assignment.Title}]  StartDate: [{assignment.StartDate}]  EndDate: [{assignment.EndDate}]");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Enter a Title Please!");
+            }
+        }
+
         // Get All Course On Terminal
         public static bool GetAllTerminal()
         {
