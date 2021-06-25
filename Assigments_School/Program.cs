@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySqlConnector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,20 @@ namespace Assigments_School
     class Program
     {
 
+        public static String db_url = @"localhost";
+        public static String db_port = "3306";
+        public static String db_name = "AssignmentsSchool";
+        public static String db_user_name = "root";//"admin";
+        public static String db_user_password = "Platanios719791";
+        public static String DB_connection_string = "";
+
         static void Main(string[] args)
         {
+            /*
+            DB_connection_string = $"server={db_url};port={db_port};uid={db_user_name};pwd={db_user_password};database={db_name};" +
+                                                $"Charset=utf8;Integrated Security=True";
+            MySqlConnection conn = new MySqlConnection(DB_connection_string);
+            */
 
             while (true)
             {
