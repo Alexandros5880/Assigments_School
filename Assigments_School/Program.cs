@@ -40,16 +40,16 @@ namespace Assigments_School
                     switch (choice)
                     {
                         case "c":
-                            //Course.TerminalAdd();
+                            AddCourse();
                             break;
                         case "a":
-                            //Assignment.TerminalAdd();
+                            AddAssignment();
                             break;
                         case "t":
-                            //Trainer.TerminalAdd();
+                            AddTrainer();
                             break;
                         case "s":
-                            //Student.TerminalAdd();
+                            AddStudent();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");
@@ -147,10 +147,199 @@ namespace Assigments_School
             }
         }
 
+        ///////////////////////////////////////////  IMPORTING FUNCTIONS /////////////////////////////////////////////////////////
+        // Import Course
+        private static void AddCourse()
+        {
+            try
+            {
+                string title = "";
+                string startdate = DateTime.Now.ToString("dd/MM/yyyy");
+                string enddate = "";
+                Console.Write("New Course Title: ");
+                title = Console.ReadLine();
+                Console.Write("End Date: ");
+                title = Console.ReadLine();
+                if (title.Length > 0 && enddate.Length > 0)
+                {
+                    string sql_query = $"INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('{title}', '{startdate}', '{enddate}');";
+                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        connection.Open();
+                        var reader = cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Exception: {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Values!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }        }
 
+        // Import Assignments
+        private static void AddAssignment()
+        {
+            try
+            {
+                string title = "";
+                string startdate = DateTime.Now.ToString("dd/MM/yyyy");
+                string enddate = "";
+                Console.Write("New Assignment Title: ");
+                title = Console.ReadLine();
+                Console.Write("End Date: ");
+                title = Console.ReadLine();
+                if (title.Length > 0 && enddate.Length > 0)
+                {
+                    string sql_query = $"INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('{title}', '{startdate}', '{enddate}');";
+                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        connection.Open();
+                        var reader = cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Exception: {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Values!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
 
+        // Import Students
+        private static void AddStudent()
+        {
+            try
+            {
+                string startdate = DateTime.Now.ToString("dd/MM/yyyy");
+                string firstname = "";
+                string lastname = "";
+                int age = 0;
+                string gender = "";
+                string email = "";
+                string phone = "";
+                Console.Write("FirstName: ");
+                firstname = Console.ReadLine();
+                Console.Write("LastName: ");
+                lastname = Console.ReadLine();
+                Console.Write("Age: ");
+                age = int.Parse(Console.ReadLine());
+                Console.Write("Gender(Male/Female): ");
+                gender = Console.ReadLine();
+                Console.Write("Email: ");
+                email = Console.ReadLine();
+                Console.Write("Phone: ");
+                phone = Console.ReadLine();
+                if (firstname.Length > 0 && lastname.Length > 0 && email.Length > 0)
+                {
+                    string sql_query = $"INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone) " +
+                        $"VALUES('{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}'); ";
+                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        connection.Open();
+                        var reader = cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Exception: {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Values!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
 
-
+        // Import Trainers
+        private static void AddTrainer()
+        {
+            try
+            {
+                string startdate = DateTime.Now.ToString("dd/MM/yyyy");
+                string firstname = "";
+                string lastname = "";
+                int age = 0;
+                string gender = "";
+                string email = "";
+                string phone = "";
+                Console.Write("FirstName: ");
+                firstname = Console.ReadLine();
+                Console.Write("LastName: ");
+                lastname = Console.ReadLine();
+                Console.Write("Age: ");
+                age = int.Parse(Console.ReadLine());
+                Console.Write("Gender(Male/Female): ");
+                gender = Console.ReadLine();
+                Console.Write("Email: ");
+                email = Console.ReadLine();
+                Console.Write("Phone: ");
+                phone = Console.ReadLine();
+                if (firstname.Length > 0 && lastname.Length > 0 && email.Length > 0)
+                {
+                    string sql_query = $"INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone) " +
+                        $"VALUES('{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}'); ";
+                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        connection.Open();
+                        var reader = cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Exception: {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Values!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
 
 
         /// <summary>
