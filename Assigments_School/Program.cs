@@ -13,7 +13,7 @@ namespace Assigments_School
         public static String db_url = @"localhost";
         public static String db_port = "3306";
         public static String db_name = "AssignmentsSchool";
-        public static String db_user_name = "root";//"admin";
+        public static String db_user_name = "root";
         public static String db_user_password = "Platanios719791";
         public static String DB_connection_string = "";
 
@@ -21,10 +21,8 @@ namespace Assigments_School
         {
             
             // Connecte to server
-            DB_connection_string = $"server={db_url};port={db_port};uid={db_user_name};pwd={db_user_password};database={db_name};" +
-                                                $"Charset=utf8;Integrated Security=True";
-            MySqlConnection conn = new MySqlConnection(DB_connection_string);
-            
+            DB_connection_string = $"server={db_url};port={db_port};uid={db_user_name};pwd={db_user_password};database={db_name};Charset=utf8;";
+            // Integrated Security=True
 
             while (true)
             {
@@ -42,16 +40,16 @@ namespace Assigments_School
                     switch (choice)
                     {
                         case "c":
-                            Course.TerminalAdd();
+                            //Course.TerminalAdd();
                             break;
                         case "a":
-                            Assignment.TerminalAdd();
+                            //Assignment.TerminalAdd();
                             break;
                         case "t":
-                            Trainer.TerminalAdd();
+                            //Trainer.TerminalAdd();
                             break;
                         case "s":
-                            Student.TerminalAdd();
+                            //Student.TerminalAdd();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");
@@ -80,34 +78,34 @@ namespace Assigments_School
                     switch (choice)
                     {
                         case "ls":
-                            Student.GetAllTerminal();
+                            GetAllStudents();
                             break;
                         case "lt":
-                            Trainer.GetAllTerminal();
+                            GetAllTrainers();
                             break;
                         case "la":
-                            Assignment.GetAllTerminal();
+                            GetAllAssignments();
                             break;
                         case "lc":
-                            Course.GetAllTerminal();
+                            GetAllCourses();
                             break;
                         case "lsc":
-                            Course.GetAllStudentsTerminal();
+                            GetAllStudentsOnCourse();
                             break;
                         case "ltc":
-                            Course.GetAllTrainersTerminal();
+                            GetAllTrainersOnCourse();
                             break;
                         case "lac":
-                            Course.GetAllAssignmentsTerminal();
+                            GetAllAssignmentsPerCourse();
                             break;
                         case "las":
-                            Student.GetAllAssignmentsTerminal();
+                            GetAllAssignmentsPerStudent();
                             break;
                         case "lscm":
-                            Student.GetAllStudentsThatBelongToMoreThatOneCourse();
+                            GetAllStudentsThatBelongToMoreThatOneCourse();
                             break;
                         case "lsd":
-                            Student.GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek();
+                            GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");
@@ -124,16 +122,16 @@ namespace Assigments_School
                     switch (choice)
                     {
                         case "c":
-                            Course.TerminalEdit();
+                            //Course.TerminalEdit();
                             break;
                         case "a":
-                            Assignment.TerminalEdit();
+                            //Assignment.TerminalEdit();
                             break;
                         case "t":
-                            Trainer.TerminalEdit();
+                            //Trainer.TerminalEdit();
                             break;
                         case "s":
-                            Student.TerminalEdit();
+                            //Student.TerminalEdit();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice!");
@@ -149,5 +147,391 @@ namespace Assigments_School
             }
         }
 
+
+
+
+
+
+
+        /// <summary>
+        /// ///////////////////////////////////////  EXPORTING FUNCTIONS /////////////////////////////////////////////////////////
+        /// </summary>
+        // Get All Students From DB
+        private static void GetAllStudents()
+        {
+            string sql_query = "SELECT * FROM Students;";
+            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                connection.Open();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
+                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
+                                      $"{reader["Gender"]}");
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        // Get All Trainers From DB
+        private static void GetAllTrainers()
+        {
+            string sql_query = "SELECT * FROM Trainers;";
+            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                connection.Open();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
+                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
+                                      $"{reader["Gender"]}");
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        // Get All Assignments FromDB
+        private static void GetAllAssignments()
+        {
+            string sql_query = "SELECT * FROM Assignments;";
+            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                connection.Open();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  " +
+                                      $"{reader["EndDate"]}  {reader["CourseTitle"]}");
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        // Get All Courses FromDB
+        private static void GetAllCourses()
+        {
+            string sql_query = "SELECT * FROM Courses;";
+            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                connection.Open();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Course: {reader["Title"]}  {reader["StartDate"]}  " +
+                                      $"{reader["EndDate"]}");
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        // Get All Students Per Course
+        private static void GetAllStudentsOnCourse()
+        {
+            Console.Write("Enter Course Title: ");
+            string title = Console.ReadLine();
+            Console.WriteLine("\n");
+            if (title.Length > 0)
+            {
+                string sql_query = $"SELECT * FROM Students stu WHERE (SELECT 1 FROM Courses CU WHERE stu.CourseTitle=cu.Title AND Title='{title}');";
+                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    connection.Open();
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
+                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
+                                      $"{reader["Gender"]}");
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please Enter A Valid Title!");
+            }
+        }
+
+        // Get All Trainers Per Course
+        private static void GetAllTrainersOnCourse()
+        {
+            Console.Write("Enter Course Title: ");
+            string title = Console.ReadLine();
+            Console.WriteLine("\n");
+            if (title.Length > 0)
+            {
+                string sql_query = $"SELECT * FROM Students stu WHERE (SELECT 1 FROM Courses CU WHERE stu.CourseTitle=cu.Title AND Title='{title}');";
+                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    connection.Open();
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Trainer: {reader["FirstName"]}  {reader["LastName"]}  " +
+                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
+                                      $"{reader["Gender"]}");
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please Enter A Valid Title!");
+            }
+        }
+
+        // Get All Assignments Per Course
+        private static void GetAllAssignmentsPerCourse()
+        {
+            Console.Write("Enter Course Title: ");
+            string title = Console.ReadLine();
+            Console.WriteLine("\n");
+            if (title.Length > 0)
+            {
+                string sql_query = $"SELECT * FROM Assignments ass WHERE (SELECT 1 FROM Courses CU WHERE ass.CourseTitle=cu.Title AND Title='{title}');";
+                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    connection.Open();
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  " +
+                                      $"{reader["EndDate"]}  {reader["CourseTitle"]}");
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please Enter A Valid Title!");
+            }
+        }
+
+        // Get All Assignments Per Student
+        private static void GetAllAssignmentsPerStudent()
+        {
+            Console.Write("Enter Students Email: ");
+            string email = Console.ReadLine();
+            Console.WriteLine("\n");
+            if (email.Length > 0)
+            {
+                string sql_query = $"SELECT * FROM Assignments ass WHERE (SELECT 1 FROM Students st WHERE ass.Title=st.AssignmentTitle AND Email='{email}');";
+                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    connection.Open();
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  " +
+                                      $"{reader["EndDate"]}  {reader["CourseTitle"]}");
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please Enter A Valid Title!");
+            }
+        }
+
+        // Get All Students That Belong To More That One Course
+        private static void GetAllStudentsThatBelongToMoreThatOneCourse()
+        {
+            string sql_query = $"SELECT * FROM Students GROUP BY CourseTitle HAVING COUNT(*) > 1;";
+            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                connection.Open();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
+                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
+                                      $"{reader["Gender"]}");
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        // Get All Students Who Need To Submit AssigNments On The Same Week
+        private static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
+        {
+            string sql_query = $"SELECT * FROM Students WHERE AssignmentTitle IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW()));";
+            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                connection.Open();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
+                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
+                                      $"{reader["Gender"]}");
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }
+

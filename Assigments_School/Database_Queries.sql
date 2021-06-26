@@ -58,35 +58,35 @@ INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_4',
 INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_5', '27/06/2021', '23/06/2021');
 
 INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Trainer_1', 'Platanios_Trainer_1', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Trainer_1', 'Platanios_Trainer_1', '29', 'Male', '29/07/2021',
         'alexandrosplatanios151@gmail.com', '6949277783');
 INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Trainer_2', 'Platanios_Trainer_2', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Trainer_2', 'Platanios_Trainer_2', '29', 'Male', '29/07/2021',
         'alexandrosplatanios152@gmail.com', '6949277783');
 INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Trainer_3', 'Platanios_Trainer_3', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Trainer_3', 'Platanios_Trainer_3', '29', 'Male', '29/07/2021',
         'alexandrosplatanios153@gmail.com', '6949277783');
 INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Trainer_4', 'Platanios_Trainer_4', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Trainer_4', 'Platanios_Trainer_4', '29', 'Male', '29/07/2021',
         'alexandrosplatanios154@gmail.com', '6949277783');
 INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Trainer_5', 'Platanios_Trainer_5', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Trainer_5', 'Platanios_Trainer_5', '29', 'Male', '29/07/2021',
         'alexandrosplatanios155@gmail.com', '6949277783');
 
 INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Student_1', 'Platanios_Student_1', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Student_1', 'Platanios_Student_1', '29', 'Male', '29/07/2021',
         'alexandrosplatanios151@gmail.com', '6949277783');
 INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Student_2', 'Platanios_Student_2', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Student_2', 'Platanios_Student_2', '29', 'Male', '29/07/2021',
         'alexandrosplatanios152@gmail.com', '6949277783');
 INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Student_3', 'Platanios_Student_3', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Student_3', 'Platanios_Student_3', '29', 'Male', '29/07/2021',
         'alexandrosplatanios153@gmail.com', '6949277783');
 INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Student_4', 'Platanios_Student_4', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Student_4', 'Platanios_Student_4', '29', 'Male', '29/07/2021',
         'alexandrosplatanios154@gmail.com', '6949277783');
 INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
-VALUES ('Alexandros_Student_5', 'Platanios_Student_5', '29', 'm', '29/07/2021',
+VALUES ('Alexandros_Student_5', 'Platanios_Student_5', '29', 'Male', '29/07/2021',
         'alexandrosplatanios155@gmail.com', '6949277783');
 
 /* Update Records And Relate Trainers AND Students to Courses AND Assignments */
@@ -119,6 +119,8 @@ UPDATE Students SET AssignmentTitle='Assignment_Test_5' Where Email='alexandrosp
 /* Request Queries */
 /* Get All Students */
 SELECT * FROM Students;
+/* Get All Trainers */
+SELECT * FROM Trainers;
 /* Get All From Assignments */
 SELECT * FROM Assignments;
 /* Get All From Courses */
