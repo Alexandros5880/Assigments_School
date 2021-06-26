@@ -51,11 +51,11 @@ INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_3', '27/07/
 INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_4', '27/07/2021', '35/07/2021');
 INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_5', '27/07/2021', '35/07/2021');
 
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_1', '27/07/2021', '35/07/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_2', '27/07/2021', '35/07/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_3', '27/07/2021', '35/07/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_4', '27/07/2021', '35/07/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_5', '27/07/2021', '35/07/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_1', '27/06/2021', '24/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_2', '27/06/2021', '25/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_3', '27/06/2021', '26/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_4', '27/06/2021', '27/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_5', '27/06/2021', '23/06/2021');
 
 INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
 VALUES ('Alexandros_Trainer_1', 'Platanios_Trainer_1', '29', 'm', '29/07/2021',
@@ -117,7 +117,6 @@ UPDATE Students SET AssignmentTitle='Assignment_Test_5' Where Email='alexandrosp
 
 
 /* Request Queries */
-
 /* Get All Students */
 SELECT * FROM Students;
 /* Get All From Assignments */
@@ -134,6 +133,8 @@ SELECT * FROM Assignments ass WHERE (SELECT 1 FROM Courses CU WHERE ass.CourseTi
 SELECT * FROM Assignments ass WHERE (SELECT 1 FROM Students st WHERE ass.Title=st.AssignmentTitle AND FirstName='Alexandros_Student_3');
 /* Get All Students Tha Belong To More That One Course */
 SELECT * FROM Students GROUP BY CourseTitle HAVING COUNT(*) > 1;
+/* Get All Students Who Need To Submit Assignment On The Same Week */
+SELECT * FROM Students WHERE AssignmentTitle IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW()));
 
 
 /* DROP EVERITHING */
