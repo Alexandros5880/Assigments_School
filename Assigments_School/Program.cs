@@ -122,16 +122,16 @@ namespace Assigments_School
                     switch (choice)
                     {
                         case "c":
-                            //Course.TerminalEdit();
+                            EditCourse();
                             break;
                         case "a":
-                            //Assignment.TerminalEdit();
+                            EditAssignment();
                             break;
                         case "t":
-                            //Trainer.TerminalEdit();
+                            EditTrainer();
                             break;
                         case "s":
-                            //Student.TerminalEdit();
+                            EditStudent();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice!");
@@ -342,9 +342,8 @@ namespace Assigments_School
         }
 
 
-        /// <summary>
-        /// ///////////////////////////////////////  EXPORTING FUNCTIONS /////////////////////////////////////////////////////////
-        /// </summary>
+
+        //////////////////////////////////////////  EXPORTING FUNCTIONS /////////////////////////////////////////////////////////
         // Get All Students From DB
         private static void GetAllStudents()
         {
@@ -713,10 +712,31 @@ namespace Assigments_School
 
 
 
+        //////////////////////////////////////////  EDITING RECORDS FUNCTIONS /////////////////////////////////////////////////////////
+        
+        // Edit Course
+        private static void EditCourse()
+        {
 
+        }
 
+        // Edit Assignment
+        private static void EditAssignment()
+        {
 
+        }
 
+        // Edit Trainer
+        private static void EditTrainer()
+        {
+
+        }
+
+        // Edit Student
+        private static void EditStudent()
+        {
+
+        }
 
 
 
