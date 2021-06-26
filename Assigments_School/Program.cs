@@ -717,25 +717,122 @@ namespace Assigments_School
         // Edit Course
         private static void EditCourse()
         {
-
+            Console.Write("Course Title: ");
+            string old_title = Console.ReadLine();
+            if(old_title.Length > 0)
+            {
+                Console.Write("Edit Title(t) ? Edit EndDate(d)");
+                string choice = Console.ReadLine();
+                switch (choice)
+                {
+                    case "t":
+                        Console.Write("New Title: ");
+                        string title = Console.ReadLine();
+                        if (title.Length > 0)
+                        {
+                            string sql_query = $"UPDATE Course SET Title='{title}' Where Title='{old_title}';";
+                            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                            try
+                            {
+                                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                connection.Open();
+                                var reader = cmd.ExecuteNonQuery();
+                            }
+                            catch (MySqlException ex)
+                            {
+                                Console.WriteLine($"Exception: {ex.Message}");
+                            }
+                            finally
+                            {
+                                connection.Close();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter A Valid Title!");
+                        }
+                        break;
+                    case "d":
+                        Console.Write("New EndDate LIKE (23/07/2021): ");
+                        string enddate = Console.ReadLine();
+                        if (enddate.Length > 0)
+                        {
+                            string sql_query = $"UPDATE Course SET EndDate='{enddate}' Where Title='{old_title}';";
+                            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                            try
+                            {
+                                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                connection.Open();
+                                var reader = cmd.ExecuteNonQuery();
+                            }
+                            catch (MySqlException ex)
+                            {
+                                Console.WriteLine($"Exception: {ex.Message}");
+                            }
+                            finally
+                            {
+                                connection.Close();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter A Valid Title!");
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Enter A Valid Choice!");
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Enter A Valid Title!");
+            }
         }
 
         // Edit Assignment
         private static void EditAssignment()
         {
+            Console.Write("Assignment Title: ");
+            string old_title = Console.ReadLine();
+            if (old_title.Length > 0)
+            {
 
+            }
+            else
+            {
+                Console.WriteLine("Enter A Valid Title!");
+            }
         }
 
         // Edit Trainer
         private static void EditTrainer()
         {
+            Console.Write("Trainer Email: ");
+            string old_email = Console.ReadLine();
+            if (old_email.Length > 0)
+            {
 
+            }
+            else
+            {
+                Console.WriteLine("Enter A Valid Email!");
+            }
         }
 
         // Edit Student
         private static void EditStudent()
         {
+            Console.Write("Student Email: ");
+            string old_email = Console.ReadLine();
+            if (old_email.Length > 0)
+            {
 
+            }
+            else
+            {
+                Console.WriteLine("Enter A Valid Email!");
+            }
         }
 
 
