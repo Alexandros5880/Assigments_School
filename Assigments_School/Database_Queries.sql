@@ -132,7 +132,8 @@ SELECT * FROM Trainers tr WHERE (SELECT 1 FROM Courses CU WHERE tr.CourseTitle=c
 SELECT * FROM Assignments ass WHERE (SELECT 1 FROM Courses CU WHERE ass.CourseTitle=cu.Title AND Title='Course_Test_1');
 /* Get All Assignments Of Specific Student */
 SELECT * FROM Assignments ass WHERE (SELECT 1 FROM Students st WHERE ass.Title=st.AssignmentTitle AND FirstName='Alexandros_Student_3');
-
+/* Get All Students Tha Belong To More That One Course */
+SELECT * FROM Students GROUP BY CourseTitle HAVING COUNT(*) > 1;
 
 
 /* DROP EVERITHING */
