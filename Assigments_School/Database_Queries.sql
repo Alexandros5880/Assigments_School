@@ -13,9 +13,7 @@ CREATE TABLE Assignments ( /* Courses */
     Title NCHAR (255)   NOT NULL,
     StartDate  NCHAR (255) NULL,
     EndDate NCHAR (255) NULL,
-    CourseTitle NCHAR (255) NULL,
-    PRIMARY KEY CLUSTERED (Title ASC),
-    FOREIGN KEY (CourseTitle) REFERENCES Courses(Title)
+    PRIMARY KEY CLUSTERED (Title ASC)
 );
 CREATE TABLE Trainers ( /* Courses */
     FirstName NCHAR (255)   NULL,
@@ -25,9 +23,7 @@ CREATE TABLE Trainers ( /* Courses */
     StartDate  NCHAR (255) NULL,
     Email  NCHAR (255) NOT NULL UNIQUE,
     Phone  NCHAR (255) NULL,
-    CourseTitle NCHAR (255) NULL,
-    PRIMARY KEY CLUSTERED (Email ASC),
-    FOREIGN KEY (CourseTitle) REFERENCES Courses(Title)
+    PRIMARY KEY CLUSTERED (Email ASC)
 );
 CREATE TABLE Students ( /* Assignments, Courses */
     FirstName NCHAR (255)   NULL,
@@ -37,26 +33,35 @@ CREATE TABLE Students ( /* Assignments, Courses */
     StartDate  NCHAR (255) NULL,
     Email  NCHAR (255) NOT NULL UNIQUE,
     Phone  NCHAR (255) NULL,
+    PRIMARY KEY CLUSTERED (Email ASC)
+);
+CREATE TABLE StudentsCourse (
+    CourseTitle NCHAR (255) NOT NULL,
+    StudentEmail NCHAR (255) NOT NULL,
+    FOREIGN KEY (CourseTitle) REFERENCES Courses(Title),
+    FOREIGN KEY (StudentEmail) REFERENCES Students(Email)
+);
+CREATE TABLE TrainersCourse (
+    CourseTitle NCHAR (255) NOT NULL,
+    TrainerEmail NCHAR (255) NOT NULL,
+    FOREIGN KEY (CourseTitle) REFERENCES Courses(Title),
+    FOREIGN KEY (TrainerEmail) REFERENCES Trainers(Email)
+);
+CREATE TABLE AssignmentsCourse (
     AssignmentTitle NCHAR (255) NULL,
     CourseTitle NCHAR (255) NULL,
-    PRIMARY KEY CLUSTERED (Email ASC),
     FOREIGN KEY (AssignmentTitle) REFERENCES Assignments (Title),
     FOREIGN KEY (CourseTitle) REFERENCES Courses(Title)
 );
+CREATE TABLE AssignmentsStudents (
+    AssignmentTitle NCHAR (255) NULL,
+    StudentEmail NCHAR (255) NOT NULL,
+    FOREIGN KEY (AssignmentTitle) REFERENCES Assignments (Title),
+    FOREIGN KEY (StudentEmail) REFERENCES Students(Email)
+);
+
 
 /* Insert Test Records */
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_1', '27/07/2021', '35/07/2021');
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_2', '27/07/2021', '35/07/2021');
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_3', '27/07/2021', '35/07/2021');
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_4', '27/07/2021', '35/07/2021');
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_5', '27/07/2021', '35/07/2021');
-
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_1', '27/06/2021', '24/06/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_2', '27/06/2021', '25/06/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_3', '27/06/2021', '26/06/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_4', '27/06/2021', '27/06/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_5', '27/06/2021', '23/06/2021');
-
 INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
 VALUES ('Alexandros_Trainer_1', 'Platanios_Trainer_1', '29', 'Male', '29/07/2021',
         'alexandrosplatanios151@gmail.com', '6949277783');
@@ -89,31 +94,38 @@ INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
 VALUES ('Alexandros_Student_5', 'Platanios_Student_5', '29', 'Male', '29/07/2021',
         'alexandrosplatanios155@gmail.com', '6949277783');
 
-/* Update Records And Relate Trainers AND Students to Courses AND Assignments */
-UPDATE Assignments SET CourseTitle='Course_Test_1' Where Title='Assignment_Test_1';
-UPDATE Assignments SET CourseTitle='Course_Test_2' Where Title='Assignment_Test_2';
-UPDATE Assignments SET CourseTitle='Course_Test_3' Where Title='Assignment_Test_3';
-UPDATE Assignments SET CourseTitle='Course_Test_4' Where Title='Assignment_Test_4';
-UPDATE Assignments SET CourseTitle='Course_Test_5' Where Title='Assignment_Test_5';
+INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_1', '27/07/2021', '35/07/2021');
+INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_2', '27/07/2021', '35/07/2021');
+INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_3', '27/07/2021', '35/07/2021');
+INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_4', '27/07/2021', '35/07/2021');
+INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_5', '27/07/2021', '35/07/2021');
 
-UPDATE Trainers SET CourseTitle='Course_Test_1' Where Email='alexandrosplatanios151@gmail.com';
-UPDATE Trainers SET CourseTitle='Course_Test_2' Where Email='alexandrosplatanios152@gmail.com';
-UPDATE Trainers SET CourseTitle='Course_Test_3' Where Email='alexandrosplatanios153@gmail.com';
-UPDATE Trainers SET CourseTitle='Course_Test_4' Where Email='alexandrosplatanios154@gmail.com';
-UPDATE Trainers SET CourseTitle='Course_Test_5' Where Email='alexandrosplatanios155@gmail.com';
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_1', '27/06/2021', '28/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_2', '27/06/2021', '28/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_3', '27/06/2021', '28/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_4', '27/06/2021', '28/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_5', '27/06/2021', '27/06/2021');
 
-UPDATE Students SET CourseTitle='Course_Test_1' Where Email='alexandrosplatanios151@gmail.com';
-UPDATE Students SET CourseTitle='Course_Test_2' Where Email='alexandrosplatanios152@gmail.com';
-UPDATE Students SET CourseTitle='Course_Test_3' Where Email='alexandrosplatanios153@gmail.com';
-UPDATE Students SET CourseTitle='Course_Test_4' Where Email='alexandrosplatanios154@gmail.com';
-UPDATE Students SET CourseTitle='Course_Test_5' Where Email='alexandrosplatanios155@gmail.com';
 
-UPDATE Students SET AssignmentTitle='Assignment_Test_1' Where Email='alexandrosplatanios151@gmail.com';
-UPDATE Students SET AssignmentTitle='Assignment_Test_2' Where Email='alexandrosplatanios152@gmail.com';
-UPDATE Students SET AssignmentTitle='Assignment_Test_3' Where Email='alexandrosplatanios153@gmail.com';
-UPDATE Students SET AssignmentTitle='Assignment_Test_4' Where Email='alexandrosplatanios154@gmail.com';
-UPDATE Students SET AssignmentTitle='Assignment_Test_5' Where Email='alexandrosplatanios155@gmail.com';
 
+INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
+INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios152@gmail.com','Course_Test_2');
+INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios153@gmail.com','Course_Test_3');
+INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios153@gmail.com','Course_Test_4');
+
+INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
+INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES ('alexandrosplatanios152@gmail.com','Course_Test_1');
+INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES ('alexandrosplatanios153@gmail.com','Course_Test_1');
+
+INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('Assignment_Test_1','Course_Test_1');
+INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('Assignment_Test_3','Course_Test_1');
+INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('Assignment_Test_4','Course_Test_1');
+INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('Assignment_Test_5','Course_Test_1');
+
+INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignment_Test_1','alexandrosplatanios151@gmail.com');
+INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignment_Test_2','alexandrosplatanios153@gmail.com');
+INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignment_Test_3','alexandrosplatanios153@gmail.com');
+INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignment_Test_4','alexandrosplatanios154@gmail.com');
 
 
 /* Request Queries */
@@ -126,17 +138,18 @@ SELECT * FROM Assignments;
 /* Get All From Courses */
 SELECT * FROM Courses;
 /* Get All Students Of Specific Course */
-SELECT * FROM Students stu WHERE (SELECT 1 FROM Courses CU WHERE stu.CourseTitle=cu.Title AND Title='Course_Test_3');
+SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='Course_Test_1');
 /* Get All Trainers Of Specific Course */
-SELECT * FROM Trainers tr WHERE (SELECT 1 FROM Courses CU WHERE tr.CourseTitle=cu.Title AND Title='Course_Test_5');
+SELECT * FROM Trainers tr WHERE Email IN (SELECT TrainerEmail FROM TrainersCourse WHERE CourseTitle='Course_Test_1');
 /* Get All Assignments Of Specific Course */
-SELECT * FROM Assignments ass WHERE (SELECT 1 FROM Courses CU WHERE ass.CourseTitle=cu.Title AND Title='Course_Test_1');
+SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle='Course_Test_1');
 /* Get All Assignments Of Specific Student */
-SELECT * FROM Assignments ass WHERE (SELECT 1 FROM Students st WHERE ass.Title=st.AssignmentTitle AND FirstName='Alexandros_Student_3');
+SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail='alexandrosplatanios151@gmail.com');
 /* Get All Students Tha Belong To More That One Course */
-SELECT * FROM Students GROUP BY CourseTitle HAVING COUNT(*) > 1;
+SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse GROUP BY StudentEmail HAVING COUNT(*) > 1);
 /* Get All Students Who Need To Submit Assignment On The Same Week */
-SELECT * FROM Students WHERE AssignmentTitle IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW()));
+SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents WHERE AssignmentTitle
+                    IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW())));
 
 
 /* DROP EVERITHING */
