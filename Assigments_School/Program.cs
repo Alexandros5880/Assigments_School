@@ -343,6 +343,7 @@ namespace Assigments_School
         {
             try
             {
+                string course_title = "";
                 Console.WriteLine("\n");
                 string title = "", startdate = "", enddate = "", description="";
                 Console.Write("Title: ");
@@ -383,14 +384,13 @@ namespace Assigments_School
                         }
                         else
                         {
-                            string course_title = "";
                             switch (ass_course_choice)
                             {
                                 case "new":
                                     course_title = AddCourse();
                                     if(course_title.Length > 0)
                                     {
-                                        // Add To DataBase
+                                        // Add To AssignmentsCourse DataBase
                                         string ass_query = $"INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('{title}','{course_title}');";
                                         connection = new MySqlConnection(DB_connection_string);
                                         try
@@ -460,7 +460,24 @@ namespace Assigments_School
                                     student_email = AddStudent();
                                     if (student_email.Length > 0)
                                     {
-                                        // Add To DataBase
+                                        // Add New Stude To This Course
+                                        string course_query = $"INSERT INTO StudentCourse (StudentEmail, CourseTitle) VALUES ('{student_email}', '{course_title}')";
+                                        connection = new MySqlConnection(DB_connection_string);
+                                        try
+                                        {
+                                            MySqlCommand cmd = new MySqlCommand(course_query, connection);
+                                            connection.Open();
+                                            var reader = cmd.ExecuteNonQuery();
+                                        }
+                                        catch (MySqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            connection.Close();
+                                        }
+                                        // Add To AssignmentsStudents On DataBase
                                         string ass_query = $"INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('{title}','{student_email}');";
                                         connection = new MySqlConnection(DB_connection_string);
                                         try
@@ -481,12 +498,14 @@ namespace Assigments_School
                                     break;
                                 case "ex":
                                     Console.Write("Select Student By Id(3): ");
-                                    GetAllStudents();
+                                    // Get All Students Of This Course
+                                    GetAllStudentsOnCourseByTitle(course_title);
+                                    // Create Assignment To Student Record
                                     string my_id = Console.ReadLine();
                                     student_email = students[int.Parse(my_id)];
                                     if (student_email.Length > 0)
                                     {
-                                        // Add To DataBase
+                                        // Add To AssignmentsStudents DataBase
                                         string ass_query = $"INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('{title}','{student_email}');";
                                         connection = new MySqlConnection(DB_connection_string);
                                         try
@@ -684,6 +703,7 @@ namespace Assigments_School
 
                 MySqlDataReader reader = cmd.ExecuteReader();
                 int counter = 0;
+                students.Clear();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Student: id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
@@ -721,6 +741,7 @@ namespace Assigments_School
 
                 MySqlDataReader reader = cmd.ExecuteReader();
                 int counter = 0;
+                trainers.Clear();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Trainer: id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
@@ -792,6 +813,7 @@ namespace Assigments_School
 
                 MySqlDataReader reader = cmd.ExecuteReader();
                 int counter = 0;
+                courses.Clear();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Course: id: {counter} Title: {reader["Title"]}  {reader["StartDate"]}  " +
@@ -832,11 +854,15 @@ namespace Assigments_School
                     connection.Open();
 
                     MySqlDataReader reader = cmd.ExecuteReader();
+                    int counter = 0;
+                    students.Clear();
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
+                        Console.WriteLine($"Student: Id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
                                       $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
                                       $"{reader["Gender"]}");
+                        students.Add(reader["Email"].ToString());
+                        counter++;
                     }
 
                 }
@@ -859,8 +885,45 @@ namespace Assigments_School
             }
         }
 
-        // Get All Trainers Per Course
-        private static void GetAllTrainersOnCourse()
+        // Get All Students Per Course
+        private static void GetAllStudentsOnCourseByTitle(string title)
+        {
+            string sql_query = $"SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='{title}');";
+            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                connection.Open();
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                int counter = 0;
+                students.Clear();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Student: Id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
+                                  $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
+                                  $"{reader["Gender"]}");
+                    students.Add(reader["Email"].ToString());
+                    counter++;
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+            // Get All Trainers Per Course
+            private static void GetAllTrainersOnCourse()
         {
             Console.WriteLine("\n");
             Console.Write("Enter Course Title: ");
