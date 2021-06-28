@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -153,24 +154,6 @@ namespace Assigments_School
         {
             try
             {
-                /*
-                string sql_query = $"INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('{title}', '{startdate}', '{enddate}');";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
-                try
-                {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
-                    connection.Open();
-                    var reader = cmd.ExecuteNonQuery();
-                }
-                catch (MySqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close();
-                }
-                */
 
             }
             catch (Exception ex)
@@ -197,8 +180,42 @@ namespace Assigments_School
         {
             try
             {
-                
-
+                string firstname = "", lastname = "", gender = "", startdate = "", email = "", phone = "";
+                int age = 0;
+                Console.Write("FirstName: ");
+                firstname = Console.ReadLine();
+                Console.Write("LastName: ");
+                lastname = Console.ReadLine();
+                Console.Write("Age: ");
+                age = int.Parse(Console.ReadLine());
+                Console.Write("Gender (Male)?(Female): ");
+                gender = Console.ReadLine();
+                Console.Write("Email: ");
+                email = Console.ReadLine();
+                Console.Write("Phone: ");
+                phone = Console.ReadLine();
+                startdate = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-ES"));
+                if (firstname.Length > 0 && lastname.Length > 0 && age > 0 &&
+                    email.Length > 0 && phone.Length > 0 && gender.Length > 0)
+                {
+                    string sql_query = $"INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone) " +
+                        $"VALUES('{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}'); ";
+                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        connection.Open();
+                        var reader = cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Exception: {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -211,8 +228,42 @@ namespace Assigments_School
         {
             try
             {
-                
-
+                string firstname="", lastname="", gender="", startdate="", email="", phone="";
+                int age=0;
+                Console.Write("FirstName: ");
+                firstname = Console.ReadLine();
+                Console.Write("LastName: ");
+                lastname = Console.ReadLine();
+                Console.Write("Age");
+                age = int.Parse(Console.ReadLine());
+                Console.Write("Gender (Male)?(Female): ");
+                gender = Console.ReadLine();
+                Console.Write("Email: ");
+                email = Console.ReadLine();
+                Console.Write("Phone: ");
+                phone = Console.ReadLine();
+                startdate = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-ES"));
+                if (firstname.Length > 0 && lastname.Length > 0 && age > 0 && 
+                    email.Length > 0 && phone.Length > 0 && gender.Length > 0)
+                {
+                    string sql_query = $"INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone) " +
+                        $"VALUES('{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}'); ";
+                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        connection.Open();
+                        var reader = cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Exception: {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
             }
             catch (Exception ex)
             {
