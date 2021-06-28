@@ -7,12 +7,14 @@ CREATE TABLE Courses (
     Title NCHAR (255)   NOT NULL,
     StartDate  NCHAR (255) NULL,
     EndDate NCHAR (255) NULL,
+    Description LONGTEXT NULL,
     PRIMARY KEY CLUSTERED (Title ASC)
 );
 CREATE TABLE Assignments ( /* Courses */
     Title NCHAR (255)   NOT NULL,
     StartDate  NCHAR (255) NULL,
     EndDate NCHAR (255) NULL,
+    Description LONGTEXT NULL,
     PRIMARY KEY CLUSTERED (Title ASC)
 );
 CREATE TABLE Trainers ( /* Courses */
@@ -94,17 +96,17 @@ INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
 VALUES ('Alexandros_Student_5', 'Platanios_Student_5', '29', 'Male', '29/07/2021',
         'alexandrosplatanios155@gmail.com', '6949277783');
 
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_1', '27/07/2021', '35/07/2021');
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_2', '27/07/2021', '35/07/2021');
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_3', '27/07/2021', '35/07/2021');
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_4', '27/07/2021', '35/07/2021');
-INSERT INTO Courses (Title, StartDate, EndDate) VALUES ('Course_Test_5', '27/07/2021', '35/07/2021');
+INSERT INTO Courses (Title, StartDate, EndDate, Description) VALUES ('Course_Test_1', '27/07/2021', '35/07/2021', 'Test Description');
+INSERT INTO Courses (Title, StartDate, EndDate, Description) VALUES ('Course_Test_2', '27/07/2021', '35/07/2021', 'Test Description');
+INSERT INTO Courses (Title, StartDate, EndDate, Description) VALUES ('Course_Test_3', '27/07/2021', '35/07/2021', 'Test Description');
+INSERT INTO Courses (Title, StartDate, EndDate, Description) VALUES ('Course_Test_4', '27/07/2021', '35/07/2021', 'Test Description');
+INSERT INTO Courses (Title, StartDate, EndDate, Description) VALUES ('Course_Test_5', '27/07/2021', '35/07/2021', 'Test Description');
 
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_1', '27/06/2021', '28/06/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_2', '27/06/2021', '28/06/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_3', '27/06/2021', '28/06/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_4', '27/06/2021', '28/06/2021');
-INSERT INTO Assignments (Title, StartDate, EndDate) VALUES ('Assignment_Test_5', '27/06/2021', '27/06/2021');
+INSERT INTO Assignments (Title, StartDate, EndDate, Description) VALUES ('Assignment_Test_1', '27/06/2021', '28/06/2021', 'Test Description');
+INSERT INTO Assignments (Title, StartDate, EndDate, Description) VALUES ('Assignment_Test_2', '27/06/2021', '28/06/2021', 'Test Description');
+INSERT INTO Assignments (Title, StartDate, EndDate, Description) VALUES ('Assignment_Test_3', '27/06/2021', '28/06/2021', 'Test Description');
+INSERT INTO Assignments (Title, StartDate, EndDate, Description) VALUES ('Assignment_Test_4', '27/06/2021', '28/06/2021', 'Test Description');
+INSERT INTO Assignments (Title, StartDate, EndDate, Description) VALUES ('Assignment_Test_5', '27/06/2021', '27/06/2021', 'Test Description');
 
 
 
@@ -138,7 +140,7 @@ SELECT * FROM Assignments;
 /* Get All From Courses */
 SELECT * FROM Courses;
 /* Get All Students Of Specific Course */
-SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='Course_Test_1');
+SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='Course_Test_7');
 /* Get All Trainers Of Specific Course */
 SELECT * FROM Trainers tr WHERE Email IN (SELECT TrainerEmail FROM TrainersCourse WHERE CourseTitle='Course_Test_1');
 /* Get All Assignments Of Specific Course */

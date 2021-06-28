@@ -18,6 +18,10 @@ namespace Assigments_School
         public static String db_user_password = "Platanios719791";
         public static String DB_connection_string = "";
 
+        public static List<string> trainers = new List<string>();
+        public static List<string> students = new List<string>();
+        public static List<string> courses = new List<string>();
+
         static void Main(string[] args)
         {
             
@@ -150,24 +154,368 @@ namespace Assigments_School
 
         ///////////////////////////////////////////  IMPORTING FUNCTIONS /////////////////////////////////////////////////////////
         // Import Course
-        private static void AddCourse()
+        private static string AddCourse()
         {
             try
             {
-
+                Console.WriteLine("\n");
+                string title = "", startdate = "", enddate = "", description = "";
+                Console.Write("Title: ");
+                title = Console.ReadLine();
+                Console.Write("EndDate(27/3/2021): ");
+                enddate = Console.ReadLine();
+                startdate = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-ES"));
+                Console.WriteLine("Enter Description: ");
+                description = Console.ReadLine();
+                if (title.Length > 0 && startdate.Length > 0 && enddate.Length > 0 && description.Length > 0)
+                {
+                    // Insert Course To Database
+                    string sql_query = $"INSERT INTO Courses (Title, StartDate, EndDate, Description) " +
+                        $"VALUES ('{title}', '{startdate}', '{enddate}', '{description}');";
+                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        connection.Open();
+                        var reader = cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Exception: {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                    // Add Trainers To Course
+                    Console.WriteLine("\n");
+                    while (true)
+                    {
+                        Console.Write("Stop(stop) ? Add New Trainer(new) ? Add Existing Trainer(ex): ");
+                        string tr_choice = Console.ReadLine();
+                        if (tr_choice.Equals("stop"))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            string trainer_email = "";
+                            switch (tr_choice)
+                            {
+                                case "new":
+                                    trainer_email = AddTrainer();
+                                    // Add Trainer To DataBase
+                                    sql_query = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
+                                                $"VALUES ('{trainer_email}','{title}');";
+                                    connection = new MySqlConnection(DB_connection_string);
+                                    try
+                                    {
+                                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                        connection.Open();
+                                        var reader = cmd.ExecuteNonQuery();
+                                    }
+                                    catch (MySqlException ex)
+                                    {
+                                        Console.WriteLine($"Exception: {ex.Message}");
+                                    }
+                                    finally
+                                    {
+                                        connection.Close();
+                                    }
+                                    break;
+                                case "ex":
+                                    string my_id = "";
+                                    Console.Write("Select Trainer By Id(3): ");
+                                    GetAllTrainers();
+                                    my_id = Console.ReadLine();
+                                    trainer_email = trainers[int.Parse(my_id)];
+                                    // Add Trainer To DataBase
+                                    sql_query = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
+                                        $"VALUES ('{trainer_email}','{title}');";
+                                    connection = new MySqlConnection(DB_connection_string);
+                                    try
+                                    {
+                                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                        connection.Open();
+                                        var reader = cmd.ExecuteNonQuery();
+                                    }
+                                    catch (MySqlException ex)
+                                    {
+                                        Console.WriteLine($"Exception: {ex.Message}");
+                                    }
+                                    finally
+                                    {
+                                        connection.Close();
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine("Enter A Valid Choice!");
+                                    break;
+                            }
+                        }
+                    }
+                    trainers.Clear();
+                    // Add Students To Course
+                    Console.WriteLine("\n");
+                    while (true)
+                    {
+                        Console.Write("Stop(stop) ? Add New Student(new) ? Add Existing Student(ex): ");
+                        string st_choice = Console.ReadLine();
+                        if (st_choice.Equals("stop"))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            string student_email = "";
+                            switch (st_choice)
+                            {
+                                case "new":
+                                    student_email = AddStudent();
+                                    // Add Trainer To DataBase
+                                    sql_query = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
+                                                $"VALUES ('{student_email}','{title}');";
+                                    connection = new MySqlConnection(DB_connection_string);
+                                    try
+                                    {
+                                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                        connection.Open();
+                                        var reader = cmd.ExecuteNonQuery();
+                                    }
+                                    catch (MySqlException ex)
+                                    {
+                                        Console.WriteLine($"Exception: {ex.Message}");
+                                    }
+                                    finally
+                                    {
+                                        connection.Close();
+                                    }
+                                    break;
+                                case "ex":
+                                    string my_id = "";
+                                    Console.WriteLine("Select Student By Id(3): ");
+                                    GetAllStudents();
+                                    my_id = Console.ReadLine();
+                                    student_email = students[int.Parse(my_id)];
+                                    // Add Trainer To DataBase
+                                    sql_query = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
+                                        $"VALUES ('{student_email}','{title}');";
+                                    connection = new MySqlConnection(DB_connection_string);
+                                    try
+                                    {
+                                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                        connection.Open();
+                                        var reader = cmd.ExecuteNonQuery();
+                                    }
+                                    catch (MySqlException ex)
+                                    {
+                                        Console.WriteLine($"Exception: {ex.Message}");
+                                    }
+                                    finally
+                                    {
+                                        connection.Close();
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine("Enter A Valid Choice!");
+                                    break;
+                            }
+                        }
+                    }
+                    students.Clear();
+                    return title;
+                }
+                else
+                {
+                    Console.WriteLine("Please Fill All Fields!");
+                    return "";
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
-            }        }
+                return "";
+            }
+        }
 
         // Import Assignments
         private static void AddAssignment()
         {
             try
             {
-                
-
+                Console.WriteLine("\n");
+                string title = "", startdate = "", enddate = "", description="";
+                Console.Write("Title: ");
+                title = Console.ReadLine();
+                Console.Write("EndDate(27/3/2021): ");
+                enddate = Console.ReadLine();
+                startdate = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-ES"));
+                Console.WriteLine("Enter Description: ");
+                description = Console.ReadLine();
+                if(title.Length > 0 && startdate.Length > 0 && enddate.Length > 0 && description.Length > 0)
+                {
+                    string sql_query = $"INSERT INTO Assignments (Title, StartDate, EndDate, Description) " +
+                        $"VALUES ('{title}', '{startdate}', '{enddate}', '{description}');";
+                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        connection.Open();
+                        var reader = cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Exception: {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                    // Add Assignment to Course
+                    Console.WriteLine("\n");
+                    while (true)
+                    {
+                        Console.Write("Add New Course(new) ? Add Existing Course(ex) ? Stop(stop): ");
+                        string ass_course_choice = Console.ReadLine();
+                        if (ass_course_choice.Equals("stop"))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            string course_title = "";
+                            switch (ass_course_choice)
+                            {
+                                case "new":
+                                    course_title = AddCourse();
+                                    if(course_title.Length > 0)
+                                    {
+                                        // Add To DataBase
+                                        string ass_query = $"INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('{title}','{course_title}');";
+                                        connection = new MySqlConnection(DB_connection_string);
+                                        try
+                                        {
+                                            MySqlCommand cmd = new MySqlCommand(ass_query, connection);
+                                            connection.Open();
+                                            var reader = cmd.ExecuteNonQuery();
+                                        }
+                                        catch (MySqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            connection.Close();
+                                        }
+                                    }
+                                    break;
+                                case "ex":
+                                    Console.Write("Select Course By Id(3): ");
+                                    GetAllCourses();
+                                    string my_id = Console.ReadLine();
+                                    course_title = courses[int.Parse(my_id)];
+                                    if (course_title.Length > 0)
+                                    {
+                                        // Add To DataBase
+                                        string ass_query = $"INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('{title}','{course_title}');";
+                                        connection = new MySqlConnection(DB_connection_string);
+                                        try
+                                        {
+                                            MySqlCommand cmd = new MySqlCommand(ass_query, connection);
+                                            connection.Open();
+                                            var reader = cmd.ExecuteNonQuery();
+                                        }
+                                        catch (MySqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            connection.Close();
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine("Enter A Valid Choice!");
+                                    break;
+                            }
+                        }
+                    }
+                    // Get From Course All Students And Select Students To Add Them To Assignment
+                    Console.WriteLine("\n");
+                    while (true)
+                    {
+                        Console.Write("Add New Student(new) ? Add Existing Student(ex) ? Stop(stop): ");
+                        string ass_course_choice = Console.ReadLine();
+                        if (ass_course_choice.Equals("stop"))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            string student_email = "";
+                            switch (ass_course_choice)
+                            {
+                                case "new":
+                                    student_email = AddStudent();
+                                    if (student_email.Length > 0)
+                                    {
+                                        // Add To DataBase
+                                        string ass_query = $"INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('{title}','{student_email}');";
+                                        connection = new MySqlConnection(DB_connection_string);
+                                        try
+                                        {
+                                            MySqlCommand cmd = new MySqlCommand(ass_query, connection);
+                                            connection.Open();
+                                            var reader = cmd.ExecuteNonQuery();
+                                        }
+                                        catch (MySqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            connection.Close();
+                                        }
+                                    }
+                                    break;
+                                case "ex":
+                                    Console.Write("Select Student By Id(3): ");
+                                    GetAllStudents();
+                                    string my_id = Console.ReadLine();
+                                    student_email = students[int.Parse(my_id)];
+                                    if (student_email.Length > 0)
+                                    {
+                                        // Add To DataBase
+                                        string ass_query = $"INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('{title}','{student_email}');";
+                                        connection = new MySqlConnection(DB_connection_string);
+                                        try
+                                        {
+                                            MySqlCommand cmd = new MySqlCommand(ass_query, connection);
+                                            connection.Open();
+                                            var reader = cmd.ExecuteNonQuery();
+                                        }
+                                        catch (MySqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            connection.Close();
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine("Enter A Valid Choice!");
+                                    break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please Fill All Fields!");
+                }
             }
             catch (Exception ex)
             {
@@ -176,10 +524,11 @@ namespace Assigments_School
         }
 
         // Import Students
-        private static void AddStudent()
+        private static string AddStudent()
         {
             try
             {
+                Console.WriteLine("\n");
                 string firstname = "", lastname = "", gender = "", startdate = "", email = "", phone = "";
                 int age = 0;
                 Console.Write("FirstName: ");
@@ -215,26 +564,34 @@ namespace Assigments_School
                     {
                         connection.Close();
                     }
+                    return email;
+                }
+                else
+                {
+                    Console.WriteLine("Please Fill All Fields!");
+                    return "";
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
+                return "";
             }
         }
 
         // Import Trainers
-        private static void AddTrainer()
+        private static string AddTrainer()
         {
             try
             {
+                Console.WriteLine("\n");
                 string firstname="", lastname="", gender="", startdate="", email="", phone="";
                 int age=0;
                 Console.Write("FirstName: ");
                 firstname = Console.ReadLine();
                 Console.Write("LastName: ");
                 lastname = Console.ReadLine();
-                Console.Write("Age");
+                Console.Write("Age: ");
                 age = int.Parse(Console.ReadLine());
                 Console.Write("Gender (Male)?(Female): ");
                 gender = Console.ReadLine();
@@ -263,11 +620,18 @@ namespace Assigments_School
                     {
                         connection.Close();
                     }
+                    return email;
+                }
+                else
+                {
+                    Console.WriteLine("Please Fill All Fields!");
+                    return "";
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
+                return "";
             }
         }
 
@@ -310,6 +674,7 @@ namespace Assigments_School
         // Get All Students From DB
         private static void GetAllStudents()
         {
+            Console.WriteLine("\n");
             string sql_query = "SELECT * FROM Students;";
             MySqlConnection connection = new MySqlConnection(DB_connection_string);
             try
@@ -318,11 +683,14 @@ namespace Assigments_School
                 connection.Open();
 
                 MySqlDataReader reader = cmd.ExecuteReader();
+                int counter = 0;
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
+                    Console.WriteLine($"Student: id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
                                       $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
                                       $"{reader["Gender"]}");
+                    students.Add(reader["Email"].ToString());
+                    counter++;
                 }
 
             }
@@ -343,6 +711,7 @@ namespace Assigments_School
         // Get All Trainers From DB
         private static void GetAllTrainers()
         {
+            Console.WriteLine("\n");
             string sql_query = "SELECT * FROM Trainers;";
             MySqlConnection connection = new MySqlConnection(DB_connection_string);
             try
@@ -351,11 +720,14 @@ namespace Assigments_School
                 connection.Open();
 
                 MySqlDataReader reader = cmd.ExecuteReader();
+                int counter = 0;
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Trainer: {reader["FirstName"]}  {reader["LastName"]}  " +
+                    Console.WriteLine($"Trainer: id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
                                       $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
                                       $"{reader["Gender"]}");
+                    trainers.Add(reader["Email"].ToString());
+                    counter++;
                 }
 
             }
@@ -376,6 +748,7 @@ namespace Assigments_School
         // Get All Assignments FromDB
         private static void GetAllAssignments()
         {
+            Console.WriteLine("\n");
             string sql_query = "SELECT * FROM Assignments;";
             MySqlConnection connection = new MySqlConnection(DB_connection_string);
             try
@@ -384,9 +757,11 @@ namespace Assigments_School
                 connection.Open();
 
                 MySqlDataReader reader = cmd.ExecuteReader();
+                int counter = 0;
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]} {reader["EndDate"]}");
+                    Console.WriteLine($"Assignment: id= {counter} {reader["Title"]}  {reader["StartDate"]} {reader["EndDate"]}");
+                    counter++;
                 }
 
             }
@@ -407,6 +782,7 @@ namespace Assigments_School
         // Get All Courses FromDB
         private static void GetAllCourses()
         {
+            Console.WriteLine("\n");
             string sql_query = "SELECT * FROM Courses;";
             MySqlConnection connection = new MySqlConnection(DB_connection_string);
             try
@@ -415,10 +791,13 @@ namespace Assigments_School
                 connection.Open();
 
                 MySqlDataReader reader = cmd.ExecuteReader();
+                int counter = 0;
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Course: Title: {reader["Title"]}  {reader["StartDate"]}  " +
+                    Console.WriteLine($"Course: id: {counter} Title: {reader["Title"]}  {reader["StartDate"]}  " +
                                       $"{reader["EndDate"]}");
+                    courses.Add(reader["Title"].ToString());
+                    counter++;
                 }
 
             }
@@ -439,6 +818,7 @@ namespace Assigments_School
         // Get All Students Per Course
         private static void GetAllStudentsOnCourse()
         {
+            Console.WriteLine("\n");
             Console.Write("Enter Course Title: ");
             string title = Console.ReadLine();
             Console.WriteLine("\n");
@@ -482,6 +862,7 @@ namespace Assigments_School
         // Get All Trainers Per Course
         private static void GetAllTrainersOnCourse()
         {
+            Console.WriteLine("\n");
             Console.Write("Enter Course Title: ");
             string title = Console.ReadLine();
             Console.WriteLine("\n");
@@ -525,6 +906,7 @@ namespace Assigments_School
         // Get All Assignments Per Course
         private static void GetAllAssignmentsPerCourse()
         {
+            Console.WriteLine("\n");
             Console.Write("Enter Course Title: ");
             string title = Console.ReadLine();
             Console.WriteLine("\n");
@@ -566,6 +948,7 @@ namespace Assigments_School
         // Get All Assignments Per Student
         private static void GetAllAssignmentsPerStudent()
         {
+            Console.WriteLine("\n");
             Console.Write("Enter Students Email: ");
             string email = Console.ReadLine();
             Console.WriteLine("\n");
@@ -607,6 +990,7 @@ namespace Assigments_School
         // Get All Students That Belong To More That One Course
         private static void GetAllStudentsThatBelongToMoreThatOneCourse()
         {
+            Console.WriteLine("\n");
             string sql_query = $"SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse GROUP BY StudentEmail HAVING COUNT(*) > 1);";
             MySqlConnection connection = new MySqlConnection(DB_connection_string);
             try
@@ -640,6 +1024,7 @@ namespace Assigments_School
         // Get All Students Who Need To Submit AssigNments On The Same Week
         private static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
         {
+            Console.WriteLine("\n");
             string sql_query = $"SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents " +
                 $"WHERE AssignmentTitle IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW())));";
             MySqlConnection connection = new MySqlConnection(DB_connection_string);
