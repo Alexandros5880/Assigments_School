@@ -10,7 +10,7 @@ CREATE TABLE Courses (
     Description LONGTEXT NULL,
     PRIMARY KEY CLUSTERED (Title ASC)
 );
-CREATE TABLE Assignments ( /* Courses, Students */
+CREATE TABLE Assignments ( /* Courses */
     Title NCHAR (255)   NOT NULL,
     StartDate  NCHAR (255) NULL,
     EndDate NCHAR (255) NULL,
@@ -161,7 +161,7 @@ UPDATE Courses SET Title='Title', StartDate='StartDate', EndDate='EndDate', Desc
 INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
 DELETE FROM StudentsCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
 /* ADD/REMOVE Trainers */
-INSERT INTO TrainersCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
+INSERT INTO TrainersCourse (StudentEmail, CourseTitle) VALUES ('StudentEmail','Course_Test_1');
 DELETE FROM TrainersCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
 /* ADD/REMOVE Assignments */
 DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
@@ -178,9 +178,13 @@ DELETE FROM AssignmentsStudents WHERE CourseTitle='CourseTitle' AND StudentEmail
 
 /* Edit Student */
 UPDATE Students SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+/* Delete Student */
+DELETE FROM Students WHERE Email='Email';
 
 /* Edit Trainer */
 UPDATE Trainer SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+/* Delete Trainer */
+DELETE FROM Trainers WHERE Email='Email';
 
 
 
