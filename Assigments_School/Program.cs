@@ -31,6 +31,9 @@ namespace Assigments_School
 
             while (true)
             {
+                trainers.Clear();
+                students.Clear();
+                courses.Clear();
                 Console.WriteLine("Import(i) ? Export(e) ? Edit(ed) ? Quit(q):");
                 string choice = Console.ReadLine();
                 Console.WriteLine("\n");
@@ -225,7 +228,7 @@ namespace Assigments_School
                                     break;
                                 case "ex":
                                     string my_id = "";
-                                    Console.Write("Select Trainer By Id(3): ");
+                                    Console.WriteLine("Select Trainer By Id(3): ");
                                     GetAllTrainers();
                                     my_id = Console.ReadLine();
                                     trainer_email = trainers[int.Parse(my_id)];
@@ -410,7 +413,7 @@ namespace Assigments_School
                                     }
                                     break;
                                 case "ex":
-                                    Console.Write("Select Course By Id(3): ");
+                                    Console.WriteLine("Select Course By Id(3): ");
                                     GetAllCourses();
                                     string my_id = Console.ReadLine();
                                     course_title = courses[int.Parse(my_id)];
@@ -497,7 +500,7 @@ namespace Assigments_School
                                     }
                                     break;
                                 case "ex":
-                                    Console.Write("Select Student By Id(3): ");
+                                    Console.WriteLine("Select Student By Id(3): ");
                                     // Get All Students Of This Course
                                     GetAllStudentsOnCourseByTitle(course_title);
                                     // Create Assignment To Student Record
@@ -662,13 +665,11 @@ namespace Assigments_School
         private static void EditCourse()
         {
 
-
         }
 
         // Edit Assignment
         private static void EditAssignment()
         {
-
 
         }
 
@@ -676,13 +677,11 @@ namespace Assigments_School
         private static void EditTrainer()
         {
 
-
         }
 
         // Edit Student
         private static void EditStudent()
         {
-
 
         }
 
@@ -706,7 +705,7 @@ namespace Assigments_School
                 students.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
+                    Console.WriteLine($"Student: id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
                                       $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
                                       $"{reader["Gender"]}");
                     students.Add(reader["Email"].ToString());
@@ -744,7 +743,7 @@ namespace Assigments_School
                 trainers.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Trainer: id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
+                    Console.WriteLine($"Trainer: id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
                                       $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
                                       $"{reader["Gender"]}");
                     trainers.Add(reader["Email"].ToString());
@@ -781,7 +780,7 @@ namespace Assigments_School
                 int counter = 0;
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Assignment: id= {counter} {reader["Title"]}  {reader["StartDate"]} {reader["EndDate"]}");
+                    Console.WriteLine($"Assignment: id={counter} {reader["Title"]}  {reader["StartDate"]} {reader["EndDate"]}");
                     counter++;
                 }
 
@@ -816,7 +815,7 @@ namespace Assigments_School
                 courses.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Course: id: {counter} Title: {reader["Title"]}  {reader["StartDate"]}  " +
+                    Console.WriteLine($"Course: id={counter} Title: {reader["Title"]}  {reader["StartDate"]}  " +
                                       $"{reader["EndDate"]}");
                     courses.Add(reader["Title"].ToString());
                     counter++;
@@ -858,7 +857,7 @@ namespace Assigments_School
                     students.Clear();
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Student: Id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
+                        Console.WriteLine($"Student: Id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
                                       $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
                                       $"{reader["Gender"]}");
                         students.Add(reader["Email"].ToString());
@@ -900,7 +899,7 @@ namespace Assigments_School
                 students.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: Id: {counter} {reader["FirstName"]}  {reader["LastName"]}  " +
+                    Console.WriteLine($"Student: Id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
                                   $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
                                   $"{reader["Gender"]}");
                     students.Add(reader["Email"].ToString());
@@ -939,11 +938,13 @@ namespace Assigments_School
                     connection.Open();
 
                     MySqlDataReader reader = cmd.ExecuteReader();
+                    int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Trainer: {reader["FirstName"]}  {reader["LastName"]}  " +
+                        Console.WriteLine($"Trainer: id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
                                       $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
                                       $"{reader["Gender"]}");
+                        counter++;
                     }
 
                 }
