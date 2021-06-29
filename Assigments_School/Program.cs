@@ -786,8 +786,6 @@ namespace Assigments_School
                                     case "add":
                                         // Add Students To Course
                                         Console.WriteLine("\n");
-                                        // Add Students To Course
-                                        Console.WriteLine("\n");
                                         while (true)
                                         {
                                             Console.Write("Stop(stop) ? Add New Student(new) ? Add Existing Student(ex): ");
@@ -1030,11 +1028,255 @@ namespace Assigments_School
                     {
                         switch (choice)
                         {
-                            case "main":
+                            case "main": // Edit Main Imfo
+                                while (true)
+                                {
+                                    Console.WriteLine("\n");
+                                    Console.Write("Quit(stop) ? Title(title) ? EndDate(date) ? Description(de): ");
+                                    string ass_choice = Console.ReadLine();
+                                    if(ass_choice.Length > 0)
+                                    {
+                                        if (ass_choice.Equals("stop"))
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            switch (ass_choice)
+                                            {
+                                                case "title": // Edit Title
+                                                    Console.Write("Enter New Title: ");
+                                                    string title = Console.ReadLine();
+                                                    if(title.Length > 0)
+                                                    {
+                                                        // Enter Title To Database
+                                                        string sql_query_0 = $"UPDATE Assignments SET Title='{title}' WHERE Title='{assignment_title}';";
+                                                        MySqlConnection connection_0 = new MySqlConnection(DB_connection_string);
+                                                        try
+                                                        {
+                                                            MySqlCommand cmd = new MySqlCommand(sql_query_0, connection_0);
+                                                            connection_0.Open();
+                                                            var reader = cmd.ExecuteNonQuery();
+                                                        }
+                                                        catch (MySqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            connection_0.Close();
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Enter A Valid Title!");
+                                                    }
+                                                    break;
+                                                case "date":
+                                                    Console.Write($"Enter EndDate Like({DateTime.Today.ToString("dd/MM/yyy", CultureInfo.CreateSpecificCulture("es-ES"))}): ");
+                                                    string enddate = Console.ReadLine();
+                                                    if(enddate.Length > 0)
+                                                    {
+                                                        // Enter Ende Date To Database
+                                                        string sql_query_1 = $"UPDATE Assignments SET EndDate='{enddate}' WHERE Title='{assignment_title}';";
+                                                        MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                        try
+                                                        {
+                                                            MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                            connection_1.Open();
+                                                            var reader = cmd.ExecuteNonQuery();
+                                                        }
+                                                        catch (MySqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            connection_1.Close();
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Enter A Valid Date!");
+                                                    }
+                                                    break;
+                                                case "de":
+                                                    Console.Write("Enter New Description: ");
+                                                    string description = Console.ReadLine();
+                                                    if(description.Length > 0)
+                                                    {
+                                                        // Enter Description To Database
+                                                        string sql_query_2 = $"UPDATE Assignments SET Description='{description}' WHERE Title='{assignment_title}';";
+                                                        MySqlConnection connection_2 = new MySqlConnection(DB_connection_string);
+                                                        try
+                                                        {
+                                                            MySqlCommand cmd = new MySqlCommand(sql_query_2, connection_2);
+                                                            connection_2.Open();
+                                                            var reader = cmd.ExecuteNonQuery();
+                                                        }
+                                                        catch (MySqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            connection_2.Close();
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Enter A Valid Description!");
+                                                    }
+                                                    break;
+                                            }
+                                    }
+                                        
+                                    }
+                                }
                                 break;
-                            case "st":
+                            case "st": // Edit Student
+                                Console.WriteLine("\n");
+                                Console.Write("Add(add) ? Remove(del): ");
+                                string st_choice = Console.ReadLine();
+                                switch (st_choice)
+                                {
+                                    case "add": // Add Student To Assignment
+                                        Console.WriteLine("\n");
+                                        while (true)
+                                        {
+                                            Console.Write("Stop(stop) ? Add Existing Student(ex): ");
+                                            string st_choice_2 = Console.ReadLine();
+                                            if (st_choice_2.Equals("stop"))
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                string student_email_2 = "";
+                                                switch (st_choice_2)
+                                                {
+                                                    case "ex":
+                                                        // Get Parents Course Title;
+                                                        string course_title_2 = GetCourseTitleByAssignmentTitle(assignment_title);
+                                                        // Select ALL Students On This Course
+                                                        string my_id_2 = "";
+                                                        Console.WriteLine("Select Student By Id(3): ");
+                                                        GetAllStudentsOnCourseByTitle(course_title_2);
+                                                        my_id_2 = Console.ReadLine();
+                                                        student_email_2 = students[int.Parse(my_id_2)];
+                                                        // Add Student To DataBase
+                                                        string sql_query_2 = $"INSERT INTO AssignmentsStudents (StudentEmail,AssignmentTitle) " +
+                                                            $"VALUES ('{student_email_2}','{assignment_title}');";
+                                                        MySqlConnection connection_2 = new MySqlConnection(DB_connection_string);
+                                                        try
+                                                        {
+                                                            MySqlCommand cmd = new MySqlCommand(sql_query_2, connection_2);
+                                                            connection_2.Open();
+                                                            var reader = cmd.ExecuteNonQuery();
+                                                        }
+                                                        catch (MySqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            connection_2.Close();
+                                                        }
+
+                                                        break;
+                                                    default:
+                                                        Console.WriteLine("Enter A Valid Choice!");
+                                                        break;
+                                                }
+                                            }
+                                        }
+                                        students.Clear();
+                                        break;
+                                    case "del": // Delete Student From Assignment
+                                        // Get Parents Course Title;
+                                        string course_title = GetCourseTitleByAssignmentTitle(assignment_title);
+                                        // Select ALL Students On This Assignment
+                                        string my_id = "";
+                                        Console.WriteLine("Select Student By Id(3): ");
+                                        GetAllStudentsOnAssignment(course_title);
+                                        my_id = Console.ReadLine();
+                                        string student_email = students[int.Parse(my_id)];
+                                        // Delete This Student On This Assignment
+                                        string sql_query_3 = $"DELETE FROM AssignmentsStudents WHERE AssignmentTitle='{assignment_title}' AND StudentEmail='{student_email}';";
+                                        MySqlConnection connection_3 = new MySqlConnection(DB_connection_string);
+                                        try
+                                        {
+                                            MySqlCommand cmd = new MySqlCommand(sql_query_3, connection_3);
+                                            connection_3.Open();
+                                            var reader = cmd.ExecuteNonQuery();
+                                        }
+                                        catch (MySqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            connection_3.Close();
+                                        }
+                                        break;
+                                    default:
+                                        Console.WriteLine("Enter A Valid Choice!");
+                                        break;
+                                }
                                 break;
-                            case "del":
+                            case "del": // Delete Assignment
+                                // Delete All Assignments Courses
+                                string sql_query = $"DELETE FROM AssignmentsCourse WHERE AssignmentTitle='{assignment_title}';";
+                                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                try
+                                {
+                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    connection.Open();
+                                    var reader = cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
+                                // Delete All Assignments Students
+                                sql_query = $"DELETE FROM AssignmentsStudents WHERE AssignmentTitle='{assignment_title}';";
+                                connection = new MySqlConnection(DB_connection_string);
+                                try
+                                {
+                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    connection.Open();
+                                    var reader = cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
+                                // Delete This Assignment
+                                sql_query = $"DELETE FROM Assignments WHERE AssignmentTitle='{assignment_title}';";
+                                connection = new MySqlConnection(DB_connection_string);
+                                try
+                                {
+                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    connection.Open();
+                                    var reader = cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
+                                Console.WriteLine("Delete Assignment OK.\n");
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
@@ -1474,9 +1716,13 @@ namespace Assigments_School
                     connection.Open();
 
                     MySqlDataReader reader = cmd.ExecuteReader();
+                    assignments.Clear();
+                    int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
+                        Console.WriteLine($"Assignment: id={counter} {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
+                        assignments.Add(reader["Title"].ToString());
+                        counter++;
                     }
 
                 }
@@ -1496,6 +1742,84 @@ namespace Assigments_School
             else
             {
                 Console.WriteLine("Please Enter A Valid Title!");
+            }
+        }
+
+        // Get All Students On Assignment
+        private static void GetAllStudentsOnAssignment(string title)
+        {
+            if (title.Length > 0)
+            {
+                string sql_query = $"SELECT * FROM AssignmentsStudents WHERE AssignmentTitle='{title}';";
+                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    connection.Open();
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    assignments.Clear();
+                    int counter = 0;
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Assignment: id={counter} {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
+                        assignments.Add(reader["Title"].ToString());
+                        counter++;
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please Enter A Valid Title!");
+            }
+        }
+
+        // Get The Parent Courses Title Of An Assignment
+        private static string GetCourseTitleByAssignmentTitle(string title)
+        {
+            if(title.Length > 0)
+            {
+                // Get Title Of This Course
+                string query = $"SELECT CourseTitle FROM AssignmentsCourse WHERE AssignmentTitle='{title}' LIMIT 0, 1;";
+                MySqlConnection connection_2 = new MySqlConnection(DB_connection_string);
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection_2);
+                    connection_2.Open();
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    string course_title = "";
+                    while (reader.Read())
+                    {
+                        course_title = reader["CourseTitle"].ToString();
+                    }
+                    return course_title;
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                    return "";
+                }
+                finally
+                {
+                    connection_2.Close();
+                }
+            }
+            else
+            {
+                return "";
             }
         }
 

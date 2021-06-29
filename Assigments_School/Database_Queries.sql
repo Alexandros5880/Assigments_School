@@ -176,8 +176,13 @@ DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle';
 /* Edit Main Imfo */
 UPDATE Assignments SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
 /* ADD/REMOVE Students */
-INSERT INTO AssignmentsStudents (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
-DELETE FROM AssignmentsStudents WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
+INSERT INTO AssignmentsStudents (StudentEmail, AssignmentTitle) VALUES ('alexandrosplatanios151@gmail.com','Assignment_Test_1');
+DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle' AND StudentEmail='StudentEmail';
+/* Delete Assignment */
+DELETE FROM AssignmentsCourse WHERE AssignmentTitle='AssignmentTitle';
+DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle';
+DELETE FROM Assignments WHERE Title='AssignmentTitle';
+
 
 /* Edit Student */
 UPDATE Students SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
