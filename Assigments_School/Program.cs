@@ -80,6 +80,7 @@ namespace Assigments_School
                             + "(ltc)  -->  [ A List of all the trainers per course.                                                         ]\n\t"
                             + "(lac)  -->  [ A List of all the assignments per course.                                                      ]\n\t"
                             + "(las)  -->  [ A List of all the assignments per student.                                                     ]\n\t"
+                            + "(lasc) -->  [ A List of all the assignments pre course and student                                           ]\n\t"
                             + "(lscm) -->  [ A List of all the students that belong to more than one course.                                ]\n\t"
                             + "(lsd)  -->  [ A List of all the students who need to submit one or more assigment on the same calendar week. ]\n\t"
                     );
@@ -110,6 +111,9 @@ namespace Assigments_School
                             break;
                         case "las":
                             GetAllAssignmentsPerStudent();
+                            break;
+                        case "lasc":
+                            GetAllAssignmentsPerCourseAndStudent();
                             break;
                         case "lscm":
                             GetAllStudentsThatBelongToMoreThatOneCourse();
@@ -1568,6 +1572,51 @@ namespace Assigments_School
             finally
             {
                 connection.Close();
+            }
+        }
+
+        // Get All Assignments Per Course And Student
+        private static void GetAllAssignmentsPerCourseAndStudent()
+        {
+            Console.WriteLine("\n");
+            Console.Write("Assignment Title: ");
+            string title = Console.ReadLine();
+            Console.Write("Enter Students Email: ");
+            string email = Console.ReadLine();
+            Console.WriteLine("\n");
+            if (email.Length > 0 && title.Length > 0)
+            {
+                string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE " +
+                    $"CourseTitle='{title}') AND Title IN(SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail = '{email}'); ";
+                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    connection.Open();
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please Enter A Valid Title!");
             }
         }
 

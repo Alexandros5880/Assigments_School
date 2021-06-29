@@ -152,6 +152,9 @@ SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCours
 /* Get All Students Who Need To Submit Assignment On The Same Week */
 SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents WHERE AssignmentTitle
                     IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW())));
+/* Select All Assignments Per Course And Per Student */
+SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle='Course_Test_1')
+                                AND Title IN (SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail='StudentEmail');
 
 
 /* Edit Course */
