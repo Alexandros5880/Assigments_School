@@ -10,7 +10,7 @@ CREATE TABLE Courses (
     Description LONGTEXT NULL,
     PRIMARY KEY CLUSTERED (Title ASC)
 );
-CREATE TABLE Assignments ( /* Courses */
+CREATE TABLE Assignments ( /* Courses, Students */
     Title NCHAR (255)   NOT NULL,
     StartDate  NCHAR (255) NULL,
     EndDate NCHAR (255) NULL,
@@ -152,6 +152,37 @@ SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCours
 /* Get All Students Who Need To Submit Assignment On The Same Week */
 SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents WHERE AssignmentTitle
                     IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW())));
+
+
+/* Edit Course */
+/* Edit Main Imfo */
+UPDATE Courses SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
+/* ADD/REMOVE Students */
+INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
+DELETE FROM StudentsCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
+/* ADD/REMOVE Trainers */
+INSERT INTO TrainersCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
+DELETE FROM TrainersCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
+/* ADD/REMOVE Assignments */
+DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
+/* DELETE THIS COURSE AND ALL ASSIGNMENTS */
+DELETE FROM Courses WHERE Title='CourseTitle';
+DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle';
+
+/* Edit Assignments */
+/* Edit Main Imfo */
+UPDATE Assignments SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
+/* ADD/REMOVE Students */
+INSERT INTO AssignmentsStudents (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
+DELETE FROM AssignmentsStudents WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
+
+/* Edit Student */
+UPDATE Students SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+
+/* Edit Trainer */
+UPDATE Trainer SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+
+
 
 
 /* DROP EVERITHING */
