@@ -674,7 +674,7 @@ namespace Assigments_School
             GetAllCourses();
             Console.Write("Select Course By Id: ");
             int id = int.Parse(Console.ReadLine());
-            string course_title = "";
+            string course_title;
             if(id >= 0 && id < courses.Count)
             {
                 course_title = courses[id];
@@ -796,7 +796,7 @@ namespace Assigments_School
                                             }
                                             else
                                             {
-                                                string student_email_2 = "";
+                                                string student_email_2;
                                                 switch (st_choice_2)
                                                 {
                                                     case "new":
@@ -821,7 +821,7 @@ namespace Assigments_School
                                                         }
                                                         break;
                                                     case "ex":
-                                                        string my_id_2 = "";
+                                                        string my_id_2;
                                                         Console.WriteLine("Select Student By Id(3): ");
                                                         GetAllStudents();
                                                         my_id_2 = Console.ReadLine();
@@ -854,7 +854,7 @@ namespace Assigments_School
                                         students.Clear();
                                         break;
                                     case "del":
-                                        string my_id = "";
+                                        string my_id;
                                         Console.WriteLine("Select Student By Id(3): ");
                                         GetAllStudentsOnCourseByTitle(course_title);
                                         my_id = Console.ReadLine();
@@ -901,7 +901,7 @@ namespace Assigments_School
                                             }
                                             else
                                             {
-                                                string trainer_email = "";
+                                                string trainer_email;
                                                 switch (tr_choice_2)
                                                 {
                                                     case "new":
@@ -926,7 +926,7 @@ namespace Assigments_School
                                                         }
                                                         break;
                                                     case "ex":
-                                                        string my_id_3 = "";
+                                                        string my_id_3;
                                                         Console.WriteLine("Select Trainer By Id(3): ");
                                                         GetAllTrainers();
                                                         my_id_3 = Console.ReadLine();
@@ -959,7 +959,7 @@ namespace Assigments_School
                                         trainers.Clear();
                                         break;
                                     case "del":
-                                        string my_id_2 = "";
+                                        string my_id_2;
                                         Console.WriteLine("Select Trainer By Id(3): ");
                                         GetAllTrainersOnCourse(course_title);
                                         my_id_2 = Console.ReadLine();
@@ -1011,7 +1011,7 @@ namespace Assigments_School
             GetAllAssignments();
             Console.Write("Select Assignment By Id: ");
             int id = int.Parse(Console.ReadLine());
-            string assignment_title = "";
+            string assignment_title;
             if (id >= 0 && id < assignments.Count)
             {
                 assignment_title = assignments[id];
@@ -1152,14 +1152,14 @@ namespace Assigments_School
                                             }
                                             else
                                             {
-                                                string student_email_2 = "";
+                                                string student_email_2;
                                                 switch (st_choice_2)
                                                 {
                                                     case "ex":
                                                         // Get Parents Course Title;
                                                         string course_title_2 = GetCourseTitleByAssignmentTitle(assignment_title);
                                                         // Select ALL Students On This Course
-                                                        string my_id_2 = "";
+                                                        string my_id_2;
                                                         Console.WriteLine("Select Student By Id(3): ");
                                                         GetAllStudentsOnCourseByTitle(course_title_2);
                                                         my_id_2 = Console.ReadLine();
@@ -1196,7 +1196,7 @@ namespace Assigments_School
                                         // Get Parents Course Title;
                                         string course_title = GetCourseTitleByAssignmentTitle(assignment_title);
                                         // Select ALL Students On This Assignment
-                                        string my_id = "";
+                                        string my_id;
                                         Console.WriteLine("Select Student By Id(3): ");
                                         GetAllStudentsOnAssignment(course_title);
                                         my_id = Console.ReadLine();
@@ -1298,7 +1298,7 @@ namespace Assigments_School
             GetAllTrainers();
             Console.Write("Select Trainer By Id: ");
             int id = int.Parse(Console.ReadLine());
-            string trainer_email = "";
+            string trainer_email;
             if (id >= 0 && id < trainers.Count)
             {
                 trainer_email = trainers[id];
@@ -1564,7 +1564,7 @@ namespace Assigments_School
             GetAllStudents();
             Console.Write("Select Student By Id: ");
             int id = int.Parse(Console.ReadLine());
-            string student_email = "";
+            string student_email;
             if (id >= 0 && id < students.Count)
             {
                 student_email = students[id];
