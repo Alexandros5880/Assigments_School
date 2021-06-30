@@ -72,17 +72,18 @@ namespace Assigments_School
                     Console.WriteLine("Exporting mode!");
                     Console.WriteLine(
                         "Enter for Example: ls\n\t"
-                            + "(ls)   -->  [ A list of all the students.                                                                    ]\n\t"
-                            + "(lt)   -->  [ A list of all the trainers.                                                                    ]\n\t"
-                            + "(la)   -->  [ A list of all the assignments.                                                                 ]\n\t"
-                            + "(lc)   -->  [ A list of all the courses.                                                                     ]\n\t"
-                            + "(lsc)  -->  [ A List of all the students per course.                                                         ]\n\t"
-                            + "(ltc)  -->  [ A List of all the trainers per course.                                                         ]\n\t"
-                            + "(lac)  -->  [ A List of all the assignments per course.                                                      ]\n\t"
-                            + "(las)  -->  [ A List of all the assignments per student.                                                     ]\n\t"
-                            + "(lasc) -->  [ A List of all the assignments pre course and student                                           ]\n\t"
-                            + "(lscm) -->  [ A List of all the students that belong to more than one course.                                ]\n\t"
-                            + "(lsd)  -->  [ A List of all the students who need to submit one or more assigment on the same calendar week. ]\n\t"
+                            + "(ls)   -->  [ A list of all the students.                                                                                 ]\n\t"
+                            + "(lt)   -->  [ A list of all the trainers.                                                                                 ]\n\t"
+                            + "(la)   -->  [ A list of all the assignments.                                                                              ]\n\t"
+                            + "(lc)   -->  [ A list of all the courses.                                                                                  ]\n\t"
+                            + "(lsc)  -->  [ A List of all the students per course.                                                                      ]\n\t"
+                            + "(ltc)  -->  [ A List of all the trainers per course.                                                                      ]\n\t"
+                            + "(lac)  -->  [ A List of all the assignments per course.                                                                   ]\n\t"
+                            + "(las)  -->  [ A List of all the assignments per student.                                                                  ]\n\t"
+                            + "(lasc) -->  [ A List of all the assignments pre course and student                                                        ]\n\t"
+                            + "(lscm) -->  [ A List of all the students that belong to more than one course.                                             ]\n\t"
+                            + "(lsd)  -->  [ A List of all the students who need to submit one or more assigment on the same calendar week.              ]\n\t"
+                            + "(lsdc)  --> [ A List of all the students who need to submit one or more assigment on the same calendar week on this date. ]\n\t"
                     );
                     choice = Console.ReadLine();
                     Console.WriteLine("\n");
@@ -120,6 +121,9 @@ namespace Assigments_School
                             break;
                         case "lsd":
                             GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek();
+                            break;
+                        case "lsdc":
+                            GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeekAsThisDate();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");
@@ -2446,9 +2450,52 @@ namespace Assigments_School
             }
         }
 
+        // Get All Students Who Need To Submeet An Assignment On The Same Week As The Date
+        private static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeekAsThisDate()
+        {
+            Console.WriteLine("\n");
+            Console.Write($"Enter A Date Like({DateTime.Today.ToString("dd/MM/yyy", CultureInfo.CreateSpecificCulture("es-ES"))}): ");
+            string date = Console.ReadLine();
+            Console.WriteLine("\n");
+            if(date.Length > 0)
+            {
+                string sql_query = $"SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents " +
+                    $"WHERE AssignmentTitle IN (SELECT Title FROM Assignments " +
+                    $"WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(STR_TO_DATE('{date}', '%d/%m/%y'))));";
+                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    connection.Open();
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
+                                          $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
+                                          $"{reader["Gender"]}");
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
 
 
-        
+
+
+
 
 
 

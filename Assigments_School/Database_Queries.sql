@@ -164,8 +164,8 @@ UPDATE Courses SET Title='Title', StartDate='StartDate', EndDate='EndDate', Desc
 INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
 DELETE FROM StudentsCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
 /* ADD/REMOVE Trainers */
-INSERT INTO TrainersCourse (StudentEmail, CourseTitle) VALUES ('StudentEmail','Course_Test_1');
-DELETE FROM TrainersCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
+INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES ('StudentEmail','Course_Test_1');
+DELETE FROM TrainersCourse WHERE CourseTitle='CourseTitle' AND TrainerEmail='StudentEmail';
 /* ADD/REMOVE Assignments */
 DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
 /* DELETE THIS COURSE AND ALL ASSIGNMENTS */
@@ -190,7 +190,7 @@ UPDATE Students SET FirstName='FirstName', LastName='LastName', Age='Age', Gende
 DELETE FROM Students WHERE Email='Email';
 
 /* Edit Trainer */
-UPDATE Trainer SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+UPDATE Trainers SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
 /* Delete Trainer */
 DELETE FROM Trainers WHERE Email='Email';
 
@@ -199,3 +199,11 @@ DELETE FROM Trainers WHERE Email='Email';
 
 /* DROP EVERITHING */
 DROP DATABASE AssignmentsSchool;
+
+
+
+SELECT * FROM Students WHERE Email IN
+                             (SELECT StudentEmail FROM AssignmentsStudents
+                             WHERE AssignmentTitle IN
+                                   (SELECT Title FROM Assignments
+                                   WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(STR_TO_DATE('01/07/2021', '%d/%m/%y'))));
