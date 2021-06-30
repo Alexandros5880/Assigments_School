@@ -1316,8 +1316,233 @@ namespace Assigments_School
                         switch (choice)
                         {
                             case "main":
+                                Console.WriteLine("\n");
+                                Console.Write("Edit FirstName(fn) ? LastName(ln) ? Age(a) ? Gender(g) ? Email(e) ? Phone(ph): ");
+                                string tr_choice_2 = Console.ReadLine();
+                                if(tr_choice_2.Length > 0)
+                                {
+                                    switch (tr_choice_2)
+                                    {
+                                        case "fn": // Edit FistName
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New FirstName: ");
+                                            string firstname = Console.ReadLine();
+                                            if(firstname.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Trainers SET FirstName='{firstname}' WHERE Email='{trainer_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid FirstName!");
+                                            }
+                                            break;
+                                        case "ln": // Edit LastName
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New LastName: ");
+                                            string lastname = Console.ReadLine();
+                                            if (lastname.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Trainers SET LastName='{lastname}' WHERE Email='{trainer_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid LastName!");
+                                            }
+                                            break;
+                                        case "a": // Edit Age
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New Age: ");
+                                            string age = Console.ReadLine();
+                                            if (age.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Trainers SET Age='{age}' WHERE Email='{trainer_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid Age!");
+                                            }
+                                            break;
+                                        case "g": // Edit Gender
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New Gender(Male/Female): ");
+                                            string gender = Console.ReadLine();
+                                            if (gender.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Trainers SET Gender='{gender}' WHERE Email='{trainer_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid Gender!");
+                                            }
+                                            break;
+                                        case "e": // Edit Email
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New Email: ");
+                                            string email = Console.ReadLine();
+                                            if (email.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Trainers SET Email='{email}' WHERE Email='{trainer_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid Email!");
+                                            }
+                                            break;
+                                        case "ph": // Edit Phone
+                                            Console.WriteLine("\n");
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New Phone: ");
+                                            string phone = Console.ReadLine();
+                                            if (phone.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Trainers SET Phone='{phone}' WHERE Email='{trainer_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid Phone!");
+                                            }
+                                            break;
+                                        default:
+                                            Console.WriteLine("Enter A Valid Choice!");
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Enter A Valid Choice!");
+                                }
                                 break;
                             case "del":
+                                // Delete All Trainer Courses With This Trainer
+                                string sql_query = $"DELETE FROM TrainersCourse WHERE TrainerEmail='{trainer_email}';";
+                                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                try
+                                {
+                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    connection.Open();
+                                    var reader = cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
+                                // Delete This Trainer
+                                sql_query = $"DELETE FROM Trainers WHERE Email='{trainer_email}';";
+                                connection = new MySqlConnection(DB_connection_string);
+                                try
+                                {
+                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    connection.Open();
+                                    var reader = cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
@@ -1357,8 +1582,250 @@ namespace Assigments_School
                         switch (choice)
                         {
                             case "main":
+                                Console.WriteLine("\n");
+                                Console.Write("Edit FirstName(fn) ? LastName(ln) ? Age(a) ? Gender(g) ? Email(e) ? Phone(ph): ");
+                                string tr_choice_2 = Console.ReadLine();
+                                if (tr_choice_2.Length > 0)
+                                {
+                                    switch (tr_choice_2)
+                                    {
+                                        case "fn": // Edit FistName
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New FirstName: ");
+                                            string firstname = Console.ReadLine();
+                                            if (firstname.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Students SET FirstName='{firstname}' WHERE Email='{student_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid FirstName!");
+                                            }
+                                            break;
+                                        case "ln": // Edit LastName
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New LastName: ");
+                                            string lastname = Console.ReadLine();
+                                            if (lastname.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Students SET LastName='{lastname}' WHERE Email='{student_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid LastName!");
+                                            }
+                                            break;
+                                        case "a": // Edit Age
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New Age: ");
+                                            string age = Console.ReadLine();
+                                            if (age.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Students SET Age='{age}' WHERE Email='{student_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid Age!");
+                                            }
+                                            break;
+                                        case "g": // Edit Gender
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New Gender(Male/Female): ");
+                                            string gender = Console.ReadLine();
+                                            if (gender.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Students SET Gender='{gender}' WHERE Email='{student_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid Gender!");
+                                            }
+                                            break;
+                                        case "e": // Edit Email
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New Email: ");
+                                            string email = Console.ReadLine();
+                                            if (email.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Students SET Email='{email}' WHERE Email='{student_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid Email!");
+                                            }
+                                            break;
+                                        case "ph": // Edit Phone
+                                            Console.WriteLine("\n");
+                                            Console.WriteLine("\n");
+                                            Console.Write("Enter New Phone: ");
+                                            string phone = Console.ReadLine();
+                                            if (phone.Length > 0)
+                                            {
+                                                // Update FirstName
+                                                string sql_query_1 = $"UPDATE Students SET Phone='{phone}' WHERE Email='{student_email}';";
+                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                try
+                                                {
+                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    connection_1.Open();
+                                                    var reader = cmd.ExecuteNonQuery();
+                                                }
+                                                catch (MySqlException ex)
+                                                {
+                                                    Console.WriteLine($"Exception: {ex.Message}");
+                                                }
+                                                finally
+                                                {
+                                                    connection_1.Close();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Enter A Valid Phone!");
+                                            }
+                                            break;
+                                        default:
+                                            Console.WriteLine("Enter A Valid Choice!");
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Enter A Valid Choice!");
+                                }
                                 break;
                             case "del":
+                                // Delete All Student Courses With This Student
+                                string sql_query = $"DELETE FROM StudentsCourse WHERE StudentEmail='{student_email}';";
+                                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                try
+                                {
+                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    connection.Open();
+                                    var reader = cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
+                                // Delete All AssignmentsStudents With This Student
+                                sql_query = $"DELETE FROM AssignmentsStudents WHERE StudentEmail='{student_email}';";
+                                connection = new MySqlConnection(DB_connection_string);
+                                try
+                                {
+                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    connection.Open();
+                                    var reader = cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
+                                // Delete This Trainer
+                                sql_query = $"DELETE FROM Students WHERE Email='{student_email}';";
+                                connection = new MySqlConnection(DB_connection_string);
+                                try
+                                {
+                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    connection.Open();
+                                    var reader = cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
