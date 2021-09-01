@@ -219,8 +219,7 @@ namespace Assigments_School
                                 case "new":
                                     trainer_email = AddTrainer();
                                     // Add Trainer To DataBase
-                                    sql_query = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
-                                                $"VALUES ('{trainer_email}','{title}');";
+                                    sql_query = $"EXEC AddTrainerToCourse '{title}', '{trainer_email}';";
                                     connection = new SqlConnection(DB_connection_string);
                                     try
                                     {
@@ -244,8 +243,7 @@ namespace Assigments_School
                                     my_id = Console.ReadLine();
                                     trainer_email = trainers[int.Parse(my_id)];
                                     // Add Trainer To DataBase
-                                    sql_query = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
-                                        $"VALUES ('{trainer_email}','{title}');";
+                                    sql_query = $"EXEC AddTrainerToCourse '{title}', '{trainer_email}';";
                                     connection = new SqlConnection(DB_connection_string);
                                     try
                                     {
@@ -286,9 +284,8 @@ namespace Assigments_School
                             {
                                 case "new":
                                     student_email = AddStudent();
-                                    // Add Trainer To DataBase
-                                    sql_query = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
-                                                $"VALUES ('{student_email}','{title}');";
+                                    // Add Student To DataBase
+                                    sql_query = $"EXEC AddStudentToCourse '{title}', '{student_email}';";
                                     connection = new SqlConnection(DB_connection_string);
                                     try
                                     {
@@ -311,9 +308,8 @@ namespace Assigments_School
                                     GetAllStudents();
                                     my_id = Console.ReadLine();
                                     student_email = students[int.Parse(my_id)];
-                                    // Add Trainer To DataBase
-                                    sql_query = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
-                                        $"VALUES ('{student_email}','{title}');";
+                                    // Add Student To DataBase
+                                    sql_query = $"EXEC AddStudentToCourse '{title}', '{student_email}';";
                                     connection = new SqlConnection(DB_connection_string);
                                     try
                                     {
