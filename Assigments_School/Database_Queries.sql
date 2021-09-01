@@ -212,7 +212,7 @@ UPDATE Courses SET Title=@title, StartDate=@sd, EndDate=@ed, Description=@descri
 END
 GO
 
-/* ADD/REMOVE Students */
+/* ADD Student To Course */
 GO
 CREATE PROCEDURE AddStudentToCourse @coursetitle VARCHAR(100), @studentemail VARCHAR(100)
 AS
@@ -222,11 +222,38 @@ DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @cour
 INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES (@student, @course);
 END
 GO
+/* Delete Student From Course */
+GO
+CREATE PROCEDURE DeleteStudentToCourse @coursetitle VARCHAR(100), @studentemail VARCHAR(100)
+AS
+BEGIN
+DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
+		@student AS VARCHAR(300) = (SELECT Email FROM Students WHERE Email = @studentemail)
+DELETE FROM StudentsCourse WHERE CourseTitle=@course AND StudentEmail=@student;
+END
+GO
 
-DELETE FROM StudentsCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
-/* ADD/REMOVE Trainers */
-INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES ('StudentEmail','Course_Test_1');
-DELETE FROM TrainersCourse WHERE CourseTitle='CourseTitle' AND TrainerEmail='StudentEmail';
+/* ADD Trainers To Course */
+GO
+CREATE PROCEDURE AddTrainerToCourse @coursetitle VARCHAR(100), @traineremail VARCHAR(100)
+AS
+BEGIN
+DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
+		@trainer AS VARCHAR(300) = (SELECT Email FROM Trainers WHERE Email = @traineremail)
+INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES (@trainer,@course);
+END
+GO
+/* REMOVE Trainers From Course */
+GO
+CREATE PROCEDURE DeleteTrainerToCourse @coursetitle VARCHAR(100), @traineremail VARCHAR(100)
+AS
+BEGIN
+DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
+		@trainer AS VARCHAR(300) = (SELECT Email FROM Trainers WHERE Email = @traineremail)
+DELETE FROM TrainersCourse WHERE CourseTitle=@course AND TrainerEmail=@trainer;
+END
+GO
+
 /* ADD/REMOVE Assignments */
 DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
 /* DELETE THIS COURSE AND ALL ASSIGNMENTS */
