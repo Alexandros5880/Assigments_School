@@ -73,18 +73,18 @@ namespace Assigments_School
                     Console.WriteLine("Exporting mode!");
                     Console.WriteLine(
                         "Enter for Example: ls\n\t"
-                            + "(ls)   -->  [ A list of all the students.                                                                                 ]\n\t"
-                            + "(lt)   -->  [ A list of all the trainers.                                                                                 ]\n\t"
-                            + "(la)   -->  [ A list of all the assignments.                                                                              ]\n\t"
-                            + "(lc)   -->  [ A list of all the courses.                                                                                  ]\n\t"
-                            + "(lsc)  -->  [ A List of all the students per course.                                                                      ]\n\t"
-                            + "(ltc)  -->  [ A List of all the trainers per course.                                                                      ]\n\t"
-                            + "(lac)  -->  [ A List of all the assignments per course.                                                                   ]\n\t"
-                            + "(las)  -->  [ A List of all the assignments per student.                                                                  ]\n\t"
-                            + "(lasc) -->  [ A List of all the assignments pre course and student                                                        ]\n\t"
-                            + "(lscm) -->  [ A List of all the students that belong to more than one course.                                             ]\n\t"
-                            + "(lsd)  -->  [ A List of all the students who need to submit one or more assigment on the same calendar week.              ]\n\t"
-                            + "(lsdc)  --> [ A List of all the students who need to submit one or more assigment on the same calendar week on this date. ]\n\t"
+                            + "(ls)  -->[ A list of all the students.                                                                                ]\n"
+                            + "(lt)  -->[ A list of all the trainers.                                                                                ]\n"
+                            + "(la)  -->[ A list of all the assignments.                                                                             ]\n"
+                            + "(lc)  -->[ A list of all the courses.                                                                                 ]\n"
+                            + "(lsc) -->[ A List of all the students per course.                                                                     ]\n"
+                            + "(ltc) -->[ A List of all the trainers per course.                                                                     ]\n"
+                            + "(lac) -->[ A List of all the assignments per course.                                                                  ]\n"
+                            + "(las) -->[ A List of all the assignments per student.                                                                 ]\n"
+                            + "(lasc)-->[ A List of all the assignments pre course and student                                                       ]\n"
+                            + "(lscm)-->[ A List of all the students that belong to more than one course.                                            ]\n"
+                            + "(lsd) -->[ A List of all the students who need to submit one or more assigment on the same calendar week.             ]\n"
+                            + "(lsdc)-->[ A List of all the students who need to submit one or more assigment on the same calendar week on this date.]\n"
                     );
                     choice = Console.ReadLine();
                     Console.WriteLine("\n");
@@ -184,10 +184,6 @@ namespace Assigments_School
                 if (title.Length > 0 && startdate.Length > 0 && enddate.Length > 0 && description.Length > 0)
                 {
                     // Insert Course To Database
-                    /*
-                    string sql_query = $"INSERT INTO Courses (Title, StartDate, EndDate, Description) " +
-                        $"VALUES ('{title}', '{startdate}', '{enddate}', '{description}');";
-                    */
                     string sql_query = $"EXEC InsertCourse '{title}', '{startdate}', '{enddate}', '{description}';";
                     SqlConnection connection = new SqlConnection(DB_connection_string);
                     try
@@ -195,6 +191,7 @@ namespace Assigments_School
                         SqlCommand cmd = new SqlCommand(sql_query, connection);
                         connection.Open();
                         var reader = cmd.ExecuteNonQuery();
+                        Console.WriteLine("\n\nCourse Added\n\n");
                     }
                     catch (SqlException ex)
                     {
@@ -2022,10 +2019,10 @@ namespace Assigments_School
                     students.Clear();
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Student: Id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
-                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                      $"{reader["Gender"]}");
-                        students.Add(reader["Email"].ToString());
+                        Console.WriteLine($"Student: Id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                      $"{reader["Gender"].ToString().Trim()}");
+                        students.Add(reader["Email"].ToString().Trim());
                         counter++;
                     }
 
@@ -2064,10 +2061,10 @@ namespace Assigments_School
                 students.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: Id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
-                                  $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                  $"{reader["Gender"]}");
-                    students.Add(reader["Email"].ToString());
+                    Console.WriteLine($"Student: Id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                  $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                  $"{reader["Gender"].ToString().Trim()}");
+                    students.Add(reader["Email"].ToString().Trim());
                     counter++;
                 }
 
@@ -2106,9 +2103,9 @@ namespace Assigments_School
                     int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Trainer: id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
-                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                      $"{reader["Gender"]}");
+                        Console.WriteLine($"Trainer: id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                      $"{reader["Gender"].ToString().Trim()}");
                         counter++;
                     }
 
@@ -2149,9 +2146,9 @@ namespace Assigments_School
                     int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Trainer: id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
-                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                      $"{reader["Gender"]}");
+                        Console.WriteLine($"Trainer: id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                      $"{reader["Gender"].ToString().Trim()}");
                         counter++;
                     }
 
@@ -2196,8 +2193,9 @@ namespace Assigments_School
                     int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Assignment: id={counter} {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
-                        assignments.Add(reader["Title"].ToString());
+                        Console.WriteLine($"Assignment: id={counter} {reader["Title"].ToString().Trim()}  " +
+                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
+                        assignments.Add(reader["Title"].ToString().Trim());
                         counter++;
                     }
 
@@ -2238,7 +2236,8 @@ namespace Assigments_School
                     int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Assignment: id={counter} {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
+                        Console.WriteLine($"Assignment: id={counter} {reader["Title"].ToString().Trim()}  " +
+                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                         assignments.Add(reader["Title"].ToString());
                         counter++;
                     }
@@ -2279,7 +2278,7 @@ namespace Assigments_School
                     string course_title = "";
                     while (reader.Read())
                     {
-                        course_title = reader["CourseTitle"].ToString();
+                        course_title = reader["CourseTitle"].ToString().Trim();
                     }
                     return course_title;
                 }
@@ -2318,7 +2317,8 @@ namespace Assigments_School
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
+                        Console.WriteLine($"Assignment: {reader["Title"].ToString().Trim()}  " +
+                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                     }
 
                 }
@@ -2355,9 +2355,9 @@ namespace Assigments_School
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
-                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                      $"{reader["Gender"]}");
+                    Console.WriteLine($"Student: {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                      $"{reader["Gender"].ToString().Trim()}");
                 }
 
             }
@@ -2397,7 +2397,8 @@ namespace Assigments_School
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
+                        Console.WriteLine($"Assignment: {reader["Title"].ToString().Trim()}  " +
+                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                     }
 
                 }
@@ -2435,9 +2436,9 @@ namespace Assigments_School
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
-                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                      $"{reader["Gender"]}");
+                    Console.WriteLine($"Student: {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                      $"{reader["Gender"].ToString().Trim()}");
                 }
 
             }
@@ -2476,9 +2477,9 @@ namespace Assigments_School
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
-                                          $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                          $"{reader["Gender"]}");
+                        Console.WriteLine($"Student: {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                          $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                          $"{reader["Gender"].ToString().Trim()}");
                     }
 
                 }
