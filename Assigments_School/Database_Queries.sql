@@ -297,13 +297,32 @@ UPDATE Assignments SET Title=@title, StartDate=@startdate, EndDate=@enddate, Des
 END
 GO
 
-/* ADD/REMOVE Students */
-INSERT INTO AssignmentsStudents (StudentEmail, AssignmentTitle) VALUES ('alexandrosplatanios151@gmail.com','Assignment_Test_1');
-DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle' AND StudentEmail='StudentEmail';
+/* ADD Student To Assignment */
+GO
+CREATE PROCEDURE InsertStudentToAssignment @studentemail VARCHAR(100),  @assignmenttitle VARCHAR(100)
+AS
+BEGIN
+INSERT INTO AssignmentsStudents (StudentEmail, AssignmentTitle) VALUES (@studentemail, @assignmenttitle);
+END
+GO
+/* Delete Student From Assignment */
+GO
+CREATE PROCEDURE DeleteStudentFromAssignment @studentemail VARCHAR(100),  @assignmenttitle VARCHAR(100)
+AS
+BEGIN
+DELETE FROM AssignmentsStudents WHERE AssignmentTitle=@assignmenttitle AND StudentEmail=@studentemail;
+END
+GO
 /* Delete Assignment */
-DELETE FROM AssignmentsCourse WHERE AssignmentTitle='AssignmentTitle';
-DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle';
-DELETE FROM Assignments WHERE Title='AssignmentTitle';
+GO
+CREATE PROCEDURE DeleteAssignment @assignmenttitle VARCHAR(100)
+AS
+BEGIN
+DELETE FROM AssignmentsCourse WHERE AssignmentTitle=@assignmenttitle;
+DELETE FROM AssignmentsStudents WHERE AssignmentTitle=@assignmenttitle;
+DELETE FROM Assignments WHERE Title=@assignmenttitle;
+END
+GO
 
 
 /* Edit Student */
