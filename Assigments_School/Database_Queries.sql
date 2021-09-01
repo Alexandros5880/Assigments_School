@@ -360,9 +360,21 @@ GO
 
 
 /* Edit Trainer */
-UPDATE Trainers SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+GO
+CREATE PROCEDURE UpdateTrainer @firstname VARCHAR(50), @lastname VARCHAR(50), @age INT, 
+								@gender VARCHAR(10), @email VARCHAR(300), @phone VARCHAR(15), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Trainers SET FirstName=@firstname, LastName=@lastname, Age=@age, Gender=@gender, Email=@email, Phone=@phone WHERE Email=@searchemail;
+END
+GO
 /* Delete Trainer */
-DELETE FROM Trainers WHERE Email='Email';
+GO
+CREATE PROCEDURE DeleteTrainer @email VARCHAR(300)
+AS
+BEGIN
+DELETE FROM Trainers WHERE Email=@email;END
+GO
 
 
 
