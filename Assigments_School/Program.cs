@@ -1641,7 +1641,7 @@ namespace Assigments_School
                                             if (firstname.Length > 0)
                                             {
                                                 // Update FirstName
-                                                string sql_query_1 = $"UPDATE Students SET FirstName='{firstname}' WHERE Email='{student_email}';";
+                                                string sql_query_1 = $"EXEC UpdateStudentFirstName '{firstname}', '{student_email}';";
                                                 SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
@@ -1669,8 +1669,8 @@ namespace Assigments_School
                                             string lastname = Console.ReadLine();
                                             if (lastname.Length > 0)
                                             {
-                                                // Update FirstName
-                                                string sql_query_1 = $"UPDATE Students SET LastName='{lastname}' WHERE Email='{student_email}';";
+                                                // Update LastName
+                                                string sql_query_1 = $"EXEC UpdateStudentLastName '{lastname}', '{student_email}';";
                                                 SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
@@ -1698,8 +1698,8 @@ namespace Assigments_School
                                             string age = Console.ReadLine();
                                             if (age.Length > 0)
                                             {
-                                                // Update FirstName
-                                                string sql_query_1 = $"UPDATE Students SET Age='{age}' WHERE Email='{student_email}';";
+                                                // Update Age
+                                                string sql_query_1 = $"EXEC UpdateStudentAge '{age}', '{student_email}';";
                                                 SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
@@ -1727,8 +1727,8 @@ namespace Assigments_School
                                             string gender = Console.ReadLine();
                                             if (gender.Length > 0)
                                             {
-                                                // Update FirstName
-                                                string sql_query_1 = $"UPDATE Students SET Gender='{gender}' WHERE Email='{student_email}';";
+                                                // Update Gender
+                                                string sql_query_1 = $"EXEC UpdateStudentGender '{gender}', '{student_email}';";
                                                 SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
@@ -1756,8 +1756,8 @@ namespace Assigments_School
                                             string email = Console.ReadLine();
                                             if (email.Length > 0)
                                             {
-                                                // Update FirstName
-                                                string sql_query_1 = $"UPDATE Students SET Email='{email}' WHERE Email='{student_email}';";
+                                                // Update Email
+                                                string sql_query_1 = $"EXEC UpdateStudentEmail '{email}', '{student_email}';";
                                                 SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
@@ -1786,8 +1786,8 @@ namespace Assigments_School
                                             string phone = Console.ReadLine();
                                             if (phone.Length > 0)
                                             {
-                                                // Update FirstName
-                                                string sql_query_1 = $"UPDATE Students SET Phone='{phone}' WHERE Email='{student_email}';";
+                                                // Update Phone
+                                                string sql_query_1 = $"EXEC UpdateStudentPhone '{phone}', '{student_email}';";
                                                 SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
@@ -1821,42 +1821,8 @@ namespace Assigments_School
                                 break;
                             case "del":
                                 // Delete All Student Courses With This Student
-                                string sql_query = $"DELETE FROM StudentsCourse WHERE StudentEmail='{student_email}';";
+                                string sql_query = $"EXEC DeleteStudent '{student_email}';";
                                 SqlConnection connection = new SqlConnection(DB_connection_string);
-                                try
-                                {
-                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                    connection.Open();
-                                    var reader = cmd.ExecuteNonQuery();
-                                }
-                                catch (SqlException ex)
-                                {
-                                    Console.WriteLine($"Exception: {ex.Message}");
-                                }
-                                finally
-                                {
-                                    connection.Close();
-                                }
-                                // Delete All AssignmentsStudents With This Student
-                                sql_query = $"DELETE FROM AssignmentsStudents WHERE StudentEmail='{student_email}';";
-                                connection = new SqlConnection(DB_connection_string);
-                                try
-                                {
-                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                    connection.Open();
-                                    var reader = cmd.ExecuteNonQuery();
-                                }
-                                catch (SqlException ex)
-                                {
-                                    Console.WriteLine($"Exception: {ex.Message}");
-                                }
-                                finally
-                                {
-                                    connection.Close();
-                                }
-                                // Delete This Trainer
-                                sql_query = $"DELETE FROM Students WHERE Email='{student_email}';";
-                                connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
                                     SqlCommand cmd = new SqlCommand(sql_query, connection);
