@@ -224,7 +224,7 @@ END
 GO
 /* Delete Student From Course */
 GO
-CREATE PROCEDURE DeleteStudentToCourse @coursetitle VARCHAR(100), @studentemail VARCHAR(100)
+CREATE PROCEDURE DeleteStudentFromCourse @coursetitle VARCHAR(100), @studentemail VARCHAR(100)
 AS
 BEGIN
 DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
@@ -245,7 +245,7 @@ END
 GO
 /* REMOVE Trainers From Course */
 GO
-CREATE PROCEDURE DeleteTrainerToCourse @coursetitle VARCHAR(100), @traineremail VARCHAR(100)
+CREATE PROCEDURE DeleteTrainerFromCourse @coursetitle VARCHAR(100), @traineremail VARCHAR(100)
 AS
 BEGIN
 DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
@@ -254,11 +254,40 @@ DELETE FROM TrainersCourse WHERE CourseTitle=@course AND TrainerEmail=@trainer;
 END
 GO
 
-/* ADD/REMOVE Assignments */
+/* Add Assignments To Course */
+GO
+CREATE PROCEDURE AddAssignmentToCourse @coursetitle VARCHAR(100), @assignmenttitle VARCHAR(100)
+AS
+BEGIN
+DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
+		@assignment AS VARCHAR(100) = (SELECT Title FROM Assignments WHERE Title = @assignmenttitle)
+INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES (@assignment,@course);
+END
+GO
+/* REMOVE Assignments From Course */
+GO
+CREATE PROCEDURE DeleteAssignmentFromCourse @coursetitle VARCHAR(100), @traineremail VARCHAR(100)
+AS
+BEGIN
+DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
+		@trainer AS VARCHAR(300) = (SELECT Email FROM Trainers WHERE Email = @traineremail)
 DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
-/* DELETE THIS COURSE AND ALL ASSIGNMENTS */
-DELETE FROM Courses WHERE Title='CourseTitle';
-DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle';
+END
+GO
+
+
+/* DELETE THIS COURSE AND ALL RELATED RECORDS */
+GO
+CREATE PROCEDURE DeleteCourseAndRelatedAssignments @coursetitle VARCHAR(100)
+AS
+BEGIN
+DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle);
+DELETE FROM AssignmentsCourse WHERE CourseTitle=@course;
+DELETE FROM StudentsCourse WHERE CourseTitle=@course;
+DELETE FROM TrainersCourse WHERE CourseTitle=@course;
+DELETE FROM Courses WHERE Title=@course;
+END
+GO
 
 /* Edit Assignments */
 /* Edit Main Imfo */
