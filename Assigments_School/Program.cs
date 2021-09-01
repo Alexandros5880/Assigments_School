@@ -1868,10 +1868,10 @@ namespace Assigments_School
                 students.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
-                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                      $"{reader["Gender"]}");
-                    students.Add(reader["Email"].ToString());
+                    Console.WriteLine($"Student: id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                      $"{reader["Gender"].ToString().Trim()}");
+                    students.Add(reader["Email"].ToString().Trim());
                     counter++;
                 }
 
@@ -1906,9 +1906,9 @@ namespace Assigments_School
                 trainers.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Trainer: id={counter} {reader["FirstName"]}  {reader["LastName"]}  " +
-                                      $"{reader["Email"]}  {reader["Phone"]}  {reader["Age"]} " +
-                                      $"{reader["Gender"]}");
+                    Console.WriteLine($"Trainer: id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                      $"{reader["Gender"].ToString().Trim()}");
                     trainers.Add(reader["Email"].ToString());
                     counter++;
                 }
@@ -1943,8 +1943,9 @@ namespace Assigments_School
                 int counter = 0;
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Assignment: id={counter} {reader["Title"]}  {reader["StartDate"]} {reader["EndDate"]}");
-                    assignments.Add(reader["Title"].ToString());
+                    Console.WriteLine($"Assignment: id={counter} {reader["Title"].ToString().Trim()}  " +
+                        $"{reader["StartDate"].ToString().Trim()} {reader["EndDate"].ToString().Trim()}");
+                    assignments.Add(reader["Title"].ToString().Trim());
                     counter++;
                 }
 
@@ -1979,9 +1980,9 @@ namespace Assigments_School
                 courses.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Course: id={counter} Title: {reader["Title"]}  {reader["StartDate"]}  " +
-                                      $"{reader["EndDate"]}");
-                    courses.Add(reader["Title"].ToString());
+                    Console.WriteLine($"Course: id={counter} Title: {reader["Title"].ToString().Trim()} " +
+                        $"{reader["StartDate"].ToString().Trim()} {reader["EndDate"].ToString().Trim()}");
+                    courses.Add(reader["Title"].ToString().Trim());
                     counter++;
                 }
 
