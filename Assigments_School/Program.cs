@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -11,12 +12,13 @@ namespace Assigments_School
     class Program
     {
 
-        public static String db_url = @"localhost";
-        public static String db_port = "3306";
-        public static String db_name = "AssignmentsSchool";
-        public static String db_user_name = "root";
-        public static String db_user_password = "Platanios719791";
-        public static String DB_connection_string = "";
+        public static string db_url = @"localhost";
+        public static string db_port = "3306";
+        public static string db_server_name = "DESKTOP-QQ55HAA\\SQLEXPRESS";
+        public static string db_name = "AssignmentsSchool";
+        public static string db_user_name = "root";
+        public static string db_user_password = "Platanios719791";
+        public static string DB_connection_string = "";
 
         public static List<string> trainers = new List<string>();
         public static List<string> students = new List<string>();
@@ -27,8 +29,7 @@ namespace Assigments_School
         {
             
             // Connecte to server
-            DB_connection_string = $"server={db_url};port={db_port};uid={db_user_name};pwd={db_user_password};database={db_name};Charset=utf8;";
-            // Integrated Security=True
+            DB_connection_string = $"Server={db_server_name};Database={db_name};Trusted_Connection=True;";
 
             while (true)
             {
@@ -183,16 +184,19 @@ namespace Assigments_School
                 if (title.Length > 0 && startdate.Length > 0 && enddate.Length > 0 && description.Length > 0)
                 {
                     // Insert Course To Database
+                    /*
                     string sql_query = $"INSERT INTO Courses (Title, StartDate, EndDate, Description) " +
                         $"VALUES ('{title}', '{startdate}', '{enddate}', '{description}');";
-                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    */
+                    string sql_query = $"EXEC InsertCourse '{title}', '{startdate}', '{enddate}', '{description}';";
+                    SqlConnection connection = new SqlConnection(DB_connection_string);
                     try
                     {
-                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        SqlCommand cmd = new SqlCommand(sql_query, connection);
                         connection.Open();
                         var reader = cmd.ExecuteNonQuery();
                     }
-                    catch (MySqlException ex)
+                    catch (SqlException ex)
                     {
                         Console.WriteLine($"Exception: {ex.Message}");
                     }
@@ -220,14 +224,14 @@ namespace Assigments_School
                                     // Add Trainer To DataBase
                                     sql_query = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
                                                 $"VALUES ('{trainer_email}','{title}');";
-                                    connection = new MySqlConnection(DB_connection_string);
+                                    connection = new SqlConnection(DB_connection_string);
                                     try
                                     {
-                                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                        SqlCommand cmd = new SqlCommand(sql_query, connection);
                                         connection.Open();
                                         var reader = cmd.ExecuteNonQuery();
                                     }
-                                    catch (MySqlException ex)
+                                    catch (SqlException ex)
                                     {
                                         Console.WriteLine($"Exception: {ex.Message}");
                                     }
@@ -245,14 +249,14 @@ namespace Assigments_School
                                     // Add Trainer To DataBase
                                     sql_query = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
                                         $"VALUES ('{trainer_email}','{title}');";
-                                    connection = new MySqlConnection(DB_connection_string);
+                                    connection = new SqlConnection(DB_connection_string);
                                     try
                                     {
-                                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                        SqlCommand cmd = new SqlCommand(sql_query, connection);
                                         connection.Open();
                                         var reader = cmd.ExecuteNonQuery();
                                     }
-                                    catch (MySqlException ex)
+                                    catch (SqlException ex)
                                     {
                                         Console.WriteLine($"Exception: {ex.Message}");
                                     }
@@ -288,14 +292,14 @@ namespace Assigments_School
                                     // Add Trainer To DataBase
                                     sql_query = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
                                                 $"VALUES ('{student_email}','{title}');";
-                                    connection = new MySqlConnection(DB_connection_string);
+                                    connection = new SqlConnection(DB_connection_string);
                                     try
                                     {
-                                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                        SqlCommand cmd = new SqlCommand(sql_query, connection);
                                         connection.Open();
                                         var reader = cmd.ExecuteNonQuery();
                                     }
-                                    catch (MySqlException ex)
+                                    catch (SqlException ex)
                                     {
                                         Console.WriteLine($"Exception: {ex.Message}");
                                     }
@@ -313,14 +317,14 @@ namespace Assigments_School
                                     // Add Trainer To DataBase
                                     sql_query = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
                                         $"VALUES ('{student_email}','{title}');";
-                                    connection = new MySqlConnection(DB_connection_string);
+                                    connection = new SqlConnection(DB_connection_string);
                                     try
                                     {
-                                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                        SqlCommand cmd = new SqlCommand(sql_query, connection);
                                         connection.Open();
                                         var reader = cmd.ExecuteNonQuery();
                                     }
-                                    catch (MySqlException ex)
+                                    catch (SqlException ex)
                                     {
                                         Console.WriteLine($"Exception: {ex.Message}");
                                     }
@@ -370,14 +374,14 @@ namespace Assigments_School
                 {
                     string sql_query = $"INSERT INTO Assignments (Title, StartDate, EndDate, Description) " +
                         $"VALUES ('{title}', '{startdate}', '{enddate}', '{description}');";
-                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    SqlConnection connection = new SqlConnection(DB_connection_string);
                     try
                     {
-                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        SqlCommand cmd = new SqlCommand(sql_query, connection);
                         connection.Open();
                         var reader = cmd.ExecuteNonQuery();
                     }
-                    catch (MySqlException ex)
+                    catch (SqlException ex)
                     {
                         Console.WriteLine($"Exception: {ex.Message}");
                     }
@@ -405,14 +409,14 @@ namespace Assigments_School
                                     {
                                         // Add To AssignmentsCourse DataBase
                                         string ass_query = $"INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('{title}','{course_title}');";
-                                        connection = new MySqlConnection(DB_connection_string);
+                                        connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
-                                            MySqlCommand cmd = new MySqlCommand(ass_query, connection);
+                                            SqlCommand cmd = new SqlCommand(ass_query, connection);
                                             connection.Open();
                                             var reader = cmd.ExecuteNonQuery();
                                         }
-                                        catch (MySqlException ex)
+                                        catch (SqlException ex)
                                         {
                                             Console.WriteLine($"Exception: {ex.Message}");
                                         }
@@ -431,14 +435,14 @@ namespace Assigments_School
                                     {
                                         // Add To DataBase
                                         string ass_query = $"INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('{title}','{course_title}');";
-                                        connection = new MySqlConnection(DB_connection_string);
+                                        connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
-                                            MySqlCommand cmd = new MySqlCommand(ass_query, connection);
+                                            SqlCommand cmd = new SqlCommand(ass_query, connection);
                                             connection.Open();
                                             var reader = cmd.ExecuteNonQuery();
                                         }
-                                        catch (MySqlException ex)
+                                        catch (SqlException ex)
                                         {
                                             Console.WriteLine($"Exception: {ex.Message}");
                                         }
@@ -475,14 +479,14 @@ namespace Assigments_School
                                     {
                                         // Add New Stude To This Course
                                         string course_query = $"INSERT INTO StudentCourse (StudentEmail, CourseTitle) VALUES ('{student_email}', '{course_title}')";
-                                        connection = new MySqlConnection(DB_connection_string);
+                                        connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
-                                            MySqlCommand cmd = new MySqlCommand(course_query, connection);
+                                            SqlCommand cmd = new SqlCommand(course_query, connection);
                                             connection.Open();
                                             var reader = cmd.ExecuteNonQuery();
                                         }
-                                        catch (MySqlException ex)
+                                        catch (SqlException ex)
                                         {
                                             Console.WriteLine($"Exception: {ex.Message}");
                                         }
@@ -492,14 +496,14 @@ namespace Assigments_School
                                         }
                                         // Add To AssignmentsStudents On DataBase
                                         string ass_query = $"INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('{title}','{student_email}');";
-                                        connection = new MySqlConnection(DB_connection_string);
+                                        connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
-                                            MySqlCommand cmd = new MySqlCommand(ass_query, connection);
+                                            SqlCommand cmd = new SqlCommand(ass_query, connection);
                                             connection.Open();
                                             var reader = cmd.ExecuteNonQuery();
                                         }
-                                        catch (MySqlException ex)
+                                        catch (SqlException ex)
                                         {
                                             Console.WriteLine($"Exception: {ex.Message}");
                                         }
@@ -520,14 +524,14 @@ namespace Assigments_School
                                     {
                                         // Add To AssignmentsStudents DataBase
                                         string ass_query = $"INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('{title}','{student_email}');";
-                                        connection = new MySqlConnection(DB_connection_string);
+                                        connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
-                                            MySqlCommand cmd = new MySqlCommand(ass_query, connection);
+                                            SqlCommand cmd = new SqlCommand(ass_query, connection);
                                             connection.Open();
                                             var reader = cmd.ExecuteNonQuery();
                                         }
-                                        catch (MySqlException ex)
+                                        catch (SqlException ex)
                                         {
                                             Console.WriteLine($"Exception: {ex.Message}");
                                         }
@@ -581,14 +585,14 @@ namespace Assigments_School
                 {
                     string sql_query = $"INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone) " +
                         $"VALUES('{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}'); ";
-                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    SqlConnection connection = new SqlConnection(DB_connection_string);
                     try
                     {
-                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        SqlCommand cmd = new SqlCommand(sql_query, connection);
                         connection.Open();
                         var reader = cmd.ExecuteNonQuery();
                     }
-                    catch (MySqlException ex)
+                    catch (SqlException ex)
                     {
                         Console.WriteLine($"Exception: {ex.Message}");
                     }
@@ -637,14 +641,14 @@ namespace Assigments_School
                 {
                     string sql_query = $"INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone) " +
                         $"VALUES('{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}'); ";
-                    MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                    SqlConnection connection = new SqlConnection(DB_connection_string);
                     try
                     {
-                        MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                        SqlCommand cmd = new SqlCommand(sql_query, connection);
                         connection.Open();
                         var reader = cmd.ExecuteNonQuery();
                     }
-                    catch (MySqlException ex)
+                    catch (SqlException ex)
                     {
                         Console.WriteLine($"Exception: {ex.Message}");
                     }
@@ -710,14 +714,14 @@ namespace Assigments_School
                                         {
                                             // Update DATABASE
                                             string sql_query = $"UPDATE Courses SET Title='{title}' WHERE Title='{course_title}';";
-                                            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                            SqlConnection connection = new SqlConnection(DB_connection_string);
                                             try
                                             {
-                                                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                                SqlCommand cmd = new SqlCommand(sql_query, connection);
                                                 connection.Open();
                                                 var reader = cmd.ExecuteNonQuery();
                                             }
-                                            catch (MySqlException ex)
+                                            catch (SqlException ex)
                                             {
                                                 Console.WriteLine($"Exception: {ex.Message}");
                                             }
@@ -735,14 +739,14 @@ namespace Assigments_School
                                         {
                                             // Update DATABASE
                                             string sql_query = $"UPDATE Courses SET EndDate='{enddate}' WHERE Title='{course_title}';";
-                                            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                            SqlConnection connection = new SqlConnection(DB_connection_string);
                                             try
                                             {
-                                                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                                SqlCommand cmd = new SqlCommand(sql_query, connection);
                                                 connection.Open();
                                                 var reader = cmd.ExecuteNonQuery();
                                             }
-                                            catch (MySqlException ex)
+                                            catch (SqlException ex)
                                             {
                                                 Console.WriteLine($"Exception: {ex.Message}");
                                             }
@@ -760,14 +764,14 @@ namespace Assigments_School
                                         {
                                             // Update DATABASE
                                             string sql_query = $"UPDATE Courses SET Description='{description}' WHERE Title='{course_title}';";
-                                            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                            SqlConnection connection = new SqlConnection(DB_connection_string);
                                             try
                                             {
-                                                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                                SqlCommand cmd = new SqlCommand(sql_query, connection);
                                                 connection.Open();
                                                 var reader = cmd.ExecuteNonQuery();
                                             }
-                                            catch (MySqlException ex)
+                                            catch (SqlException ex)
                                             {
                                                 Console.WriteLine($"Exception: {ex.Message}");
                                             }
@@ -808,14 +812,14 @@ namespace Assigments_School
                                                         // Add Trainer To DataBase
                                                         string sql_query_2 = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
                                                                     $"VALUES ('{student_email_2}','{course_title}');";
-                                                        MySqlConnection connection_2 = new MySqlConnection(DB_connection_string);
+                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
-                                                            MySqlCommand cmd = new MySqlCommand(sql_query_2, connection_2);
+                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
                                                             connection_2.Open();
                                                             var reader = cmd.ExecuteNonQuery();
                                                         }
-                                                        catch (MySqlException ex)
+                                                        catch (SqlException ex)
                                                         {
                                                             Console.WriteLine($"Exception: {ex.Message}");
                                                         }
@@ -833,14 +837,14 @@ namespace Assigments_School
                                                         // Add Trainer To DataBase
                                                         sql_query_2 = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
                                                             $"VALUES ('{student_email_2}','{course_title}');";
-                                                        connection_2 = new MySqlConnection(DB_connection_string);
+                                                        connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
-                                                            MySqlCommand cmd = new MySqlCommand(sql_query_2, connection_2);
+                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
                                                             connection_2.Open();
                                                             var reader = cmd.ExecuteNonQuery();
                                                         }
-                                                        catch (MySqlException ex)
+                                                        catch (SqlException ex)
                                                         {
                                                             Console.WriteLine($"Exception: {ex.Message}");
                                                         }
@@ -865,14 +869,14 @@ namespace Assigments_School
                                         string student_email = students[int.Parse(my_id)];
                                         // Add Trainer To DataBase
                                         string sql_query = $"DELETE FROM StudentsCourse WHERE CourseTitle='{course_title}' AND StudentEmail='{student_email}';";
-                                        MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                        SqlConnection connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
-                                            MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                            SqlCommand cmd = new SqlCommand(sql_query, connection);
                                             connection.Open();
                                             var reader = cmd.ExecuteNonQuery();
                                         }
-                                        catch (MySqlException ex)
+                                        catch (SqlException ex)
                                         {
                                             Console.WriteLine($"Exception: {ex.Message}");
                                         }
@@ -913,14 +917,14 @@ namespace Assigments_School
                                                         // Add Trainer To DataBase
                                                         string sql_query_2 = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
                                                                     $"VALUES ('{trainer_email}','{course_title}');";
-                                                        MySqlConnection connection_2 = new MySqlConnection(DB_connection_string);
+                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
-                                                            MySqlCommand cmd = new MySqlCommand(sql_query_2, connection_2);
+                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
                                                             connection_2.Open();
                                                             var reader = cmd.ExecuteNonQuery();
                                                         }
-                                                        catch (MySqlException ex)
+                                                        catch (SqlException ex)
                                                         {
                                                             Console.WriteLine($"Exception: {ex.Message}");
                                                         }
@@ -938,14 +942,14 @@ namespace Assigments_School
                                                         // Add Trainer To DataBase
                                                         string sql_query_3 = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
                                                             $"VALUES ('{trainer_email}','{course_title}');";
-                                                        MySqlConnection connection_3 = new MySqlConnection(DB_connection_string);
+                                                        SqlConnection connection_3 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
-                                                            MySqlCommand cmd = new MySqlCommand(sql_query_3, connection_3);
+                                                            SqlCommand cmd = new SqlCommand(sql_query_3, connection_3);
                                                             connection_3.Open();
                                                             var reader = cmd.ExecuteNonQuery();
                                                         }
-                                                        catch (MySqlException ex)
+                                                        catch (SqlException ex)
                                                         {
                                                             Console.WriteLine($"Exception: {ex.Message}");
                                                         }
@@ -970,14 +974,14 @@ namespace Assigments_School
                                         string student_email = students[int.Parse(my_id_2)];
                                         // Add Trainer To DataBase
                                         string sql_query = $"DELETE FROM TrainersCourse WHERE CourseTitle='{course_title}' AND StudentEmail='{student_email}';";
-                                        MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                        SqlConnection connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
-                                            MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                            SqlCommand cmd = new SqlCommand(sql_query, connection);
                                             connection.Open();
                                             var reader = cmd.ExecuteNonQuery();
                                         }
-                                        catch (MySqlException ex)
+                                        catch (SqlException ex)
                                         {
                                             Console.WriteLine($"Exception: {ex.Message}");
                                         }
@@ -1057,14 +1061,14 @@ namespace Assigments_School
                                                     {
                                                         // Enter Title To Database
                                                         string sql_query_0 = $"UPDATE Assignments SET Title='{title}' WHERE Title='{assignment_title}';";
-                                                        MySqlConnection connection_0 = new MySqlConnection(DB_connection_string);
+                                                        SqlConnection connection_0 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
-                                                            MySqlCommand cmd = new MySqlCommand(sql_query_0, connection_0);
+                                                            SqlCommand cmd = new SqlCommand(sql_query_0, connection_0);
                                                             connection_0.Open();
                                                             var reader = cmd.ExecuteNonQuery();
                                                         }
-                                                        catch (MySqlException ex)
+                                                        catch (SqlException ex)
                                                         {
                                                             Console.WriteLine($"Exception: {ex.Message}");
                                                         }
@@ -1085,14 +1089,14 @@ namespace Assigments_School
                                                     {
                                                         // Enter Ende Date To Database
                                                         string sql_query_1 = $"UPDATE Assignments SET EndDate='{enddate}' WHERE Title='{assignment_title}';";
-                                                        MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                        SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
-                                                            MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                            SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                             connection_1.Open();
                                                             var reader = cmd.ExecuteNonQuery();
                                                         }
-                                                        catch (MySqlException ex)
+                                                        catch (SqlException ex)
                                                         {
                                                             Console.WriteLine($"Exception: {ex.Message}");
                                                         }
@@ -1113,14 +1117,14 @@ namespace Assigments_School
                                                     {
                                                         // Enter Description To Database
                                                         string sql_query_2 = $"UPDATE Assignments SET Description='{description}' WHERE Title='{assignment_title}';";
-                                                        MySqlConnection connection_2 = new MySqlConnection(DB_connection_string);
+                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
-                                                            MySqlCommand cmd = new MySqlCommand(sql_query_2, connection_2);
+                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
                                                             connection_2.Open();
                                                             var reader = cmd.ExecuteNonQuery();
                                                         }
-                                                        catch (MySqlException ex)
+                                                        catch (SqlException ex)
                                                         {
                                                             Console.WriteLine($"Exception: {ex.Message}");
                                                         }
@@ -1172,14 +1176,14 @@ namespace Assigments_School
                                                         // Add Student To DataBase
                                                         string sql_query_2 = $"INSERT INTO AssignmentsStudents (StudentEmail,AssignmentTitle) " +
                                                             $"VALUES ('{student_email_2}','{assignment_title}');";
-                                                        MySqlConnection connection_2 = new MySqlConnection(DB_connection_string);
+                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
-                                                            MySqlCommand cmd = new MySqlCommand(sql_query_2, connection_2);
+                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
                                                             connection_2.Open();
                                                             var reader = cmd.ExecuteNonQuery();
                                                         }
-                                                        catch (MySqlException ex)
+                                                        catch (SqlException ex)
                                                         {
                                                             Console.WriteLine($"Exception: {ex.Message}");
                                                         }
@@ -1207,14 +1211,14 @@ namespace Assigments_School
                                         string student_email = students[int.Parse(my_id)];
                                         // Delete This Student On This Assignment
                                         string sql_query_3 = $"DELETE FROM AssignmentsStudents WHERE AssignmentTitle='{assignment_title}' AND StudentEmail='{student_email}';";
-                                        MySqlConnection connection_3 = new MySqlConnection(DB_connection_string);
+                                        SqlConnection connection_3 = new SqlConnection(DB_connection_string);
                                         try
                                         {
-                                            MySqlCommand cmd = new MySqlCommand(sql_query_3, connection_3);
+                                            SqlCommand cmd = new SqlCommand(sql_query_3, connection_3);
                                             connection_3.Open();
                                             var reader = cmd.ExecuteNonQuery();
                                         }
-                                        catch (MySqlException ex)
+                                        catch (SqlException ex)
                                         {
                                             Console.WriteLine($"Exception: {ex.Message}");
                                         }
@@ -1231,14 +1235,14 @@ namespace Assigments_School
                             case "del": // Delete Assignment
                                 // Delete All Assignments Courses
                                 string sql_query = $"DELETE FROM AssignmentsCourse WHERE AssignmentTitle='{assignment_title}';";
-                                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                SqlConnection connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
-                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                                     connection.Open();
                                     var reader = cmd.ExecuteNonQuery();
                                 }
-                                catch (MySqlException ex)
+                                catch (SqlException ex)
                                 {
                                     Console.WriteLine($"Exception: {ex.Message}");
                                 }
@@ -1248,14 +1252,14 @@ namespace Assigments_School
                                 }
                                 // Delete All Assignments Students
                                 sql_query = $"DELETE FROM AssignmentsStudents WHERE AssignmentTitle='{assignment_title}';";
-                                connection = new MySqlConnection(DB_connection_string);
+                                connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
-                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                                     connection.Open();
                                     var reader = cmd.ExecuteNonQuery();
                                 }
-                                catch (MySqlException ex)
+                                catch (SqlException ex)
                                 {
                                     Console.WriteLine($"Exception: {ex.Message}");
                                 }
@@ -1265,14 +1269,14 @@ namespace Assigments_School
                                 }
                                 // Delete This Assignment
                                 sql_query = $"DELETE FROM Assignments WHERE AssignmentTitle='{assignment_title}';";
-                                connection = new MySqlConnection(DB_connection_string);
+                                connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
-                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                                     connection.Open();
                                     var reader = cmd.ExecuteNonQuery();
                                 }
-                                catch (MySqlException ex)
+                                catch (SqlException ex)
                                 {
                                     Console.WriteLine($"Exception: {ex.Message}");
                                 }
@@ -1335,14 +1339,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Trainers SET FirstName='{firstname}' WHERE Email='{trainer_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1364,14 +1368,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Trainers SET LastName='{lastname}' WHERE Email='{trainer_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1393,14 +1397,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Trainers SET Age='{age}' WHERE Email='{trainer_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1422,14 +1426,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Trainers SET Gender='{gender}' WHERE Email='{trainer_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1451,14 +1455,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Trainers SET Email='{email}' WHERE Email='{trainer_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1481,14 +1485,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Trainers SET Phone='{phone}' WHERE Email='{trainer_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1515,14 +1519,14 @@ namespace Assigments_School
                             case "del":
                                 // Delete All Trainer Courses With This Trainer
                                 string sql_query = $"DELETE FROM TrainersCourse WHERE TrainerEmail='{trainer_email}';";
-                                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                SqlConnection connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
-                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                                     connection.Open();
                                     var reader = cmd.ExecuteNonQuery();
                                 }
-                                catch (MySqlException ex)
+                                catch (SqlException ex)
                                 {
                                     Console.WriteLine($"Exception: {ex.Message}");
                                 }
@@ -1532,14 +1536,14 @@ namespace Assigments_School
                                 }
                                 // Delete This Trainer
                                 sql_query = $"DELETE FROM Trainers WHERE Email='{trainer_email}';";
-                                connection = new MySqlConnection(DB_connection_string);
+                                connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
-                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                                     connection.Open();
                                     var reader = cmd.ExecuteNonQuery();
                                 }
-                                catch (MySqlException ex)
+                                catch (SqlException ex)
                                 {
                                     Console.WriteLine($"Exception: {ex.Message}");
                                 }
@@ -1601,14 +1605,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Students SET FirstName='{firstname}' WHERE Email='{student_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1630,14 +1634,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Students SET LastName='{lastname}' WHERE Email='{student_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1659,14 +1663,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Students SET Age='{age}' WHERE Email='{student_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1688,14 +1692,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Students SET Gender='{gender}' WHERE Email='{student_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1717,14 +1721,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Students SET Email='{email}' WHERE Email='{student_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1747,14 +1751,14 @@ namespace Assigments_School
                                             {
                                                 // Update FirstName
                                                 string sql_query_1 = $"UPDATE Students SET Phone='{phone}' WHERE Email='{student_email}';";
-                                                MySqlConnection connection_1 = new MySqlConnection(DB_connection_string);
+                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                 try
                                                 {
-                                                    MySqlCommand cmd = new MySqlCommand(sql_query_1, connection_1);
+                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
                                                     connection_1.Open();
                                                     var reader = cmd.ExecuteNonQuery();
                                                 }
-                                                catch (MySqlException ex)
+                                                catch (SqlException ex)
                                                 {
                                                     Console.WriteLine($"Exception: {ex.Message}");
                                                 }
@@ -1781,14 +1785,14 @@ namespace Assigments_School
                             case "del":
                                 // Delete All Student Courses With This Student
                                 string sql_query = $"DELETE FROM StudentsCourse WHERE StudentEmail='{student_email}';";
-                                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                                SqlConnection connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
-                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                                     connection.Open();
                                     var reader = cmd.ExecuteNonQuery();
                                 }
-                                catch (MySqlException ex)
+                                catch (SqlException ex)
                                 {
                                     Console.WriteLine($"Exception: {ex.Message}");
                                 }
@@ -1798,14 +1802,14 @@ namespace Assigments_School
                                 }
                                 // Delete All AssignmentsStudents With This Student
                                 sql_query = $"DELETE FROM AssignmentsStudents WHERE StudentEmail='{student_email}';";
-                                connection = new MySqlConnection(DB_connection_string);
+                                connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
-                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                                     connection.Open();
                                     var reader = cmd.ExecuteNonQuery();
                                 }
-                                catch (MySqlException ex)
+                                catch (SqlException ex)
                                 {
                                     Console.WriteLine($"Exception: {ex.Message}");
                                 }
@@ -1815,14 +1819,14 @@ namespace Assigments_School
                                 }
                                 // Delete This Trainer
                                 sql_query = $"DELETE FROM Students WHERE Email='{student_email}';";
-                                connection = new MySqlConnection(DB_connection_string);
+                                connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
-                                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                                     connection.Open();
                                     var reader = cmd.ExecuteNonQuery();
                                 }
-                                catch (MySqlException ex)
+                                catch (SqlException ex)
                                 {
                                     Console.WriteLine($"Exception: {ex.Message}");
                                 }
@@ -1853,13 +1857,13 @@ namespace Assigments_School
         {
             Console.WriteLine("\n");
             string sql_query = "SELECT * FROM Students;";
-            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
-                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 int counter = 0;
                 students.Clear();
                 while (reader.Read())
@@ -1872,7 +1876,7 @@ namespace Assigments_School
                 }
 
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
@@ -1891,13 +1895,13 @@ namespace Assigments_School
         {
             Console.WriteLine("\n");
             string sql_query = "SELECT * FROM Trainers;";
-            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
-                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 int counter = 0;
                 trainers.Clear();
                 while (reader.Read())
@@ -1910,7 +1914,7 @@ namespace Assigments_School
                 }
 
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
@@ -1929,13 +1933,13 @@ namespace Assigments_School
         {
             Console.WriteLine("\n");
             string sql_query = "SELECT * FROM Assignments;";
-            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
-                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 int counter = 0;
                 while (reader.Read())
                 {
@@ -1945,7 +1949,7 @@ namespace Assigments_School
                 }
 
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
@@ -1964,13 +1968,13 @@ namespace Assigments_School
         {
             Console.WriteLine("\n");
             string sql_query = "SELECT * FROM Courses;";
-            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
-                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 int counter = 0;
                 courses.Clear();
                 while (reader.Read())
@@ -1982,7 +1986,7 @@ namespace Assigments_School
                 }
 
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
@@ -2006,13 +2010,13 @@ namespace Assigments_School
             if (title.Length > 0)
             {
                 string sql_query = $"SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='{title}');";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     int counter = 0;
                     students.Clear();
                     while (reader.Read())
@@ -2025,7 +2029,7 @@ namespace Assigments_School
                     }
 
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                 }
@@ -2048,13 +2052,13 @@ namespace Assigments_School
         private static void GetAllStudentsOnCourseByTitle(string title)
         {
             string sql_query = $"SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='{title}');";
-            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
-                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 int counter = 0;
                 students.Clear();
                 while (reader.Read())
@@ -2067,7 +2071,7 @@ namespace Assigments_School
                 }
 
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
@@ -2091,13 +2095,13 @@ namespace Assigments_School
             if (title.Length > 0)
             {
                 string sql_query = $"SELECT * FROM Trainers tr WHERE Email IN (SELECT TrainerEmail FROM TrainersCourse WHERE CourseTitle='{title}');";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     int counter = 0;
                     while (reader.Read())
                     {
@@ -2108,7 +2112,7 @@ namespace Assigments_School
                     }
 
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                 }
@@ -2134,13 +2138,13 @@ namespace Assigments_School
             if (title.Length > 0)
             {
                 string sql_query = $"SELECT * FROM Trainers tr WHERE Email IN (SELECT TrainerEmail FROM TrainersCourse WHERE CourseTitle='{title}');";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     int counter = 0;
                     while (reader.Read())
                     {
@@ -2151,7 +2155,7 @@ namespace Assigments_School
                     }
 
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                 }
@@ -2180,13 +2184,13 @@ namespace Assigments_School
             if (title.Length > 0)
             {
                 string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle='{title}');";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     assignments.Clear();
                     int counter = 0;
                     while (reader.Read())
@@ -2197,7 +2201,7 @@ namespace Assigments_School
                     }
 
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                 }
@@ -2222,13 +2226,13 @@ namespace Assigments_School
             if (title.Length > 0)
             {
                 string sql_query = $"SELECT * FROM AssignmentsStudents WHERE AssignmentTitle='{title}';";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     assignments.Clear();
                     int counter = 0;
                     while (reader.Read())
@@ -2239,7 +2243,7 @@ namespace Assigments_School
                     }
 
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                 }
@@ -2265,12 +2269,12 @@ namespace Assigments_School
             {
                 // Get Title Of This Course
                 string query = $"SELECT CourseTitle FROM AssignmentsCourse WHERE AssignmentTitle='{title}' LIMIT 0, 1;";
-                MySqlConnection connection_2 = new MySqlConnection(DB_connection_string);
+                SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(query, connection_2);
+                    SqlCommand cmd = new SqlCommand(query, connection_2);
                     connection_2.Open();
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     string course_title = "";
                     while (reader.Read())
                     {
@@ -2278,7 +2282,7 @@ namespace Assigments_School
                     }
                     return course_title;
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                     return "";
@@ -2304,20 +2308,20 @@ namespace Assigments_School
             if (email.Length > 0)
             {
                 string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail='{email}');";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
                     }
 
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                 }
@@ -2341,13 +2345,13 @@ namespace Assigments_School
         {
             Console.WriteLine("\n");
             string sql_query = $"SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse GROUP BY StudentEmail HAVING COUNT(*) > 1);";
-            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
-                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
@@ -2356,7 +2360,7 @@ namespace Assigments_School
                 }
 
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
@@ -2383,20 +2387,20 @@ namespace Assigments_School
             {
                 string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE " +
                     $"CourseTitle='{title}') AND Title IN(SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail = '{email}'); ";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         Console.WriteLine($"Assignment: {reader["Title"]}  {reader["StartDate"]}  {reader["EndDate"]}");
                     }
 
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                 }
@@ -2421,13 +2425,13 @@ namespace Assigments_School
             Console.WriteLine("\n");
             string sql_query = $"SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents " +
                 $"WHERE AssignmentTitle IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW())));";
-            MySqlConnection connection = new MySqlConnection(DB_connection_string);
+            SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
-                MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
@@ -2436,7 +2440,7 @@ namespace Assigments_School
                 }
 
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
@@ -2462,13 +2466,13 @@ namespace Assigments_School
                 string sql_query = $"SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents " +
                     $"WHERE AssignmentTitle IN (SELECT Title FROM Assignments " +
                     $"WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(STR_TO_DATE('{date}', '%d/%m/%y'))));";
-                MySqlConnection connection = new MySqlConnection(DB_connection_string);
+                SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand(sql_query, connection);
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         Console.WriteLine($"Student: {reader["FirstName"]}  {reader["LastName"]}  " +
@@ -2477,7 +2481,7 @@ namespace Assigments_School
                     }
 
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
                 }
