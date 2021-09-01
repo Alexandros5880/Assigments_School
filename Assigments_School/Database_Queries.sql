@@ -13,7 +13,7 @@ CREATE TABLE Courses (
     PRIMARY KEY CLUSTERED (Title ASC)
 );
 GO
-CREATE TABLE Assignments ( /* Courses */
+CREATE TABLE Assignments (
     Title NCHAR (255)   NOT NULL,
     StartDate  NCHAR (255) NULL,
     EndDate NCHAR (255) NULL,
@@ -21,7 +21,7 @@ CREATE TABLE Assignments ( /* Courses */
     PRIMARY KEY CLUSTERED (Title ASC)
 );
 GO
-CREATE TABLE Trainers ( /* Courses */
+CREATE TABLE Trainers (
     FirstName NCHAR (255)   NULL,
     LastName  NCHAR (255) NULL,
     Age  INT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE Trainers ( /* Courses */
     PRIMARY KEY CLUSTERED (Email ASC)
 );
 GO
-CREATE TABLE Students ( /* Assignments, Courses */
+CREATE TABLE Students (
     FirstName NCHAR (255)   NULL,
     LastName  NCHAR (255) NULL,
     Age  INT NULL,
