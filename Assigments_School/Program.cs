@@ -11,13 +11,8 @@ namespace Assigments_School
 {
     class Program
     {
-
-        public static string db_url = @"localhost";
-        public static string db_port = "3306";
         public static string db_server_name = "DESKTOP-QQ55HAA\\SQLEXPRESS";
         public static string db_name = "AssignmentsSchool";
-        public static string db_user_name = "root";
-        public static string db_user_password = "Platanios719791";
         public static string DB_connection_string = "";
 
         public static List<string> trainers = new List<string>();

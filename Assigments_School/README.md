@@ -1,4 +1,11 @@
-#### SQL Procedures:
+##### Setup:
+* Edit Program.cs
+* On Class Program Set **db_server_name** and **db_name_**
+* Run the **Database_Queries.sql_** file
+* Run The Program.
+
+
+##### SQL Procedures:
     -- Export Data
     EXEC GetAllStudents;
     EXEC GetAllTrainers;

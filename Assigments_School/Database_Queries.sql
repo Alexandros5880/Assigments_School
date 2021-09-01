@@ -656,16 +656,3 @@ INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignm
 INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignment_Test_2','alexandrosplatanios153@gmail.com');
 INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignment_Test_3','alexandrosplatanios153@gmail.com');
 INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignment_Test_4','alexandrosplatanios154@gmail.com');
-
-
-
-
-
-
-
-
-/* DROP EVERITHING */
-DROP DATABASE AssignmentsSchool;
-
-
-
