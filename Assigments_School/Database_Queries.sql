@@ -202,9 +202,27 @@ GO
 
 /* Edit Course */
 /* Edit Main Imfo */
-UPDATE Courses SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
+GO
+CREATE PROCEDURE UpdateCourse @title VARCHAR(100), @startdate VARCHAR(30), @enddate VARCHAR(30), @description VARCHAR(500), @searchtitle VARCHAR(100)
+AS
+BEGIN
+DECLARE @sd AS DATE = (SELECT CONVERT(DATE, @startdate, 103)),
+		@ed AS DATE = (SELECT CONVERT(DATE, @enddate, 103));
+UPDATE Courses SET Title=@title, StartDate=@sd, EndDate=@ed, Description=@description WHERE Title=@searchtitle;
+END
+GO
+
 /* ADD/REMOVE Students */
-INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
+GO
+CREATE PROCEDURE AddStudentToCourse @coursetitle VARCHAR(100), @studentemail VARCHAR(100)
+AS
+BEGIN
+DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
+		@student AS VARCHAR(300) = (SELECT Email FROM Students WHERE Email = @studentemail)
+INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES (@student, @course);
+END
+GO
+
 DELETE FROM StudentsCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
 /* ADD/REMOVE Trainers */
 INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES ('StudentEmail','Course_Test_1');
