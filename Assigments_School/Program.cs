@@ -72,7 +72,7 @@ namespace Assigments_School
                 {
                     Console.WriteLine("Exporting mode!");
                     Console.WriteLine(
-                        "Enter for Example: ls\n\t"
+                        "Enter for Example: ls\n"
                             + "(ls)  -->[ A list of all the students.                                                                                ]\n"
                             + "(lt)  -->[ A list of all the trainers.                                                                                ]\n"
                             + "(la)  -->[ A list of all the assignments.                                                                             ]\n"
