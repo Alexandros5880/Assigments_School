@@ -124,7 +124,7 @@ namespace Assigments_School
                             GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek();
                             break;
                         case "lsdc":
-                            GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeekAsThisDate();
+                            GetAllStudentsWhoNeedToSubmitAssignmentsOnTheSameWeekAsThisDate();
                             break;
                         default:
                             Console.WriteLine("Enter a Valid Choice.");
@@ -1859,7 +1859,7 @@ namespace Assigments_School
         private static void GetAllStudents()
         {
             Console.WriteLine("\n");
-            string sql_query = "SELECT * FROM Students;";
+            string sql_query = "EXEC GetAllStudents;";
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -1897,7 +1897,7 @@ namespace Assigments_School
         private static void GetAllTrainers()
         {
             Console.WriteLine("\n");
-            string sql_query = "SELECT * FROM Trainers;";
+            string sql_query = "EXEC GetAllTrainers;";
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -1935,7 +1935,7 @@ namespace Assigments_School
         private static void GetAllAssignments()
         {
             Console.WriteLine("\n");
-            string sql_query = "SELECT * FROM Assignments;";
+            string sql_query = "EXEC GetAllAssignments;";
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -1971,7 +1971,7 @@ namespace Assigments_School
         private static void GetAllCourses()
         {
             Console.WriteLine("\n");
-            string sql_query = "SELECT * FROM Courses;";
+            string sql_query = "EXEC GetAllCourses;";
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -2013,7 +2013,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (title.Length > 0)
             {
-                string sql_query = $"SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='{title}');";
+                string sql_query = $"EXEC GetAllStudentsOfCourses '{title}';";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2055,7 +2055,7 @@ namespace Assigments_School
         // Get All Students Per Course
         private static void GetAllStudentsOnCourseByTitle(string title)
         {
-            string sql_query = $"SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='{title}');";
+            string sql_query = $"EXEC GetAllStudentsOfCourses '{title}';";
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -2098,7 +2098,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (title.Length > 0)
             {
-                string sql_query = $"SELECT * FROM Trainers tr WHERE Email IN (SELECT TrainerEmail FROM TrainersCourse WHERE CourseTitle='{title}');";
+                string sql_query = $"EXEC GetAllTrainersOfCourses '{title}';";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2141,7 +2141,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (title.Length > 0)
             {
-                string sql_query = $"SELECT * FROM Trainers tr WHERE Email IN (SELECT TrainerEmail FROM TrainersCourse WHERE CourseTitle='{title}');";
+                string sql_query = $"EXEC GetAllTrainersOfCourses '{title}';";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2187,7 +2187,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (title.Length > 0)
             {
-                string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle='{title}');";
+                string sql_query = $"EXEC GetAllAssignmentsOfCourses '{title}';";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2231,7 +2231,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (title.Length > 0)
             {
-                string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle='{title}');";
+                string sql_query = $"EXEC GetAllAssignmentsOfCourses '{title}';";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2274,7 +2274,7 @@ namespace Assigments_School
         {
             if (title.Length > 0)
             {
-                string sql_query = $"SELECT * FROM AssignmentsStudents WHERE AssignmentTitle='{title}';";
+                string sql_query = $"EXEC GetAllStudentsOfAssignment '{title}';";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2318,7 +2318,7 @@ namespace Assigments_School
             if(title.Length > 0)
             {
                 // Get Title Of This Course
-                string query = $"SELECT CourseTitle FROM AssignmentsCourse WHERE AssignmentTitle='{title}' LIMIT 0, 1;";
+                string query = $"EXEC GetCourseTitleByAssignmentTitle '{title}';";
                 SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2357,7 +2357,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (email.Length > 0)
             {
-                string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail='{email}');";
+                string sql_query = $"EXEC GetAllAssignmentsOfStudent '{email}';";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2395,7 +2395,7 @@ namespace Assigments_School
         private static void GetAllStudentsThatBelongToMoreThatOneCourse()
         {
             Console.WriteLine("\n");
-            string sql_query = $"SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse GROUP BY StudentEmail HAVING COUNT(*) > 1);";
+            string sql_query = $"EXEC GetAllStudentsThatBelongMoreToOneCourse;";
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -2436,8 +2436,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (email.Length > 0 && title.Length > 0)
             {
-                string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE " +
-                    $"CourseTitle='{title}') AND Title IN(SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail = '{email}'); ";
+                string sql_query = $"EXEC GetAllAssignmentsPerCourseAndStudent '{title}', '{email}';";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {
@@ -2475,8 +2474,7 @@ namespace Assigments_School
         private static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
         {
             Console.WriteLine("\n");
-            string sql_query = $"SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents " +
-                $"WHERE AssignmentTitle IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW())));";
+            string sql_query = $"EXEC GetAllStudentsSubmitsAssOnSameWeek;";
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -2507,7 +2505,7 @@ namespace Assigments_School
         }
 
         // Get All Students Who Need To Submeet An Assignment On The Same Week As The Date
-        private static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeekAsThisDate()
+        private static void GetAllStudentsWhoNeedToSubmitAssignmentsOnTheSameWeekAsThisDate()
         {
             Console.WriteLine("\n");
             Console.Write($"Enter A Date Like({DateTime.Today.ToString("dd/MM/yyy", CultureInfo.CreateSpecificCulture("es-ES"))}): ");
@@ -2515,9 +2513,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if(date.Length > 0)
             {
-                string sql_query = $"SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents " +
-                    $"WHERE AssignmentTitle IN (SELECT Title FROM Assignments " +
-                    $"WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(STR_TO_DATE('{date}', '%d/%m/%y'))));";
+                string sql_query = $"EXEC GetAllStudentsSubmitsAssOnSameWeekAsDate '{date}'";
                 SqlConnection connection = new SqlConnection(DB_connection_string);
                 try
                 {

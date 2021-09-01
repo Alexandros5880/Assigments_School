@@ -166,6 +166,35 @@ SELECT * FROM Assignments WHERE Title IN (SELECT AssignmentTitle FROM Assignment
 END
 GO
 
+/* Get All Students Of Specific Assignment */
+GO
+CREATE PROCEDURE GetAllStudentsOfAssignment  @title VARCHAR(100)
+AS
+BEGIN
+SELECT * FROM Students WHERE Email IN
+(SELECT StudentEmail FROM AssignmentsStudents WHERE AssignmentTitle=@title);
+END
+GO
+
+/* Get Course Title By Assignment Title */
+GO
+CREATE PROCEDURE GetCourseTitleByAssignmentTitle @title VARCHAR(100)
+AS
+BEGIN
+SELECT TOP 1 CourseTitle FROM AssignmentsCourse WHERE AssignmentTitle=@title;
+END
+GO
+
+/* Get All Assignments Per Course And Student */
+GO
+CREATE PROCEDURE GetAllAssignmentsPerCourseAndStudent @coursetitle VARCHAR(100), @studentemail VARCHAR(300)
+AS
+BEGIN
+SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE 
+CourseTitle=@coursetitle) AND Title IN(SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail =@studentemail);
+END
+GO
+
 /* Get All Students Tha Belong To More That One Course */
 GO
 CREATE PROCEDURE GetAllStudentsThatBelongMoreToOneCourse
