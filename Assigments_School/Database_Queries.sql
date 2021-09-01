@@ -347,7 +347,30 @@ BEGIN
 UPDATE Assignments SET Title=@title, StartDate=@startdate, EndDate=@enddate, Description=@description WHERE Title=@searchtitle;
 END
 GO
-
+/* Update Title */
+GO
+CREATE PROCEDURE UpdateAssignmentsTitle @title VARCHAR(100), @searchtitle VARCHAR(100)
+AS
+BEGIN
+UPDATE Assignments SET Title=@title WHERE Title=@searchtitle;
+END
+GO
+/* Update Date */
+GO
+CREATE PROCEDURE UpdateAssignmentsDate @enddate VARCHAR(30), @searchtitle VARCHAR(100)
+AS
+BEGIN
+UPDATE Assignments SET EndDate=@enddate WHERE Title=@searchtitle;
+END
+GO
+/* Update Description */
+GO
+CREATE PROCEDURE UpdateAssignmentsDescription @description VARCHAR(500), @searchtitle VARCHAR(100)
+AS
+BEGIN
+UPDATE Assignments SET Description=@description WHERE Title=@searchtitle;
+END
+GO
 /* ADD Student To Assignment */
 GO
 CREATE PROCEDURE InsertStudentToAssignment @studentemail VARCHAR(100),  @assignmenttitle VARCHAR(100)

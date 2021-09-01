@@ -1150,7 +1150,7 @@ namespace Assigments_School
                                                     if(title.Length > 0)
                                                     {
                                                         // Enter Title To Database
-                                                        string sql_query_0 = $"UPDATE Assignments SET Title='{title}' WHERE Title='{assignment_title}';";
+                                                        string sql_query_0 = $"EXEC UpdateAssignmentsTitle '{title}', '{assignment_title}';";
                                                         SqlConnection connection_0 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
@@ -1178,7 +1178,7 @@ namespace Assigments_School
                                                     if(enddate.Length > 0)
                                                     {
                                                         // Enter Ende Date To Database
-                                                        string sql_query_1 = $"UPDATE Assignments SET EndDate='{enddate}' WHERE Title='{assignment_title}';";
+                                                        string sql_query_1 = $"EXEC UpdateAssignmentsDate '{enddate}', '{assignment_title}'; ";
                                                         SqlConnection connection_1 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
@@ -1206,7 +1206,7 @@ namespace Assigments_School
                                                     if(description.Length > 0)
                                                     {
                                                         // Enter Description To Database
-                                                        string sql_query_2 = $"UPDATE Assignments SET Description='{description}' WHERE Title='{assignment_title}';";
+                                                        string sql_query_2 = $"EXEC UpdateAssignmentsDescription '{description}', '{assignment_title}';";
                                                         SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
@@ -1243,7 +1243,7 @@ namespace Assigments_School
                                         Console.WriteLine("\n");
                                         while (true)
                                         {
-                                            Console.Write("Stop(stop) ? Add Existing Student(ex): ");
+                                            Console.Write("Stop(stop) ? Add Student(a): ");
                                             string st_choice_2 = Console.ReadLine();
                                             if (st_choice_2.Equals("stop"))
                                             {
@@ -1254,7 +1254,7 @@ namespace Assigments_School
                                                 string student_email_2;
                                                 switch (st_choice_2)
                                                 {
-                                                    case "ex":
+                                                    case "a":
                                                         // Get Parents Course Title;
                                                         string course_title_2 = GetCourseTitleByAssignmentTitle(assignment_title);
                                                         // Select ALL Students On This Course
@@ -1264,8 +1264,7 @@ namespace Assigments_School
                                                         my_id_2 = Console.ReadLine();
                                                         student_email_2 = students[int.Parse(my_id_2)];
                                                         // Add Student To DataBase
-                                                        string sql_query_2 = $"INSERT INTO AssignmentsStudents (StudentEmail,AssignmentTitle) " +
-                                                            $"VALUES ('{student_email_2}','{assignment_title}');";
+                                                        string sql_query_2 = $"EXEC InsertStudentToAssignment '{student_email_2}', '{assignment_title}';";
                                                         SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
@@ -1300,7 +1299,7 @@ namespace Assigments_School
                                         my_id = Console.ReadLine();
                                         string student_email = students[int.Parse(my_id)];
                                         // Delete This Student On This Assignment
-                                        string sql_query_3 = $"DELETE FROM AssignmentsStudents WHERE AssignmentTitle='{assignment_title}' AND StudentEmail='{student_email}';";
+                                        string sql_query_3 = $"EXEC DeleteStudentFromAssignment '{student_email}', '{assignment_title}';";
                                         SqlConnection connection_3 = new SqlConnection(DB_connection_string);
                                         try
                                         {
@@ -1323,8 +1322,8 @@ namespace Assigments_School
                                 }
                                 break;
                             case "del": // Delete Assignment
-                                // Delete All Assignments Courses
-                                string sql_query = $"DELETE FROM AssignmentsCourse WHERE AssignmentTitle='{assignment_title}';";
+                                // Delete All Assignments And All Related Records
+                                string sql_query = $"EXEC DeleteAssignment '{assignment_title}';";
                                 SqlConnection connection = new SqlConnection(DB_connection_string);
                                 try
                                 {
@@ -1340,41 +1339,6 @@ namespace Assigments_School
                                 {
                                     connection.Close();
                                 }
-                                // Delete All Assignments Students
-                                sql_query = $"DELETE FROM AssignmentsStudents WHERE AssignmentTitle='{assignment_title}';";
-                                connection = new SqlConnection(DB_connection_string);
-                                try
-                                {
-                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                    connection.Open();
-                                    var reader = cmd.ExecuteNonQuery();
-                                }
-                                catch (SqlException ex)
-                                {
-                                    Console.WriteLine($"Exception: {ex.Message}");
-                                }
-                                finally
-                                {
-                                    connection.Close();
-                                }
-                                // Delete This Assignment
-                                sql_query = $"DELETE FROM Assignments WHERE AssignmentTitle='{assignment_title}';";
-                                connection = new SqlConnection(DB_connection_string);
-                                try
-                                {
-                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                    connection.Open();
-                                    var reader = cmd.ExecuteNonQuery();
-                                }
-                                catch (SqlException ex)
-                                {
-                                    Console.WriteLine($"Exception: {ex.Message}");
-                                }
-                                finally
-                                {
-                                    connection.Close();
-                                }
-                                Console.WriteLine("Delete Assignment OK.\n");
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
