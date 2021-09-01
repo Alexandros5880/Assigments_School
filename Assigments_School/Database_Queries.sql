@@ -354,6 +354,16 @@ END
 GO
 
 
+/* Student */
+/* Insert Student */
+GO
+CREATE PROCEDURE InsertStudent @firstname VARCHAR(50), @lastname VARCHAR(50), @age INT, 
+								@gender VARCHAR(10), @email VARCHAR(300), @phone VARCHAR(15)
+AS
+BEGIN
+INSERT INTO Students (FirstName, LastName, Age, Gender, Email, Phone) VALUES (@firstname, @lastname, @age, @gender, @email, @phone);
+END
+GO
 /* Edit Student */
 GO
 CREATE PROCEDURE UpdateStudent @firstname VARCHAR(50), @lastname VARCHAR(50), @age INT, 
@@ -371,7 +381,15 @@ BEGIN
 DELETE FROM Students WHERE Email=@email;END
 GO
 
-
+/* Trainer */
+/* Insert Trainer */
+CREATE PROCEDURE InsertTrainer @firstname VARCHAR(50), @lastname VARCHAR(50), @age INT, 
+								@gender VARCHAR(10), @email VARCHAR(300), @phone VARCHAR(15)
+AS
+BEGIN
+INSERT INTO Trainers (FirstName, LastName, Age, Gender, Email, Phone) VALUES (@firstname, @lastname, @age, @gender, @email, @phone);
+END
+GO
 /* Edit Trainer */
 GO
 CREATE PROCEDURE UpdateTrainer @firstname VARCHAR(50), @lastname VARCHAR(50), @age INT, 
