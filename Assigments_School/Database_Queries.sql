@@ -206,9 +206,7 @@ GO
 CREATE PROCEDURE UpdateCourse @title VARCHAR(100), @startdate VARCHAR(30), @enddate VARCHAR(30), @description VARCHAR(500), @searchtitle VARCHAR(100)
 AS
 BEGIN
-DECLARE @sd AS DATE = (SELECT CONVERT(DATE, @startdate, 103)),
-		@ed AS DATE = (SELECT CONVERT(DATE, @enddate, 103));
-UPDATE Courses SET Title=@title, StartDate=@sd, EndDate=@ed, Description=@description WHERE Title=@searchtitle;
+UPDATE Courses SET Title=@title, StartDate=@startdate, EndDate=@enddate, Description=@description WHERE Title=@searchtitle;
 END
 GO
 
@@ -291,7 +289,14 @@ GO
 
 /* Edit Assignments */
 /* Edit Main Imfo */
-UPDATE Assignments SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
+GO
+CREATE PROCEDURE UpdateAssignment @title VARCHAR(100), @startdate VARCHAR(30), @enddate VARCHAR(30), @description VARCHAR(500), @searchtitle VARCHAR(100)
+AS
+BEGIN
+UPDATE Assignments SET Title=@title, StartDate=@startdate, EndDate=@enddate, Description=@description WHERE Title=@searchtitle;
+END
+GO
+
 /* ADD/REMOVE Students */
 INSERT INTO AssignmentsStudents (StudentEmail, AssignmentTitle) VALUES ('alexandrosplatanios151@gmail.com','Assignment_Test_1');
 DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle' AND StudentEmail='StudentEmail';
