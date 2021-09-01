@@ -309,6 +309,14 @@ GO
 
 
 /* Edit Assignments */
+/* Insert Assignment */
+GO
+CREATE PROCEDURE UpdateAssignment @title VARCHAR(100), @startdate VARCHAR(30), @enddate VARCHAR(30), @description VARCHAR(500)
+AS
+BEGIN
+INSERT INTO Assignments (Title, StartDate, EndDate, Description) VALUES (@title, @startdate, @enddate, @description);
+END
+GO
 /* Edit Main Imfo */
 GO
 CREATE PROCEDURE UpdateAssignment @title VARCHAR(100), @startdate VARCHAR(30), @enddate VARCHAR(30), @description VARCHAR(500), @searchtitle VARCHAR(100)
