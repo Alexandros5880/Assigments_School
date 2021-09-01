@@ -180,7 +180,7 @@ GO
 CREATE PROCEDURE GetAllStudentsSubmitsAssOnSameWeek
 AS
 BEGIN
-DECLARE @numGivenWeekDate AS VARCHAR(100)=(SELECT DATEPART(week, (SELECT CONVERT(DATE, '27/7/2021', 103)))),
+DECLARE @numGivenWeekDate AS VARCHAR(100)=(SELECT DATEPART(week, (SELECT CONVERT(DATE, (SELECT CAST( GETDATE() AS Date)), 103)))),
 		@numNowWeekDate AS VARCHAR(100)=(SELECT DATEPART(week, (SELECT CAST( GETDATE() AS Date ))));
 SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents WHERE AssignmentTitle IN 
                                         (SELECT Title FROM Assignments WHERE @numGivenWeekDate = @numGivenWeekDate ));
@@ -285,12 +285,10 @@ END
 GO
 /* REMOVE Assignments From Course */
 GO
-CREATE PROCEDURE DeleteAssignmentFromCourse @coursetitle VARCHAR(100), @traineremail VARCHAR(100)
+CREATE PROCEDURE DeleteAssignmentFromCourse @coursetitle VARCHAR(200), @assignmenttitle VARCHAR(200)
 AS
 BEGIN
-DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
-		@trainer AS VARCHAR(300) = (SELECT Email FROM Trainers WHERE Email = @traineremail)
-DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
+DELETE FROM AssignmentsCourse WHERE CourseTitle=@coursetitle AND AssignmentTitle=@assignmenttitle;
 END
 GO
 /* DELETE THIS COURSE  */
