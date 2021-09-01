@@ -217,6 +217,14 @@ GO
 
 
 /* Edit Course */
+/* Insert Course */
+GO
+CREATE PROCEDURE InsertCourse @title VARCHAR(100), @startdate VARCHAR(30), @enddate VARCHAR(30), @description VARCHAR(500)
+AS
+BEGIN
+INSERT INTO Courses (Title, StartDate, EndDate, Description) VALUES (@title, @startdate, @enddate, @description);
+END
+GO
 /* Edit Main Imfo */
 GO
 CREATE PROCEDURE UpdateCourse @title VARCHAR(100), @startdate VARCHAR(30), @enddate VARCHAR(30), @description VARCHAR(500), @searchtitle VARCHAR(100)
@@ -225,7 +233,6 @@ BEGIN
 UPDATE Courses SET Title=@title, StartDate=@startdate, EndDate=@enddate, Description=@description WHERE Title=@searchtitle;
 END
 GO
-
 /* ADD Student To Course */
 GO
 CREATE PROCEDURE AddStudentToCourse @coursetitle VARCHAR(100), @studentemail VARCHAR(100)
@@ -246,7 +253,6 @@ DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @cour
 DELETE FROM StudentsCourse WHERE CourseTitle=@course AND StudentEmail=@student;
 END
 GO
-
 /* ADD Trainers To Course */
 GO
 CREATE PROCEDURE AddTrainerToCourse @coursetitle VARCHAR(100), @traineremail VARCHAR(100)
@@ -267,7 +273,6 @@ DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @cour
 DELETE FROM TrainersCourse WHERE CourseTitle=@course AND TrainerEmail=@trainer;
 END
 GO
-
 /* Add Assignments To Course */
 GO
 CREATE PROCEDURE AddAssignmentToCourse @coursetitle VARCHAR(100), @assignmenttitle VARCHAR(100)
@@ -288,9 +293,7 @@ DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @cour
 DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
 END
 GO
-
-
-/* DELETE THIS COURSE AND ALL RELATED RECORDS */
+/* DELETE THIS COURSE  */
 GO
 CREATE PROCEDURE DeleteCourse @coursetitle VARCHAR(100)
 AS
@@ -302,6 +305,8 @@ DELETE FROM TrainersCourse WHERE CourseTitle=@course;
 DELETE FROM Courses WHERE Title=@course;
 END
 GO
+
+
 
 /* Edit Assignments */
 /* Edit Main Imfo */
