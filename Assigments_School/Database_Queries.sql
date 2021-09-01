@@ -233,6 +233,30 @@ BEGIN
 UPDATE Courses SET Title=@title, StartDate=@startdate, EndDate=@enddate, Description=@description WHERE Title=@searchtitle;
 END
 GO
+/* Update Title */
+GO
+CREATE PROCEDURE UpdateCourseTitle @title VARCHAR(100), @searchtitle VARCHAR(100)
+AS
+BEGIN
+UPDATE Courses SET Title=@title WHERE Title=@searchtitle;
+END
+GO
+/* Update Date */
+GO
+CREATE PROCEDURE UpdateCourseEndDate @enddate VARCHAR(30), @searchtitle VARCHAR(100)
+AS
+BEGIN
+UPDATE Courses SET EndDate=@enddate WHERE Title=@searchtitle;
+END
+GO
+/* Update Description */
+GO
+CREATE PROCEDURE UpdateCourseEndDescription @description VARCHAR(500), @searchtitle VARCHAR(100)
+AS
+BEGIN
+UPDATE Courses SET Description=@description WHERE Title=@searchtitle;
+END
+GO
 /* ADD Student To Course */
 GO
 CREATE PROCEDURE AddStudentToCourse @coursetitle VARCHAR(100), @studentemail VARCHAR(100)

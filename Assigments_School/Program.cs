@@ -349,7 +349,7 @@ namespace Assigments_School
         }
 
         // Import Assignments
-        private static void AddAssignment()
+        private static string AddAssignment()
         {
             try
             {
@@ -539,15 +539,18 @@ namespace Assigments_School
                             }
                         }
                     }
+                    return title;
                 }
                 else
                 {
                     Console.WriteLine("Please Fill All Fields!");
+                    return "";
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
+                return "";
             }
         }
 
@@ -703,7 +706,7 @@ namespace Assigments_School
                                         if(title.Length > 0)
                                         {
                                             // Update DATABASE
-                                            string sql_query = $"UPDATE Courses SET Title='{title}' WHERE Title='{course_title}';";
+                                            string sql_query = $"EXEC UpdateCourseTitle '{title}', '{course_title}';";
                                             SqlConnection connection = new SqlConnection(DB_connection_string);
                                             try
                                             {
@@ -728,7 +731,7 @@ namespace Assigments_School
                                         if(enddate.Length > 0)
                                         {
                                             // Update DATABASE
-                                            string sql_query = $"UPDATE Courses SET EndDate='{enddate}' WHERE Title='{course_title}';";
+                                            string sql_query = $"EXEC UpdateCourseEndDate '{enddate}', '{course_title}';";
                                             SqlConnection connection = new SqlConnection(DB_connection_string);
                                             try
                                             {
@@ -753,7 +756,7 @@ namespace Assigments_School
                                         if (description.Length > 0)
                                         {
                                             // Update DATABASE
-                                            string sql_query = $"UPDATE Courses SET Description='{description}' WHERE Title='{course_title}';";
+                                            string sql_query = $"EXEC UpdateCourseEndDescription '{description}', '{course_title}';";
                                             SqlConnection connection = new SqlConnection(DB_connection_string);
                                             try
                                             {
@@ -800,8 +803,7 @@ namespace Assigments_School
                                                     case "new":
                                                         student_email_2 = AddStudent();
                                                         // Add Trainer To DataBase
-                                                        string sql_query_2 = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
-                                                                    $"VALUES ('{student_email_2}','{course_title}');";
+                                                        string sql_query_2 = $"EXEC AddStudentToCourse '{course_title}', '{student_email_2}';";
                                                         SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
@@ -825,8 +827,7 @@ namespace Assigments_School
                                                         my_id_2 = Console.ReadLine();
                                                         student_email_2 = students[int.Parse(my_id_2)];
                                                         // Add Trainer To DataBase
-                                                        sql_query_2 = $"INSERT INTO StudentsCourse (StudentEmail, CourseTitle) " +
-                                                            $"VALUES ('{student_email_2}','{course_title}');";
+                                                        sql_query_2 = $"EXEC AddStudentToCourse '{course_title}', '{student_email_2}';";
                                                         connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
@@ -858,7 +859,7 @@ namespace Assigments_School
                                         my_id = Console.ReadLine();
                                         string student_email = students[int.Parse(my_id)];
                                         // Add Trainer To DataBase
-                                        string sql_query = $"DELETE FROM StudentsCourse WHERE CourseTitle='{course_title}' AND StudentEmail='{student_email}';";
+                                        string sql_query = $"EXEC DeleteStudentToCourse '{course_title}', '{student_email}';";
                                         SqlConnection connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
@@ -905,8 +906,7 @@ namespace Assigments_School
                                                     case "new":
                                                         trainer_email = AddTrainer();
                                                         // Add Trainer To DataBase
-                                                        string sql_query_2 = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
-                                                                    $"VALUES ('{trainer_email}','{course_title}');";
+                                                        string sql_query_2 = $"EXEC AddTrainerToCourse '{course_title}', '{trainer_email}';";
                                                         SqlConnection connection_2 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
@@ -930,8 +930,7 @@ namespace Assigments_School
                                                         my_id_3 = Console.ReadLine();
                                                         trainer_email = trainers[int.Parse(my_id_3)];
                                                         // Add Trainer To DataBase
-                                                        string sql_query_3 = $"INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) " +
-                                                            $"VALUES ('{trainer_email}','{course_title}');";
+                                                        string sql_query_3 = $"EXEC AddTrainerToCourse '{course_title}', '{trainer_email}';";
                                                         SqlConnection connection_3 = new SqlConnection(DB_connection_string);
                                                         try
                                                         {
@@ -963,7 +962,7 @@ namespace Assigments_School
                                         my_id_2 = Console.ReadLine();
                                         string student_email = students[int.Parse(my_id_2)];
                                         // Add Trainer To DataBase
-                                        string sql_query = $"DELETE FROM TrainersCourse WHERE CourseTitle='{course_title}' AND StudentEmail='{student_email}';";
+                                        string sql_query = $"EXEC DeleteTrainerToCourse '{course_title}', '{student_email}';";
                                         SqlConnection connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
@@ -986,7 +985,108 @@ namespace Assigments_School
                                 }
                                 break;
                             case "ass": // Edit Assignments
-                                // TODO: [EditCourse()]: Edit Assignment Line 995
+                                // TODO: [EditCourse()]: Edit Assignment Line 985
+                                Console.WriteLine("\n");
+                                Console.Write("Add(add) ? Remove(del): ");
+                                string as_choice = Console.ReadLine();
+                                string ass_title;
+                                switch (as_choice)
+                                {
+                                    case "add":
+                                        // Add Assignments To Course
+                                        Console.WriteLine("\n");
+                                        while (true)
+                                        {
+                                            Console.Write("Stop(stop) ? Add New Assignment(new) ? Add Existing Assignment(ex): ");
+                                            string tr_choice_2 = Console.ReadLine();
+                                            if (tr_choice_2.Equals("stop"))
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                switch (tr_choice_2)
+                                                {
+                                                    case "new":
+                                                        ass_title = AddAssignment();
+                                                        // Add Assignment To DataBase
+                                                        string sql_query_2 = $"EXEC AddAssignmentToCourse '{course_title}', '{ass_title}';";
+                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
+                                                        try
+                                                        {
+                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
+                                                            connection_2.Open();
+                                                            var reader = cmd.ExecuteNonQuery();
+                                                        }
+                                                        catch (SqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            connection_2.Close();
+                                                        }
+                                                        break;
+                                                    case "ex":
+                                                        string my_id_3;
+                                                        Console.WriteLine("Select Assignment By Id(3): ");
+                                                        GetAllAssignments();
+                                                        my_id_3 = Console.ReadLine();
+                                                        ass_title = assignments[int.Parse(my_id_3)];
+                                                        // Add Assignment To DataBase
+                                                        string sql_query_3 = $"EXEC AddAssignmentToCourse '{course_title}', '{ass_title}';";
+                                                        SqlConnection connection_3 = new SqlConnection(DB_connection_string);
+                                                        try
+                                                        {
+                                                            SqlCommand cmd = new SqlCommand(sql_query_3, connection_3);
+                                                            connection_3.Open();
+                                                            var reader = cmd.ExecuteNonQuery();
+                                                        }
+                                                        catch (SqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            connection_3.Close();
+                                                        }
+                                                        break;
+                                                    default:
+                                                        Console.WriteLine("Enter A Valid Choice!");
+                                                        break;
+                                                }
+                                            }
+                                        }
+                                        trainers.Clear();
+                                        break;
+                                    case "del":
+                                        string my_id_2;
+                                        Console.WriteLine("Select Assignment By Id(3): ");
+                                        GetAllAssignmentsPerCourse(course_title);
+                                        my_id_2 = Console.ReadLine();
+                                        ass_title = assignments[int.Parse(my_id_2)];
+                                        // Add Trainer To DataBase
+                                        string sql_query = $"EXEC DeleteAssignmentFromCourse '{course_title}', '{ass_title}';";
+                                        SqlConnection connection = new SqlConnection(DB_connection_string);
+                                        try
+                                        {
+                                            SqlCommand cmd = new SqlCommand(sql_query, connection);
+                                            connection.Open();
+                                            var reader = cmd.ExecuteNonQuery();
+                                        }
+                                        catch (SqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            connection.Close();
+                                        }
+                                        break;
+                                    default:
+                                        Console.WriteLine("Enter A Valid Choice!");
+                                        break;
+                                }
                                 break;
                             case "del": // Delete This Course
                                 // TODO: [EditCourse()]: Delete This Course Line 998
@@ -2171,6 +2271,50 @@ namespace Assigments_School
             Console.WriteLine("\n");
             Console.Write("Enter Course Title: ");
             string title = Console.ReadLine();
+            Console.WriteLine("\n");
+            if (title.Length > 0)
+            {
+                string sql_query = $"SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle='{title}');";
+                SqlConnection connection = new SqlConnection(DB_connection_string);
+                try
+                {
+                    SqlCommand cmd = new SqlCommand(sql_query, connection);
+                    connection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    assignments.Clear();
+                    int counter = 0;
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Assignment: id={counter} {reader["Title"].ToString().Trim()}  " +
+                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
+                        assignments.Add(reader["Title"].ToString().Trim());
+                        counter++;
+                    }
+
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please Enter A Valid Title!");
+            }
+        }
+
+        // Get All Assignments Per Course
+        private static void GetAllAssignmentsPerCourse(string title)
+        {
             Console.WriteLine("\n");
             if (title.Length > 0)
             {
