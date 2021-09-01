@@ -575,8 +575,7 @@ namespace Assigments_School
                 if (firstname.Length > 0 && lastname.Length > 0 && age > 0 &&
                     email.Length > 0 && phone.Length > 0 && gender.Length > 0)
                 {
-                    string sql_query = $"INSERT INTO Students (FirstName, LastName, Age, Gender, StartDate, Email, Phone) " +
-                        $"VALUES('{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}'); ";
+                    string sql_query = $"EXEC InsertStudent '{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}';";
                     SqlConnection connection = new SqlConnection(DB_connection_string);
                     try
                     {
