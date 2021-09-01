@@ -1,22 +1,26 @@
 /* Create Database and Select this Database */
 CREATE DATABASE AssignmentsSchool;
+GO
 USE AssignmentsSchool;
+GO
 
 /* Create Tables */
 CREATE TABLE Courses (
     Title NCHAR (255)   NOT NULL,
     StartDate  NCHAR (255) NULL,
     EndDate NCHAR (255) NULL,
-    Description LONGTEXT NULL,
+    Description VARCHAR(500) NULL,
     PRIMARY KEY CLUSTERED (Title ASC)
 );
+GO
 CREATE TABLE Assignments ( /* Courses */
     Title NCHAR (255)   NOT NULL,
     StartDate  NCHAR (255) NULL,
     EndDate NCHAR (255) NULL,
-    Description LONGTEXT NULL,
+    Description VARCHAR(500) NULL,
     PRIMARY KEY CLUSTERED (Title ASC)
 );
+GO
 CREATE TABLE Trainers ( /* Courses */
     FirstName NCHAR (255)   NULL,
     LastName  NCHAR (255) NULL,
@@ -27,6 +31,7 @@ CREATE TABLE Trainers ( /* Courses */
     Phone  NCHAR (255) NULL,
     PRIMARY KEY CLUSTERED (Email ASC)
 );
+GO
 CREATE TABLE Students ( /* Assignments, Courses */
     FirstName NCHAR (255)   NULL,
     LastName  NCHAR (255) NULL,
@@ -37,33 +42,215 @@ CREATE TABLE Students ( /* Assignments, Courses */
     Phone  NCHAR (255) NULL,
     PRIMARY KEY CLUSTERED (Email ASC)
 );
+GO
 CREATE TABLE StudentsCourse (
     CourseTitle NCHAR (255) NOT NULL,
     StudentEmail NCHAR (255) NOT NULL,
     FOREIGN KEY (CourseTitle) REFERENCES Courses(Title),
     FOREIGN KEY (StudentEmail) REFERENCES Students(Email)
 );
+GO
 CREATE TABLE TrainersCourse (
     CourseTitle NCHAR (255) NOT NULL,
     TrainerEmail NCHAR (255) NOT NULL,
     FOREIGN KEY (CourseTitle) REFERENCES Courses(Title),
     FOREIGN KEY (TrainerEmail) REFERENCES Trainers(Email)
 );
+GO
 CREATE TABLE AssignmentsCourse (
     AssignmentTitle NCHAR (255) NULL,
     CourseTitle NCHAR (255) NULL,
     FOREIGN KEY (AssignmentTitle) REFERENCES Assignments (Title),
     FOREIGN KEY (CourseTitle) REFERENCES Courses(Title)
 );
+GO
 CREATE TABLE AssignmentsStudents (
     AssignmentTitle NCHAR (255) NULL,
     StudentEmail NCHAR (255) NOT NULL,
     FOREIGN KEY (AssignmentTitle) REFERENCES Assignments (Title),
     FOREIGN KEY (StudentEmail) REFERENCES Students(Email)
 );
+GO
 
 
-/* Insert Test Records */
+
+
+
+
+/* Request Queries */
+/* Get All Students */
+GO
+CREATE PROCEDURE GetAllStudents
+AS
+BEGIN
+SELECT * FROM Students;
+END
+GO
+
+/* Get All Trainers */
+GO
+CREATE PROCEDURE GetAllTrainers
+AS
+BEGIN
+SELECT * FROM Trainers;
+END
+GO
+
+/* Get All From Assignments */
+GO
+CREATE PROCEDURE GetAllAssignments
+AS
+BEGIN
+SELECT * FROM Assignments;
+END
+GO
+
+/* Get All From Courses */
+GO
+CREATE PROCEDURE GetAllCourses
+AS
+BEGIN
+SELECT * FROM Courses;
+END
+GO
+
+/* Get All Students Of Specific Course */
+GO
+CREATE PROCEDURE GetAllStudentsOfCourses @title VARCHAR(100)
+AS
+BEGIN
+SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle=@title);
+END
+GO
+
+/* Get All Trainers Of Specific Course */
+GO
+CREATE PROCEDURE GetAllTrainersOfCourses @title VARCHAR(100)
+AS
+BEGIN
+SELECT * FROM Trainers tr WHERE Email IN (SELECT TrainerEmail FROM TrainersCourse WHERE CourseTitle=@title);
+END
+GO
+
+/* Get All Assignments Of Specific Course */
+GO
+CREATE PROCEDURE GetAllAssignmentsOfCourses @title VARCHAR(100)
+AS
+BEGIN
+SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle=@title);
+END
+GO
+
+/* Get All Assignments Of Specific Student */
+GO
+CREATE PROCEDURE GetAllAssignmentsOfStudent @email VARCHAR(300)
+AS
+BEGIN
+SELECT * FROM Assignments WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail=@email);
+END
+GO
+
+/* Get All Students Tha Belong To More That One Course */
+GO
+CREATE PROCEDURE GetAllStudentsThatBelongMoreToOneCourse
+AS
+BEGIN
+SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse GROUP BY StudentEmail HAVING COUNT(*) > 1);
+END
+GO
+
+/* Get All Students Who Need To Submit Assignment On The Same Week */
+GO
+CREATE PROCEDURE GetAllStudentsSubmitsAssOnSameWeek
+AS
+BEGIN
+DECLARE @numGivenWeekDate AS VARCHAR(100)=(SELECT DATEPART(week, (SELECT CONVERT(DATE, '27/7/2021', 103)))),
+		@numNowWeekDate AS VARCHAR(100)=(SELECT DATEPART(week, (SELECT CAST( GETDATE() AS Date ))));
+SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents WHERE AssignmentTitle IN 
+                                        (SELECT Title FROM Assignments WHERE @numGivenWeekDate = @numGivenWeekDate ));
+END
+GO
+
+/* Select All Assignments Per Course And Per Student */
+GO
+CREATE PROCEDURE GetAllAssignmentsOfOneStudent @coursetitle VARCHAR(100), @studentemail VARCHAR(300)
+AS
+BEGIN
+SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle=@coursetitle)
+                                AND Title IN (SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail=@studentemail);
+END
+GO
+
+/* Get All Students Who Need To Submit Assignment On The Same Week As The Date */
+GO
+CREATE PROCEDURE GetAllStudentsSubmitsAssOnSameWeekAsDate @date VARCHAR(30)
+AS
+BEGIN
+DECLARE @week AS INT=(SELECT DATEPART(week, (SELECT CONVERT(DATE, @date, 103))));
+SELECT * FROM Students WHERE Email IN
+                             (SELECT StudentEmail FROM AssignmentsStudents
+                             WHERE AssignmentTitle IN
+                                   (SELECT Title FROM Assignments
+                                   WHERE (SELECT DATEPART(week, (SELECT CONVERT(DATE, EndDate, 103)))) = @week));
+END
+GO
+
+
+
+
+
+
+/* Edit Course */
+/* Edit Main Imfo */
+UPDATE Courses SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
+/* ADD/REMOVE Students */
+INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
+DELETE FROM StudentsCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
+/* ADD/REMOVE Trainers */
+INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES ('StudentEmail','Course_Test_1');
+DELETE FROM TrainersCourse WHERE CourseTitle='CourseTitle' AND TrainerEmail='StudentEmail';
+/* ADD/REMOVE Assignments */
+DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
+/* DELETE THIS COURSE AND ALL ASSIGNMENTS */
+DELETE FROM Courses WHERE Title='CourseTitle';
+DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle';
+
+/* Edit Assignments */
+/* Edit Main Imfo */
+UPDATE Assignments SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
+/* ADD/REMOVE Students */
+INSERT INTO AssignmentsStudents (StudentEmail, AssignmentTitle) VALUES ('alexandrosplatanios151@gmail.com','Assignment_Test_1');
+DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle' AND StudentEmail='StudentEmail';
+/* Delete Assignment */
+DELETE FROM AssignmentsCourse WHERE AssignmentTitle='AssignmentTitle';
+DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle';
+DELETE FROM Assignments WHERE Title='AssignmentTitle';
+
+
+/* Edit Student */
+UPDATE Students SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+/* Delete Student */
+DELETE FROM Students WHERE Email='Email';
+
+/* Edit Trainer */
+UPDATE Trainers SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+/* Delete Trainer */
+DELETE FROM Trainers WHERE Email='Email';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   /* Insert Test Records */
 INSERT INTO Trainers (FirstName, LastName, Age, Gender, StartDate, Email, Phone)
 VALUES ('Alexandros_Trainer_1', 'Platanios_Trainer_1', '29', 'Male', '29/07/2021',
         'alexandrosplatanios151@gmail.com', '6949277783');
@@ -130,69 +317,8 @@ INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignm
 INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('Assignment_Test_4','alexandrosplatanios154@gmail.com');
 
 
-/* Request Queries */
-/* Get All Students */
-SELECT * FROM Students;
-/* Get All Trainers */
-SELECT * FROM Trainers;
-/* Get All From Assignments */
-SELECT * FROM Assignments;
-/* Get All From Courses */
-SELECT * FROM Courses;
-/* Get All Students Of Specific Course */
-SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse WHERE CourseTitle='Course_Test_7');
-/* Get All Trainers Of Specific Course */
-SELECT * FROM Trainers tr WHERE Email IN (SELECT TrainerEmail FROM TrainersCourse WHERE CourseTitle='Course_Test_1');
-/* Get All Assignments Of Specific Course */
-SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle='Course_Test_1');
-/* Get All Assignments Of Specific Student */
-SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail='alexandrosplatanios151@gmail.com');
-/* Get All Students Tha Belong To More That One Course */
-SELECT * FROM Students st WHERE Email IN (SELECT StudentEmail FROM StudentsCourse GROUP BY StudentEmail HAVING COUNT(*) > 1);
-/* Get All Students Who Need To Submit Assignment On The Same Week */
-SELECT * FROM Students WHERE Email IN (SELECT StudentEmail FROM AssignmentsStudents WHERE AssignmentTitle
-                    IN (SELECT Title FROM Assignments WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(NOW())));
-/* Select All Assignments Per Course And Per Student */
-SELECT * FROM Assignments ass WHERE Title IN (SELECT AssignmentTitle FROM AssignmentsCourse WHERE CourseTitle='Course_Test_1')
-                                AND Title IN (SELECT AssignmentTitle FROM AssignmentsStudents WHERE StudentEmail='StudentEmail');
 
 
-/* Edit Course */
-/* Edit Main Imfo */
-UPDATE Courses SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
-/* ADD/REMOVE Students */
-INSERT INTO StudentsCourse (StudentEmail, CourseTitle) VALUES ('alexandrosplatanios151@gmail.com','Course_Test_1');
-DELETE FROM StudentsCourse WHERE CourseTitle='CourseTitle' AND StudentEmail='StudentEmail';
-/* ADD/REMOVE Trainers */
-INSERT INTO TrainersCourse (TrainerEmail, CourseTitle) VALUES ('StudentEmail','Course_Test_1');
-DELETE FROM TrainersCourse WHERE CourseTitle='CourseTitle' AND TrainerEmail='StudentEmail';
-/* ADD/REMOVE Assignments */
-DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle' AND AssignmentTitle='AssignmentTitle';
-/* DELETE THIS COURSE AND ALL ASSIGNMENTS */
-DELETE FROM Courses WHERE Title='CourseTitle';
-DELETE FROM AssignmentsCourse WHERE CourseTitle='CourseTitle';
-
-/* Edit Assignments */
-/* Edit Main Imfo */
-UPDATE Assignments SET Title='Title', StartDate='StartDate', EndDate='EndDate', Description='Description' WHERE Title='Title';
-/* ADD/REMOVE Students */
-INSERT INTO AssignmentsStudents (StudentEmail, AssignmentTitle) VALUES ('alexandrosplatanios151@gmail.com','Assignment_Test_1');
-DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle' AND StudentEmail='StudentEmail';
-/* Delete Assignment */
-DELETE FROM AssignmentsCourse WHERE AssignmentTitle='AssignmentTitle';
-DELETE FROM AssignmentsStudents WHERE AssignmentTitle='AssignmentTitle';
-DELETE FROM Assignments WHERE Title='AssignmentTitle';
-
-
-/* Edit Student */
-UPDATE Students SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
-/* Delete Student */
-DELETE FROM Students WHERE Email='Email';
-
-/* Edit Trainer */
-UPDATE Trainers SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
-/* Delete Trainer */
-DELETE FROM Trainers WHERE Email='Email';
 
 
 
@@ -202,8 +328,3 @@ DROP DATABASE AssignmentsSchool;
 
 
 
-SELECT * FROM Students WHERE Email IN
-                             (SELECT StudentEmail FROM AssignmentsStudents
-                             WHERE AssignmentTitle IN
-                                   (SELECT Title FROM Assignments
-                                   WHERE WEEK(STR_TO_DATE(EndDate, '%d/%m/%y')) = WEEK(STR_TO_DATE('01/07/2021', '%d/%m/%y'))));
