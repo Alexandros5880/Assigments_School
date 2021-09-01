@@ -365,8 +365,7 @@ namespace Assigments_School
                 description = Console.ReadLine();
                 if(title.Length > 0 && startdate.Length > 0 && enddate.Length > 0 && description.Length > 0)
                 {
-                    string sql_query = $"INSERT INTO Assignments (Title, StartDate, EndDate, Description) " +
-                        $"VALUES ('{title}', '{startdate}', '{enddate}', '{description}');";
+                    string sql_query = $"EXEC InsertAssignment '{title}', '{startdate}', '{enddate}', '{description}';";
                     SqlConnection connection = new SqlConnection(DB_connection_string);
                     try
                     {
@@ -401,7 +400,7 @@ namespace Assigments_School
                                     if(course_title.Length > 0)
                                     {
                                         // Add To AssignmentsCourse DataBase
-                                        string ass_query = $"INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('{title}','{course_title}');";
+                                        string ass_query = $"EXEC AddAssignmentToCourse '{title}', '{course_title}';";
                                         connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
@@ -427,7 +426,7 @@ namespace Assigments_School
                                     if (course_title.Length > 0)
                                     {
                                         // Add To DataBase
-                                        string ass_query = $"INSERT INTO AssignmentsCourse (AssignmentTitle, CourseTitle) VALUES ('{title}','{course_title}');";
+                                        string ass_query = $"EXEC AddAssignmentToCourse '{title}', '{course_title}';";
                                         connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
@@ -471,7 +470,7 @@ namespace Assigments_School
                                     if (student_email.Length > 0)
                                     {
                                         // Add New Stude To This Course
-                                        string course_query = $"INSERT INTO StudentCourse (StudentEmail, CourseTitle) VALUES ('{student_email}', '{course_title}')";
+                                        string course_query = $"EXEC AddStudentToCourse '{course_title}', '{student_email}';";
                                         connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
@@ -488,7 +487,7 @@ namespace Assigments_School
                                             connection.Close();
                                         }
                                         // Add To AssignmentsStudents On DataBase
-                                        string ass_query = $"INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('{title}','{student_email}');";
+                                        string ass_query = $"EXEC InsertStudentToAssignment '{student_email}', '{title}';";
                                         connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
@@ -516,7 +515,7 @@ namespace Assigments_School
                                     if (student_email.Length > 0)
                                     {
                                         // Add To AssignmentsStudents DataBase
-                                        string ass_query = $"INSERT INTO AssignmentsStudents (AssignmentTitle, StudentEmail) VALUES ('{title}','{student_email}');";
+                                        string ass_query = $"EXEC InsertStudentToAssignment '{student_email}', '{title}';";
                                         connection = new SqlConnection(DB_connection_string);
                                         try
                                         {
