@@ -419,6 +419,54 @@ BEGIN
 UPDATE Students SET FirstName=@firstname, LastName=@lastname, Age=@age, Gender=@gender, Email=@email, Phone=@phone WHERE Email=@searchemail;
 END
 GO
+/* Edit FirstName */
+GO
+CREATE PROCEDURE UpdateStudentFirstName @firstname VARCHAR(50), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Students SET FirstName=@firstname WHERE Email=@searchemail;
+END
+GO
+/* Edit LastName */
+GO
+CREATE PROCEDURE UpdateStudentLastName @lastname VARCHAR(50), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Students SET LastName=@lastname WHERE Email=@searchemail;
+END
+GO
+/* Edit Age */
+GO
+CREATE PROCEDURE UpdateStudentAge @age VARCHAR(11), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Students SET Age=@age WHERE Email=@searchemail;
+END
+GO
+/* Edit Gender */
+GO
+CREATE PROCEDURE UpdateStudentGender @gebder VARCHAR(33), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Students SET Gender=@gender WHERE Email=@searchemail;
+END
+GO
+/* Edit Email */
+GO
+CREATE PROCEDURE UpdateStudentEmail @email VARCHAR(33), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Students SET Email=@email WHERE Email=@searchemail;
+END
+GO
+/* Edit Phone */
+GO
+CREATE PROCEDURE UpdateStudentPhone @phone VARCHAR(33), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Students SET Phone=@phone WHERE Email=@searchemail;
+END
+GO
 /* Delete Student */
 GO
 CREATE PROCEDURE DeleteStudent @email VARCHAR(300)
@@ -443,6 +491,54 @@ CREATE PROCEDURE UpdateTrainer @firstname VARCHAR(50), @lastname VARCHAR(50), @a
 AS
 BEGIN
 UPDATE Trainers SET FirstName=@firstname, LastName=@lastname, Age=@age, Gender=@gender, Email=@email, Phone=@phone WHERE Email=@searchemail;
+END
+GO
+/* Edit FirstName */
+GO
+CREATE PROCEDURE UpdateTrainerFirstName @firstname VARCHAR(50), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Trainers SET FirstName=@firstname WHERE Email=@searchemail;
+END
+GO
+/* Edit LastName */
+GO
+CREATE PROCEDURE UpdateTrainerLastName @lastname VARCHAR(50), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Trainers SET LastName=@lastname WHERE Email=@searchemail;
+END
+GO
+/* Edit Age */
+GO
+CREATE PROCEDURE UpdateTrainerAge @age VARCHAR(11), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Trainers SET Age=@age WHERE Email=@searchemail;
+END
+GO
+/* Edit Gender */
+GO
+CREATE PROCEDURE UpdateTrainerGender @gebder VARCHAR(33), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Trainers SET Gender=@gender WHERE Email=@searchemail;
+END
+GO
+/* Edit Email */
+GO
+CREATE PROCEDURE UpdateTrainerEmail @email VARCHAR(33), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Trainers SET Email=@email WHERE Email=@searchemail;
+END
+GO
+/* Edit Phone */
+GO
+CREATE PROCEDURE UpdateTrainerPhone @phone VARCHAR(33), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Trainers SET Phone=@phone WHERE Email=@searchemail;
 END
 GO
 /* Delete Trainer */

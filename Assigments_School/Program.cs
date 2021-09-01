@@ -1353,7 +1353,7 @@ namespace Assigments_School
             }
         }
 
-        // Edit Trainer
+        // TODO: Edit Trainer LINE 1356
         private static void EditTrainer()
         {
             Console.WriteLine("\n");
@@ -1619,7 +1619,7 @@ namespace Assigments_School
             }
         }
 
-        // Edit Student
+        // TODO: Edit Student line 1622
         private static void EditStudent()
         {
             Console.WriteLine("\n");
