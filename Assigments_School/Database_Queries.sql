@@ -46,29 +46,45 @@ GO
 CREATE TABLE StudentsCourse (
     CourseTitle NCHAR (255) NOT NULL,
     StudentEmail NCHAR (255) NOT NULL,
-    FOREIGN KEY (CourseTitle) REFERENCES Courses(Title),
-    FOREIGN KEY (StudentEmail) REFERENCES Students(Email)
+    FOREIGN KEY (CourseTitle) REFERENCES Courses(Title)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (StudentEmail) REFERENCES Students(Email) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
 );
 GO
 CREATE TABLE TrainersCourse (
     CourseTitle NCHAR (255) NOT NULL,
     TrainerEmail NCHAR (255) NOT NULL,
-    FOREIGN KEY (CourseTitle) REFERENCES Courses(Title),
+    FOREIGN KEY (CourseTitle) REFERENCES Courses(Title)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (TrainerEmail) REFERENCES Trainers(Email)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 GO
 CREATE TABLE AssignmentsCourse (
     AssignmentTitle NCHAR (255) NULL,
     CourseTitle NCHAR (255) NULL,
-    FOREIGN KEY (AssignmentTitle) REFERENCES Assignments (Title),
+    FOREIGN KEY (AssignmentTitle) REFERENCES Assignments (Title)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (CourseTitle) REFERENCES Courses(Title)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 GO
 CREATE TABLE AssignmentsStudents (
     AssignmentTitle NCHAR (255) NULL,
     StudentEmail NCHAR (255) NOT NULL,
-    FOREIGN KEY (AssignmentTitle) REFERENCES Assignments (Title),
-    FOREIGN KEY (StudentEmail) REFERENCES Students(Email)
+    FOREIGN KEY (AssignmentTitle) REFERENCES Assignments (Title)
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE,
+    FOREIGN KEY (StudentEmail) REFERENCES Students(Email) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
 );
 GO
 
@@ -276,7 +292,7 @@ GO
 
 /* DELETE THIS COURSE AND ALL RELATED RECORDS */
 GO
-CREATE PROCEDURE DeleteCourseAndRelatedAssignments @coursetitle VARCHAR(100)
+CREATE PROCEDURE DeleteCourse @coursetitle VARCHAR(100)
 AS
 BEGIN
 DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle);
@@ -326,9 +342,22 @@ GO
 
 
 /* Edit Student */
-UPDATE Students SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';
+GO
+CREATE PROCEDURE UpdateStudent @firstname VARCHAR(50), @lastname VARCHAR(50), @age INT, 
+								@gender VARCHAR(10), @email VARCHAR(300), @phone VARCHAR(15), @searchemail VARCHAR(300)
+AS
+BEGIN
+UPDATE Students SET FirstName=@firstname, LastName=@lastname, Age=@age, Gender=@gender, Email=@email, Phone=@phone WHERE Email=@searchemail;
+END
+GO
 /* Delete Student */
-DELETE FROM Students WHERE Email='Email';
+GO
+CREATE PROCEDURE DeleteStudent @email VARCHAR(300)
+AS
+BEGIN
+DELETE FROM Students WHERE Email=@email;END
+GO
+
 
 /* Edit Trainer */
 UPDATE Trainers SET FirstName='FirstName', LastName='LastName', Age='Age', Gender='Gender', Email='Email', Phone='Phone' WHERE Email='Email';

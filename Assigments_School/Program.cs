@@ -992,8 +992,10 @@ namespace Assigments_School
                                 }
                                 break;
                             case "ass": // Edit Assignments
+                                // TODO: [EditCourse()]: Edit Assignment Line 995
                                 break;
                             case "del": // Delete This Course
+                                // TODO: [EditCourse()]: Delete This Course Line 998
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
@@ -1133,8 +1135,7 @@ namespace Assigments_School
                                                     }
                                                     break;
                                             }
-                                    }
-                                        
+                                        }
                                     }
                                 }
                                 break;
@@ -1186,7 +1187,6 @@ namespace Assigments_School
                                                         {
                                                             connection_2.Close();
                                                         }
-
                                                         break;
                                                     default:
                                                         Console.WriteLine("Enter A Valid Choice!");
