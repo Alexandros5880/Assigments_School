@@ -59,6 +59,7 @@
     <Folder Include="Tables" />
     <Folder Include="Procedures" />
     <Folder Include="AfterPublishScript" />
+    <Folder Include="Diagram" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Courses.sql" />
@@ -132,5 +133,8 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="AfterPublishScript\Script.PostDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagram\Diagram_1.png" />
   </ItemGroup>
 </Project>
