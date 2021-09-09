@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>SchoolsDatabase</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{28f7c6d1-b5af-4a10-a18e-93c72a04a879}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>SchoolsDatabase</RootNamespace>
+    <AssemblyName>SchoolsDatabase</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Procedures" />
+    <Folder Include="AfterPublishScript" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Courses.sql" />
+    <Build Include="Tables\Assignments.sql" />
+    <Build Include="Tables\Trainers.sql" />
+    <Build Include="Tables\Students.sql" />
+    <Build Include="Tables\StudentsCourses.sql" />
+    <Build Include="Tables\TrainersCourses.sql" />
+    <Build Include="Tables\AssignmentsCourses.sql" />
+    <Build Include="Tables\AssignmentsStudents.sql" />
+    <Build Include="Procedures\GetAllStudents.sql" />
+    <Build Include="Procedures\GetAllTrainers.sql" />
+    <Build Include="Procedures\GetAllAssignments.sql" />
+    <Build Include="Procedures\GetAllCourses.sql" />
+    <Build Include="Procedures\GetAllStudentsOfCourses.sql" />
+    <Build Include="Procedures\GetAllTrainersOfCourses.sql" />
+    <Build Include="Procedures\GetAllAssignmentsOfCourses.sql" />
+    <Build Include="Procedures\GetAllAssignmentsOfStudent.sql" />
+    <Build Include="Procedures\GetAllStudentsOfAssignment.sql" />
+    <Build Include="Procedures\GetCourseTitleByAssignmentTitle.sql" />
+    <Build Include="Procedures\GetAllAssignmentsPerCourseAndStudent.sql" />
+    <Build Include="Procedures\GetAllStudentsThatBelongMoreToOneCourse.sql" />
+    <Build Include="Procedures\GetAllStudentsSubmitsAssOnSameWeek.sql" />
+    <Build Include="Procedures\GetAllAssignmentsOfOneStudent.sql" />
+    <Build Include="Procedures\GetAllStudentsSubmitsAssOnSameWeekAsDate.sql" />
+    <Build Include="Procedures\InsertCourse.sql" />
+    <Build Include="Procedures\UpdateCourse.sql" />
+    <Build Include="Procedures\UpdateCourseTitle.sql" />
+    <Build Include="Procedures\UpdateCourseEndDate.sql" />
+    <Build Include="Procedures\UpdateCourseEndDescription.sql" />
+    <Build Include="Procedures\AddStudentToCourse.sql" />
+    <Build Include="Procedures\DeleteStudentFromCourse.sql" />
+    <Build Include="Procedures\AddTrainerToCourse.sql" />
+    <Build Include="Procedures\DeleteTrainerFromCourse.sql" />
+    <Build Include="Procedures\AddAssignmentToCourse.sql" />
+    <Build Include="Procedures\DeleteAssignmentFromCourse.sql" />
+    <Build Include="Procedures\DeleteCourse.sql" />
+    <Build Include="Procedures\InsertAssignment.sql" />
+    <Build Include="Procedures\UpdateAssignment.sql" />
+    <Build Include="Procedures\UpdateAssignmentsTitle.sql" />
+    <Build Include="Procedures\UpdateAssignmentsDate.sql" />
+    <Build Include="Procedures\UpdateAssignmentsDescription.sql" />
+    <Build Include="Procedures\InsertStudentToAssignment.sql" />
+    <Build Include="Procedures\DeleteStudentFromAssignment.sql" />
+    <Build Include="Procedures\DeleteAssignment.sql" />
+    <Build Include="Procedures\InsertStudent.sql" />
+    <Build Include="Procedures\UpdateStudent.sql" />
+    <Build Include="Procedures\UpdateStudentFirstName.sql" />
+    <Build Include="Procedures\UpdateStudentLastName.sql" />
+    <Build Include="Procedures\UpdateStudentAge.sql" />
+    <Build Include="Procedures\UpdateStudentGender.sql" />
+    <Build Include="Procedures\UpdateStudentEmail.sql" />
+    <Build Include="Procedures\UpdateStudentPhone.sql" />
+    <Build Include="Procedures\DeleteStudent.sql" />
+    <Build Include="Procedures\InsertTrainer.sql" />
+    <Build Include="Procedures\UpdateTrainer.sql" />
+    <Build Include="Procedures\UpdateTrainerFirstName.sql" />
+    <Build Include="Procedures\UpdateTrainerLastName.sql" />
+    <Build Include="Procedures\UpdateTrainerAge.sql" />
+    <Build Include="Procedures\UpdateTrainerGender.sql" />
+    <Build Include="Procedures\UpdateTrainerEmail.sql" />
+    <Build Include="Procedures\UpdateTrainerPhone.sql" />
+    <Build Include="Procedures\DeleteTrainer.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="AfterPublishScript\Script.PostDeployment1.sql" />
+  </ItemGroup>
+</Project>

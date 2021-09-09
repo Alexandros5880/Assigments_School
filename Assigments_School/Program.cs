@@ -12,7 +12,7 @@ namespace Assigments_School
     class Program
     {
         public static string db_server_name = "DESKTOP-QQ55HAA\\SQLEXPRESS";
-        public static string db_name = "AssignmentsSchool";
+        public static string db_name = "SchoolsDatabase";
         public static string DB_connection_string = "";
 
         public static List<string> trainers = new List<string>();
@@ -1862,15 +1862,13 @@ namespace Assigments_School
                 connection.Open();
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                int counter = 0;
                 students.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                    Console.WriteLine($"Student: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
                                       $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                       $"{reader["Gender"].ToString().Trim()}");
                     students.Add(reader["Email"].ToString().Trim());
-                    counter++;
                 }
 
             }
@@ -1900,15 +1898,13 @@ namespace Assigments_School
                 connection.Open();
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                int counter = 0;
                 trainers.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Trainer: id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                    Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
                                       $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                       $"{reader["Gender"].ToString().Trim()}");
                     trainers.Add(reader["Email"].ToString());
-                    counter++;
                 }
 
             }
@@ -1938,13 +1934,11 @@ namespace Assigments_School
                 connection.Open();
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                int counter = 0;
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Assignment: id={counter} {reader["Title"].ToString().Trim()}  " +
+                    Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
                         $"{reader["StartDate"].ToString().Trim()} {reader["EndDate"].ToString().Trim()}");
                     assignments.Add(reader["Title"].ToString().Trim());
-                    counter++;
                 }
 
             }
@@ -1972,16 +1966,13 @@ namespace Assigments_School
             {
                 SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
-
                 SqlDataReader reader = cmd.ExecuteReader();
-                int counter = 0;
                 courses.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Course: id={counter} Title: {reader["Title"].ToString().Trim()} " +
+                    Console.WriteLine($"Course: id={reader["Id"].ToString().Trim()} Title: {reader["Title"].ToString().Trim()} " +
                         $"{reader["StartDate"].ToString().Trim()} {reader["EndDate"].ToString().Trim()}");
                     courses.Add(reader["Title"].ToString().Trim());
-                    counter++;
                 }
 
             }
@@ -2016,15 +2007,13 @@ namespace Assigments_School
                     connection.Open();
 
                     SqlDataReader reader = cmd.ExecuteReader();
-                    int counter = 0;
                     students.Clear();
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Student: Id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                        Console.WriteLine($"Student: Id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
                                       $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                       $"{reader["Gender"].ToString().Trim()}");
                         students.Add(reader["Email"].ToString().Trim());
-                        counter++;
                     }
 
                 }
@@ -2058,15 +2047,13 @@ namespace Assigments_School
                 connection.Open();
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                int counter = 0;
                 students.Clear();
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Student: Id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                    Console.WriteLine($"Student: Id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
                                   $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                   $"{reader["Gender"].ToString().Trim()}");
                     students.Add(reader["Email"].ToString().Trim());
-                    counter++;
                 }
 
             }
@@ -2101,13 +2088,11 @@ namespace Assigments_School
                     connection.Open();
 
                     SqlDataReader reader = cmd.ExecuteReader();
-                    int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Trainer: id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                        Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
                                       $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                       $"{reader["Gender"].ToString().Trim()}");
-                        counter++;
                     }
 
                 }
@@ -2144,13 +2129,11 @@ namespace Assigments_School
                     connection.Open();
 
                     SqlDataReader reader = cmd.ExecuteReader();
-                    int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Trainer: id={counter} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                        Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
                                       $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                       $"{reader["Gender"].ToString().Trim()}");
-                        counter++;
                     }
 
                 }
@@ -2191,13 +2174,11 @@ namespace Assigments_School
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     assignments.Clear();
-                    int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Assignment: id={counter} {reader["Title"].ToString().Trim()}  " +
+                        Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
                             $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                         assignments.Add(reader["Title"].ToString().Trim());
-                        counter++;
                     }
 
                 }
@@ -2235,13 +2216,11 @@ namespace Assigments_School
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     assignments.Clear();
-                    int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Assignment: id={counter} {reader["Title"].ToString().Trim()}  " +
+                        Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
                             $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                         assignments.Add(reader["Title"].ToString().Trim());
-                        counter++;
                     }
 
                 }
@@ -2278,13 +2257,11 @@ namespace Assigments_School
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     assignments.Clear();
-                    int counter = 0;
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Assignment: id={counter} {reader["Title"].ToString().Trim()}  " +
+                        Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
                             $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                         assignments.Add(reader["Title"].ToString());
-                        counter++;
                     }
 
                 }

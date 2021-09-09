@@ -1,0 +1,5 @@
+﻿CREATE PROCEDURE DeleteTrainer @email VARCHAR(300)
+AS
+BEGIN
+DELETE FROM Trainers WHERE Email=@email;END
+RETURN 0

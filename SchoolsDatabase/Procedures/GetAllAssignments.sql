@@ -1,0 +1,6 @@
+﻿CREATE PROCEDURE GetAllAssignments
+AS
+BEGIN
+SELECT * FROM Assignments;
+END
+RETURN 0
