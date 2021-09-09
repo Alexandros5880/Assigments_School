@@ -122,6 +122,10 @@
     <Build Include="Procedures\UpdateTrainerEmail.sql" />
     <Build Include="Procedures\UpdateTrainerPhone.sql" />
     <Build Include="Procedures\DeleteTrainer.sql" />
+    <Build Include="Procedures\GetStudentById.sql" />
+    <Build Include="Procedures\GetCourseById.sql" />
+    <Build Include="Procedures\GetAllStudentsOfCourseById.sql" />
+    <Build Include="Procedures\GetAllTrainersOfCourseById.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="AfterPublishScript\Script.PostDeployment1.sql" />

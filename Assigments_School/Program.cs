@@ -161,6 +161,10 @@ namespace Assigments_School
             }
         }
 
+
+
+
+
         ///////////////////////////////////////////  IMPORTING FUNCTIONS /////////////////////////////////////////////////////////
         // Import Course
         private static string AddCourse()
@@ -1886,6 +1890,43 @@ namespace Assigments_School
             }
         }
 
+        /*
+        // Get All Students From DB
+        private static Student GetAllStudentById(int id)
+        {
+            Console.WriteLine("\n");
+            string sql_query = $"EXEC GetStudentById {id};";
+            SqlConnection connection = new SqlConnection(DB_connection_string);
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                students.Clear();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Student: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                      $"{reader["Gender"].ToString().Trim()}");
+                    students.Add(reader["Email"].ToString().Trim());
+                }
+                return students.FirstOrDefault();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        */
+
         // Get All Trainers From DB
         private static void GetAllTrainers()
         {
@@ -1994,45 +2035,37 @@ namespace Assigments_School
         private static void GetAllStudentsOnCourse()
         {
             Console.WriteLine("\n");
-            Console.Write("Enter Course Title: ");
-            string title = Console.ReadLine();
-            Console.WriteLine("\n");
-            if (title.Length > 0)
+            Console.Write("Select Course By Id: ");
+            GetAllCourses();
+            SqlConnection connection = new SqlConnection(DB_connection_string);
+            try
             {
-                string sql_query = $"EXEC GetAllStudentsOfCourses '{title}';";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
-                try
+                int id = int.Parse(Console.ReadLine());
+                Console.WriteLine("\n");
+                string sql_query = $"EXEC GetAllStudentsOfCourseById '{id}';";
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                students.Clear();
+                while (reader.Read())
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    students.Clear();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"Student: Id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
-                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
-                                      $"{reader["Gender"].ToString().Trim()}");
-                        students.Add(reader["Email"].ToString().Trim());
-                    }
-
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close();
+                    Console.WriteLine($"Student: Id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                    $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                    $"{reader["Gender"].ToString().Trim()}");
+                    students.Add(reader["Email"].ToString().Trim());
                 }
             }
-            else
+            catch (SqlException ex)
             {
-                Console.WriteLine("Please Enter A Valid Title!");
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -2075,43 +2108,35 @@ namespace Assigments_School
         private static void GetAllTrainersOnCourse()
         {
             Console.WriteLine("\n");
-            Console.Write("Enter Course Title: ");
-            string title = Console.ReadLine();
-            Console.WriteLine("\n");
-            if (title.Length > 0)
+            Console.Write("Select Course By Id: ");
+            GetAllCourses();
+            SqlConnection connection = new SqlConnection(DB_connection_string);
+            try
             {
-                string sql_query = $"EXEC GetAllTrainersOfCourses '{title}';";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
-                try
+                int id = int.Parse(Console.ReadLine());
+                Console.WriteLine("\n");
+                string sql_query = $"EXEC GetAllTrainersOfCourseById '{id}';";
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
-                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
-                                      $"{reader["Gender"].ToString().Trim()}");
-                    }
-
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close();
+                    Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
+                                    $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
+                                    $"{reader["Gender"].ToString().Trim()}");
                 }
             }
-            else
+            catch (SqlException ex)
             {
-                Console.WriteLine("Please Enter A Valid Title!");
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
