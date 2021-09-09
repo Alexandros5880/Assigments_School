@@ -346,7 +346,6 @@ namespace Assigments_School
                 return "";
             }
         }
-
         // Import Assignments
         private static string AddAssignment()
         {
@@ -552,7 +551,6 @@ namespace Assigments_School
                 return "";
             }
         }
-
         // Import Students
         private static string AddStudent()
         {
@@ -607,7 +605,6 @@ namespace Assigments_School
                 return "";
             }
         }
-
         // Import Trainers
         private static string AddTrainer()
         {
@@ -1102,7 +1099,6 @@ namespace Assigments_School
                 Console.WriteLine("Enter A Valid Id!");
             }
         }
-
         // Edit Assignment
         private static void EditAssignment()
         {
@@ -1351,7 +1347,6 @@ namespace Assigments_School
                 Console.WriteLine("Enter A Valid Id!");
             }
         }
-
         // TODO: Edit Trainer LINE 1356
         private static void EditTrainer()
         {
@@ -1600,7 +1595,6 @@ namespace Assigments_School
                 Console.WriteLine("Enter A Valid Id!");
             }
         }
-
         // TODO: Edit Student line 1622
         private static void EditStudent()
         {
@@ -1854,6 +1848,7 @@ namespace Assigments_School
 
 
         //////////////////////////////////////////  EXPORTING FUNCTIONS /////////////////////////////////////////////////////////
+        
         // Get All Students From DB
         private static void GetAllStudents()
         {
@@ -1889,7 +1884,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Trainers From DB
         private static void GetAllTrainers()
         {
@@ -1925,7 +1919,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Assignments FromDB
         private static void GetAllAssignments()
         {
@@ -1959,7 +1952,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Courses FromDB
         private static void GetAllCourses()
         {
@@ -1993,7 +1985,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Students Per Course
         private static void GetAllStudentsOnCourse()
         {
@@ -2032,7 +2023,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Students Per Course
         private static void GetAllStudentsOnCourseByTitle(string title)
         {
@@ -2065,7 +2055,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Trainers Per Course
         private static void GetAllTrainersOnCourse()
         {
@@ -2102,7 +2091,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Trainers Per Course
         private static void GetAllTrainersOnCourse(string title)
         {
@@ -2142,7 +2130,6 @@ namespace Assigments_School
                 Console.WriteLine("Please Enter A Valid Title!");
             }
         }
-
         // Get All Assignments Per Course
         private static void GetAllAssignmentsPerCourse()
         {
@@ -2181,7 +2168,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Assignments Per Course
         private static void GetAllAssignmentsPerCourse(string title)
         {
@@ -2223,7 +2209,6 @@ namespace Assigments_School
                 Console.WriteLine("Please Enter A Valid Title!");
             }
         }
-
         // Get All Students On Assignment
         private static void GetAllStudentsOnAssignment(string title)
         {
@@ -2235,7 +2220,6 @@ namespace Assigments_School
                 {
                     SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
-
                     SqlDataReader reader = cmd.ExecuteReader();
                     assignments.Clear();
                     while (reader.Read())
@@ -2244,7 +2228,6 @@ namespace Assigments_School
                             $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                         assignments.Add(reader["Title"].ToString());
                     }
-
                 }
                 catch (SqlException ex)
                 {
@@ -2264,7 +2247,6 @@ namespace Assigments_School
                 Console.WriteLine("Please Enter A Valid Title!");
             }
         }
-
         // Get The Parent Courses Title Of An Assignment
         private static string GetCourseTitleByAssignmentTitle(string title)
         {
@@ -2300,7 +2282,6 @@ namespace Assigments_School
                 return "";
             }
         }
-
         // Get All Assignments Per Student
         private static void GetAllAssignmentsPerStudent()
         {
@@ -2336,7 +2317,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Students That Belong To More That One Course
         private static void GetAllStudentsThatBelongToMoreThatOneCourse()
         {
@@ -2347,7 +2327,6 @@ namespace Assigments_School
             {
                 SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
-
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -2370,7 +2349,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Assignments Per Course And Student
         private static void GetAllAssignmentsPerCourseAndStudent()
         {
@@ -2409,7 +2387,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Students Who Need To Submit AssigNments On The Same Week
         private static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
         {
@@ -2428,7 +2405,6 @@ namespace Assigments_School
                                       $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                       $"{reader["Gender"].ToString().Trim()}");
                 }
-
             }
             catch (SqlException ex)
             {
@@ -2443,7 +2419,6 @@ namespace Assigments_School
                 connection.Close();
             }
         }
-
         // Get All Students Who Need To Submeet An Assignment On The Same Week As The Date
         private static void GetAllStudentsWhoNeedToSubmitAssignmentsOnTheSameWeekAsThisDate()
         {
@@ -2459,7 +2434,6 @@ namespace Assigments_School
                 {
                     SqlCommand cmd = new SqlCommand(sql_query, connection);
                     connection.Open();
-
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
@@ -2467,7 +2441,6 @@ namespace Assigments_School
                                           $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                           $"{reader["Gender"].ToString().Trim()}");
                     }
-
                 }
                 catch (SqlException ex)
                 {
