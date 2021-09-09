@@ -1,5 +1,4 @@
-﻿using MySqlConnector;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -240,7 +239,7 @@ namespace Assigments_School
                                     Console.WriteLine("Select Trainer By Id(3): ");
                                     GetAllTrainers();
                                     my_id = Console.ReadLine();
-                                    trainer_email = trainers[int.Parse(my_id)];
+                                    trainer_email = trainers[int.Parse(my_id)-1];
                                     // Add Trainer To DataBase
                                     sql_query = $"EXEC AddTrainerToCourse '{title}', '{trainer_email}';";
                                     connection = new SqlConnection(DB_connection_string);
@@ -306,7 +305,7 @@ namespace Assigments_School
                                     Console.WriteLine("Select Student By Id(3): ");
                                     GetAllStudents();
                                     my_id = Console.ReadLine();
-                                    student_email = students[int.Parse(my_id)];
+                                    student_email = students[int.Parse(my_id)-1];
                                     // Add Student To DataBase
                                     sql_query = $"EXEC AddStudentToCourse '{title}', '{student_email}';";
                                     connection = new SqlConnection(DB_connection_string);
@@ -420,7 +419,7 @@ namespace Assigments_School
                                     Console.WriteLine("Select Course By Id(3): ");
                                     GetAllCourses();
                                     string my_id = Console.ReadLine();
-                                    course_title = courses[int.Parse(my_id)];
+                                    course_title = courses[int.Parse(my_id)-1];
                                     if (course_title.Length > 0)
                                     {
                                         // Add To DataBase
@@ -509,7 +508,7 @@ namespace Assigments_School
                                     GetAllStudentsOnCourseByTitle(course_title);
                                     // Create Assignment To Student Record
                                     string my_id = Console.ReadLine();
-                                    student_email = students[int.Parse(my_id)];
+                                    student_email = students[int.Parse(my_id)-1];
                                     if (student_email.Length > 0)
                                     {
                                         // Add To AssignmentsStudents DataBase
@@ -670,7 +669,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             GetAllCourses();
             Console.Write("Select Course By Id: ");
-            int id = int.Parse(Console.ReadLine());
+            int id = int.Parse(Console.ReadLine())-1;
             string course_title;
             if(id >= 0 && id < courses.Count)
             {
@@ -821,7 +820,7 @@ namespace Assigments_School
                                                         Console.WriteLine("Select Student By Id(3): ");
                                                         GetAllStudents();
                                                         my_id_2 = Console.ReadLine();
-                                                        student_email_2 = students[int.Parse(my_id_2)];
+                                                        student_email_2 = students[int.Parse(my_id_2)-1];
                                                         // Add Trainer To DataBase
                                                         sql_query_2 = $"EXEC AddStudentToCourse '{course_title}', '{student_email_2}';";
                                                         connection_2 = new SqlConnection(DB_connection_string);
@@ -853,7 +852,7 @@ namespace Assigments_School
                                         Console.WriteLine("Select Student By Id(3): ");
                                         GetAllStudentsOnCourseByTitle(course_title);
                                         my_id = Console.ReadLine();
-                                        string student_email = students[int.Parse(my_id)];
+                                        string student_email = students[int.Parse(my_id)-1];
                                         // Add Trainer To DataBase
                                         string sql_query = $"EXEC DeleteStudentToCourse '{course_title}', '{student_email}';";
                                         SqlConnection connection = new SqlConnection(DB_connection_string);
@@ -924,7 +923,7 @@ namespace Assigments_School
                                                         Console.WriteLine("Select Trainer By Id(3): ");
                                                         GetAllTrainers();
                                                         my_id_3 = Console.ReadLine();
-                                                        trainer_email = trainers[int.Parse(my_id_3)];
+                                                        trainer_email = trainers[int.Parse(my_id_3)-1];
                                                         // Add Trainer To DataBase
                                                         string sql_query_3 = $"EXEC AddTrainerToCourse '{course_title}', '{trainer_email}';";
                                                         SqlConnection connection_3 = new SqlConnection(DB_connection_string);
@@ -956,7 +955,7 @@ namespace Assigments_School
                                         Console.WriteLine("Select Trainer By Id(3): ");
                                         GetAllTrainersOnCourse(course_title);
                                         my_id_2 = Console.ReadLine();
-                                        string student_email = students[int.Parse(my_id_2)];
+                                        string student_email = students[int.Parse(my_id_2)-1];
                                         // Add Trainer To DataBase
                                         string sql_query = $"EXEC DeleteTrainerToCourse '{course_title}', '{student_email}';";
                                         SqlConnection connection = new SqlConnection(DB_connection_string);
@@ -1028,7 +1027,7 @@ namespace Assigments_School
                                                         Console.WriteLine("Select Assignment By Id(3): ");
                                                         GetAllAssignments();
                                                         my_id_3 = Console.ReadLine();
-                                                        ass_title = assignments[int.Parse(my_id_3)];
+                                                        ass_title = assignments[int.Parse(my_id_3)-1];
                                                         // Add Assignment To DataBase
                                                         string sql_query_3 = $"EXEC AddAssignmentToCourse '{course_title}', '{ass_title}';";
                                                         SqlConnection connection_3 = new SqlConnection(DB_connection_string);
@@ -1060,7 +1059,7 @@ namespace Assigments_School
                                         Console.WriteLine("Select Assignment By Id(3): ");
                                         GetAllAssignmentsPerCourse(course_title);
                                         my_id_2 = Console.ReadLine();
-                                        ass_title = assignments[int.Parse(my_id_2)];
+                                        ass_title = assignments[int.Parse(my_id_2)-1];
                                         // Add Trainer To DataBase
                                         string sql_query = $"EXEC DeleteAssignmentFromCourse '{course_title}', '{ass_title}';";
                                         SqlConnection connection = new SqlConnection(DB_connection_string);
@@ -1105,7 +1104,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             GetAllAssignments();
             Console.Write("Select Assignment By Id: ");
-            int id = int.Parse(Console.ReadLine());
+            int id = int.Parse(Console.ReadLine())-1;
             string assignment_title;
             if (id >= 0 && id < assignments.Count)
             {
@@ -1257,7 +1256,7 @@ namespace Assigments_School
                                                         Console.WriteLine("Select Student By Id(3): ");
                                                         GetAllStudentsOnCourseByTitle(course_title_2);
                                                         my_id_2 = Console.ReadLine();
-                                                        student_email_2 = students[int.Parse(my_id_2)];
+                                                        student_email_2 = students[int.Parse(my_id_2)-1];
                                                         // Add Student To DataBase
                                                         string sql_query_2 = $"EXEC InsertStudentToAssignment '{student_email_2}', '{assignment_title}';";
                                                         SqlConnection connection_2 = new SqlConnection(DB_connection_string);
@@ -1292,7 +1291,7 @@ namespace Assigments_School
                                         Console.WriteLine("Select Student By Id(3): ");
                                         GetAllStudentsOnAssignment(course_title);
                                         my_id = Console.ReadLine();
-                                        string student_email = students[int.Parse(my_id)];
+                                        string student_email = students[int.Parse(my_id)-1];
                                         // Delete This Student On This Assignment
                                         string sql_query_3 = $"EXEC DeleteStudentFromAssignment '{student_email}', '{assignment_title}';";
                                         SqlConnection connection_3 = new SqlConnection(DB_connection_string);
@@ -1347,13 +1346,13 @@ namespace Assigments_School
                 Console.WriteLine("Enter A Valid Id!");
             }
         }
-        // TODO: Edit Trainer LINE 1356
+        // Edit Trainer
         private static void EditTrainer()
         {
             Console.WriteLine("\n");
             GetAllTrainers();
             Console.Write("Select Trainer By Id: ");
-            int id = int.Parse(Console.ReadLine());
+            int id = int.Parse(Console.ReadLine())-1;
             string trainer_email;
             if (id >= 0 && id < trainers.Count)
             {
@@ -1595,13 +1594,13 @@ namespace Assigments_School
                 Console.WriteLine("Enter A Valid Id!");
             }
         }
-        // TODO: Edit Student line 1622
+        // Edit Student
         private static void EditStudent()
         {
             Console.WriteLine("\n");
             GetAllStudents();
             Console.Write("Select Student By Id: ");
-            int id = int.Parse(Console.ReadLine());
+            int id = int.Parse(Console.ReadLine())-1;
             string student_email;
             if (id >= 0 && id < students.Count)
             {
