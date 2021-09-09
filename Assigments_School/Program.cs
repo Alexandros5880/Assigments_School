@@ -1890,43 +1890,6 @@ namespace Assigments_School
             }
         }
 
-        /*
-        // Get All Students From DB
-        private static Student GetAllStudentById(int id)
-        {
-            Console.WriteLine("\n");
-            string sql_query = $"EXEC GetStudentById {id};";
-            SqlConnection connection = new SqlConnection(DB_connection_string);
-            try
-            {
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                students.Clear();
-                while (reader.Read())
-                {
-                    Console.WriteLine($"Student: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
-                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
-                                      $"{reader["Gender"].ToString().Trim()}");
-                    students.Add(reader["Email"].ToString().Trim());
-                }
-                return students.FirstOrDefault();
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
-        */
-
         // Get All Trainers From DB
         private static void GetAllTrainers()
         {
@@ -2037,6 +2000,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             Console.Write("Select Course By Id: ");
             GetAllCourses();
+            Console.WriteLine("\n");
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -2078,7 +2042,6 @@ namespace Assigments_School
             {
                 SqlCommand cmd = new SqlCommand(sql_query, connection);
                 connection.Open();
-
                 SqlDataReader reader = cmd.ExecuteReader();
                 students.Clear();
                 while (reader.Read())
@@ -2088,7 +2051,6 @@ namespace Assigments_School
                                   $"{reader["Gender"].ToString().Trim()}");
                     students.Add(reader["Email"].ToString().Trim());
                 }
-
             }
             catch (SqlException ex)
             {
@@ -2110,6 +2072,7 @@ namespace Assigments_School
             Console.WriteLine("\n");
             Console.Write("Select Course By Id: ");
             GetAllCourses();
+            Console.WriteLine("\n");
             SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
@@ -2160,7 +2123,6 @@ namespace Assigments_School
                                       $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
                                       $"{reader["Gender"].ToString().Trim()}");
                     }
-
                 }
                 catch (SqlException ex)
                 {
@@ -2185,44 +2147,38 @@ namespace Assigments_School
         private static void GetAllAssignmentsPerCourse()
         {
             Console.WriteLine("\n");
-            Console.Write("Enter Course Title: ");
-            string title = Console.ReadLine();
+            Console.Write("Select Course By Id: ");
+            GetAllAssignments();
             Console.WriteLine("\n");
-            if (title.Length > 0)
+            SqlConnection connection = new SqlConnection(DB_connection_string);
+            try
             {
-                string sql_query = $"EXEC GetAllAssignmentsOfCourses '{title}';";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
-                try
+                int id = int.Parse(Console.ReadLine());
+                Console.WriteLine("\n");
+                string sql_query = $"EXEC GetAllAssignmentsOfCourseById {id};";
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                assignments.Clear();
+                while (reader.Read())
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
+                    Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
+                        $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
+                    assignments.Add(reader["Title"].ToString().Trim());
+                }
 
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    assignments.Clear();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
-                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
-                        assignments.Add(reader["Title"].ToString().Trim());
-                    }
-
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close();
-                }
             }
-            else
+            catch (SqlException ex)
             {
-                Console.WriteLine("Please Enter A Valid Title!");
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -2349,42 +2305,35 @@ namespace Assigments_School
         private static void GetAllAssignmentsPerStudent()
         {
             Console.WriteLine("\n");
-            Console.Write("Enter Students Email: ");
-            string email = Console.ReadLine();
+            Console.Write("Select Course By Id: ");
+            GetAllAssignments();
             Console.WriteLine("\n");
-            if (email.Length > 0)
+            SqlConnection connection = new SqlConnection(DB_connection_string);
+            try
             {
-                string sql_query = $"EXEC GetAllAssignmentsOfStudent '{email}';";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
-                try
+                int id = int.Parse(Console.ReadLine());
+                Console.WriteLine("\n");
+                string sql_query = $"EXEC GetAllAssignmentsOfStudentById '{id}';";
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"Assignment: {reader["Title"].ToString().Trim()}  " +
-                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
-                    }
-
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close();
+                    Console.WriteLine($"Assignment: {reader["Title"].ToString().Trim()}  " +
+                        $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                 }
             }
-            else
+            catch (SqlException ex)
             {
-                Console.WriteLine("Please Enter A Valid Title!");
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -2425,45 +2374,39 @@ namespace Assigments_School
         // Get All Assignments Per Course And Student
         private static void GetAllAssignmentsPerCourseAndStudent()
         {
-            Console.WriteLine("\n");
-            Console.Write("Assignment Title: ");
-            string title = Console.ReadLine();
-            Console.Write("Enter Students Email: ");
-            string email = Console.ReadLine();
-            Console.WriteLine("\n");
-            if (email.Length > 0 && title.Length > 0)
+            SqlConnection connection = new SqlConnection(DB_connection_string);
+            try
             {
-                string sql_query = $"EXEC GetAllAssignmentsPerCourseAndStudent '{title}', '{email}';";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
-                try
+                Console.WriteLine("\n");
+                Console.Write("Select Course By Id: ");
+                GetAllCourses();
+                int c_id = int.Parse(Console.ReadLine());
+                Console.WriteLine("\n");
+                Console.Write("Select Student By Id: ");
+                GetAllStudents();
+                int s_id = int.Parse(Console.ReadLine());
+                Console.WriteLine("\n");
+                string sql_query = $"EXEC GetAllAssignmentsPerCourseAndStudentByIds {c_id}, {s_id};";
+                SqlCommand cmd = new SqlCommand(sql_query, connection);
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"Assignment: {reader["Title"].ToString().Trim()}  " +
-                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
-                    }
-
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close();
+                    Console.WriteLine($"Assignment: {reader["Title"].ToString().Trim()}  " +
+                        $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
                 }
             }
-            else
+            catch (SqlException ex)
             {
-                Console.WriteLine("Please Enter A Valid Title!");
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -2540,14 +2483,6 @@ namespace Assigments_School
                 }
             }
         }
-
-
-
-
-
-
-
-
 
     }
 }

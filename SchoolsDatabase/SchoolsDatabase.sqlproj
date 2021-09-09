@@ -126,6 +126,9 @@
     <Build Include="Procedures\GetCourseById.sql" />
     <Build Include="Procedures\GetAllStudentsOfCourseById.sql" />
     <Build Include="Procedures\GetAllTrainersOfCourseById.sql" />
+    <Build Include="Procedures\GetAllAssignmentsOfCourseById.sql" />
+    <Build Include="Procedures\GetAllAssignmentsOfStudentById.sql" />
+    <Build Include="Procedures\GetAllAssignmentsPerCourseAndStudentByIds.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="AfterPublishScript\Script.PostDeployment1.sql" />
