@@ -13,6 +13,9 @@ namespace Assigments_School
         public static string db_server_name = "DESKTOP-QQ55HAA\\SQLEXPRESS";
         public static string db_name = "SchoolsDatabase";
         public static string DB_connection_string = "";
+        private static SqlConnection _connection;
+        private static SqlCommand _command;
+        private static string _query = "";
 
         public static List<string> trainers = new List<string>();
         public static List<string> students = new List<string>();
@@ -24,6 +27,7 @@ namespace Assigments_School
             
             // Connecte to server
             DB_connection_string = $"Server={db_server_name};Database={db_name};Trusted_Connection=True;";
+            _connection = new SqlConnection(DB_connection_string);
 
             while (true)
             {
@@ -64,9 +68,8 @@ namespace Assigments_School
                 // Exporting
                 else if (choice.Equals("e") || choice.Equals("Export"))
                 {
-                    Console.WriteLine("Exporting mode!");
                     Console.WriteLine(
-                        "Enter for Example: ls\n"
+                        "Enter for Example: ls\n\n"
                             + "(ls)  -->[ A list of all the students.                                                                                ]\n"
                             + "(lt)  -->[ A list of all the trainers.                                                                                ]\n"
                             + "(la)  -->[ A list of all the assignments.                                                                             ]\n"
@@ -156,7 +159,7 @@ namespace Assigments_School
                 {
                     break;
                 }
-                Console.WriteLine("\n\n");
+                Console.WriteLine("\n");
             }
         }
 
@@ -181,14 +184,13 @@ namespace Assigments_School
                 description = Console.ReadLine();
                 if (title.Length > 0 && startdate.Length > 0 && enddate.Length > 0 && description.Length > 0)
                 {
-                    // Insert Course To Database
-                    string sql_query = $"EXEC InsertCourse '{title}', '{startdate}', '{enddate}', '{description}';";
-                    SqlConnection connection = new SqlConnection(DB_connection_string);
+                    #region "Insert Course To DB"
+                    _query = $"EXEC InsertCourse '{title}', '{startdate}', '{enddate}', '{description}';";
                     try
                     {
-                        SqlCommand cmd = new SqlCommand(sql_query, connection);
-                        connection.Open();
-                        var reader = cmd.ExecuteNonQuery();
+                        _command = new SqlCommand(_query, _connection);
+                        _connection.Open();
+                        var reader = _command.ExecuteNonQuery();
                         Console.WriteLine("\n\nCourse Added\n\n");
                     }
                     catch (SqlException ex)
@@ -197,8 +199,9 @@ namespace Assigments_School
                     }
                     finally
                     {
-                        connection.Close();
+                        _connection.Close();
                     }
+                    #endregion
                     // Add Trainers To Course
                     Console.WriteLine("\n");
                     while (true)
@@ -216,14 +219,13 @@ namespace Assigments_School
                             {
                                 case "new":
                                     trainer_email = AddTrainer();
-                                    // Add Trainer To DataBase
-                                    sql_query = $"EXEC AddTrainerToCourse '{title}', '{trainer_email}';";
-                                    connection = new SqlConnection(DB_connection_string);
+                                    #region "Add Trainer To DataBase"
+                                    _query = $"EXEC AddTrainerToCourse '{title}', '{trainer_email}';";
                                     try
                                     {
-                                        SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                        connection.Open();
-                                        var reader = cmd.ExecuteNonQuery();
+                                        _command = new SqlCommand(_query, _connection);
+                                        _connection.Open();
+                                        var reader = _command.ExecuteNonQuery();
                                     }
                                     catch (SqlException ex)
                                     {
@@ -231,8 +233,9 @@ namespace Assigments_School
                                     }
                                     finally
                                     {
-                                        connection.Close();
+                                        _connection.Close();
                                     }
+                                    #endregion
                                     break;
                                 case "ex":
                                     string my_id = "";
@@ -240,14 +243,13 @@ namespace Assigments_School
                                     GetAllTrainers();
                                     my_id = Console.ReadLine();
                                     trainer_email = trainers[int.Parse(my_id)-1];
-                                    // Add Trainer To DataBase
-                                    sql_query = $"EXEC AddTrainerToCourse '{title}', '{trainer_email}';";
-                                    connection = new SqlConnection(DB_connection_string);
+                                    #region "Add Trainer To DataBase"
+                                    _query = $"EXEC AddTrainerToCourse '{title}', '{trainer_email}';";
                                     try
                                     {
-                                        SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                        connection.Open();
-                                        var reader = cmd.ExecuteNonQuery();
+                                        _command = new SqlCommand(_query, _connection);
+                                        _connection.Open();
+                                        var reader = _command.ExecuteNonQuery();
                                     }
                                     catch (SqlException ex)
                                     {
@@ -255,8 +257,9 @@ namespace Assigments_School
                                     }
                                     finally
                                     {
-                                        connection.Close();
+                                        _connection.Close();
                                     }
+                                    #endregion
                                     break;
                                 default:
                                     Console.WriteLine("Enter A Valid Choice!");
@@ -282,14 +285,13 @@ namespace Assigments_School
                             {
                                 case "new":
                                     student_email = AddStudent();
-                                    // Add Student To DataBase
-                                    sql_query = $"EXEC AddStudentToCourse '{title}', '{student_email}';";
-                                    connection = new SqlConnection(DB_connection_string);
+                                    #region "Add Student To DataBase"
+                                    _query = $"EXEC AddStudentToCourse '{title}', '{student_email}';";
                                     try
                                     {
-                                        SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                        connection.Open();
-                                        var reader = cmd.ExecuteNonQuery();
+                                        _command = new SqlCommand(_query, _connection);
+                                        _connection.Open();
+                                        var reader = _command.ExecuteNonQuery();
                                     }
                                     catch (SqlException ex)
                                     {
@@ -297,8 +299,9 @@ namespace Assigments_School
                                     }
                                     finally
                                     {
-                                        connection.Close();
+                                        _connection.Close();
                                     }
+                                    #endregion
                                     break;
                                 case "ex":
                                     string my_id = "";
@@ -306,14 +309,13 @@ namespace Assigments_School
                                     GetAllStudents();
                                     my_id = Console.ReadLine();
                                     student_email = students[int.Parse(my_id)-1];
-                                    // Add Student To DataBase
-                                    sql_query = $"EXEC AddStudentToCourse '{title}', '{student_email}';";
-                                    connection = new SqlConnection(DB_connection_string);
+                                    #region "Add Student To DataBase"
+                                    _query = $"EXEC AddStudentToCourse '{title}', '{student_email}';";
                                     try
                                     {
-                                        SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                        connection.Open();
-                                        var reader = cmd.ExecuteNonQuery();
+                                        _command = new SqlCommand(_query, _connection);
+                                        _connection.Open();
+                                        var reader = _command.ExecuteNonQuery();
                                     }
                                     catch (SqlException ex)
                                     {
@@ -321,8 +323,9 @@ namespace Assigments_School
                                     }
                                     finally
                                     {
-                                        connection.Close();
+                                        _connection.Close();
                                     }
+                                    #endregion
                                     break;
                                 default:
                                     Console.WriteLine("Enter A Valid Choice!");
@@ -362,13 +365,13 @@ namespace Assigments_School
                 description = Console.ReadLine();
                 if(title.Length > 0 && startdate.Length > 0 && enddate.Length > 0 && description.Length > 0)
                 {
-                    string sql_query = $"EXEC InsertAssignment '{title}', '{startdate}', '{enddate}', '{description}';";
-                    SqlConnection connection = new SqlConnection(DB_connection_string);
+                    #region "Add Assignment"
+                    _query = $"EXEC InsertAssignment '{title}', '{startdate}', '{enddate}', '{description}';";
                     try
                     {
-                        SqlCommand cmd = new SqlCommand(sql_query, connection);
-                        connection.Open();
-                        var reader = cmd.ExecuteNonQuery();
+                        _command = new SqlCommand(_query, _connection);
+                        _connection.Open();
+                        var reader = _command.ExecuteNonQuery();
                     }
                     catch (SqlException ex)
                     {
@@ -376,8 +379,9 @@ namespace Assigments_School
                     }
                     finally
                     {
-                        connection.Close();
+                        _connection.Close();
                     }
+                    #endregion
                     // Add Assignment to Course
                     Console.WriteLine("\n");
                     while (true)
@@ -396,14 +400,13 @@ namespace Assigments_School
                                     course_title = AddCourse();
                                     if(course_title.Length > 0)
                                     {
-                                        // Add To AssignmentsCourse DataBase
-                                        string ass_query = $"EXEC AddAssignmentToCourse '{title}', '{course_title}';";
-                                        connection = new SqlConnection(DB_connection_string);
+                                        #region "Add To AssignmentsCourse DataBase"
+                                        _query = $"EXEC AddAssignmentToCourse '{title}', '{course_title}';";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(ass_query, connection);
-                                            connection.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -411,8 +414,9 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection.Close();
+                                            _connection.Close();
                                         }
+                                        #endregion
                                     }
                                     break;
                                 case "ex":
@@ -422,14 +426,13 @@ namespace Assigments_School
                                     course_title = courses[int.Parse(my_id)-1];
                                     if (course_title.Length > 0)
                                     {
-                                        // Add To DataBase
-                                        string ass_query = $"EXEC AddAssignmentToCourse '{title}', '{course_title}';";
-                                        connection = new SqlConnection(DB_connection_string);
+                                        #region "Add To AssignmentsCourse DataBase"
+                                        _query = $"EXEC AddAssignmentToCourse '{title}', '{course_title}';";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(ass_query, connection);
-                                            connection.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -437,8 +440,9 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection.Close();
+                                            _connection.Close();
                                         }
+                                        #endregion
                                     }
                                     break;
                                 default:
@@ -466,14 +470,13 @@ namespace Assigments_School
                                     student_email = AddStudent();
                                     if (student_email.Length > 0)
                                     {
-                                        // Add New Stude To This Course
-                                        string course_query = $"EXEC AddStudentToCourse '{course_title}', '{student_email}';";
-                                        connection = new SqlConnection(DB_connection_string);
+                                        #region "Add New Student To This Course"
+                                        _query = $"EXEC AddStudentToCourse '{course_title}', '{student_email}';";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(course_query, connection);
-                                            connection.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -481,16 +484,16 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection.Close();
+                                            _connection.Close();
                                         }
-                                        // Add To AssignmentsStudents On DataBase
-                                        string ass_query = $"EXEC InsertStudentToAssignment '{student_email}', '{title}';";
-                                        connection = new SqlConnection(DB_connection_string);
+                                        #endregion
+                                        #region "Add To AssignmentsStudents On DataBase"
+                                        _query = $"EXEC InsertStudentToAssignment '{student_email}', '{title}';";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(ass_query, connection);
-                                            connection.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -498,8 +501,9 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection.Close();
+                                            _connection.Close();
                                         }
+                                        #endregion
                                     }
                                     break;
                                 case "ex":
@@ -511,14 +515,13 @@ namespace Assigments_School
                                     student_email = students[int.Parse(my_id)-1];
                                     if (student_email.Length > 0)
                                     {
-                                        // Add To AssignmentsStudents DataBase
-                                        string ass_query = $"EXEC InsertStudentToAssignment '{student_email}', '{title}';";
-                                        connection = new SqlConnection(DB_connection_string);
+                                        #region "Add To AssignmentsStudents DataBase"
+                                        _query = $"EXEC InsertStudentToAssignment '{student_email}', '{title}';";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(ass_query, connection);
-                                            connection.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -526,8 +529,9 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection.Close();
+                                            _connection.Close();
                                         }
+                                        #endregion
                                     }
                                     break;
                                 default:
@@ -574,13 +578,13 @@ namespace Assigments_School
                 if (firstname.Length > 0 && lastname.Length > 0 && age > 0 &&
                     email.Length > 0 && phone.Length > 0 && gender.Length > 0)
                 {
-                    string sql_query = $"EXEC InsertStudent '{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}';";
-                    SqlConnection connection = new SqlConnection(DB_connection_string);
+                    #region "Insert Student"
+                    _query = $"EXEC InsertStudent '{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}';";
                     try
                     {
-                        SqlCommand cmd = new SqlCommand(sql_query, connection);
-                        connection.Open();
-                        var reader = cmd.ExecuteNonQuery();
+                        _command = new SqlCommand(_query, _connection);
+                        _connection.Open();
+                        var reader = _command.ExecuteNonQuery();
                     }
                     catch (SqlException ex)
                     {
@@ -588,8 +592,9 @@ namespace Assigments_School
                     }
                     finally
                     {
-                        connection.Close();
+                        _connection.Close();
                     }
+                    #endregion
                     return email;
                 }
                 else
@@ -628,13 +633,13 @@ namespace Assigments_School
                 if (firstname.Length > 0 && lastname.Length > 0 && age > 0 && 
                     email.Length > 0 && phone.Length > 0 && gender.Length > 0)
                 {
-                    string sql_query = $"EXEC InsertTrainer '{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}';";
-                    SqlConnection connection = new SqlConnection(DB_connection_string);
+                    #region "Insert Trainer"
+                    _query = $"EXEC InsertTrainer '{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}';";
                     try
                     {
-                        SqlCommand cmd = new SqlCommand(sql_query, connection);
-                        connection.Open();
-                        var reader = cmd.ExecuteNonQuery();
+                        _command = new SqlCommand(_query, _connection);
+                        _connection.Open();
+                        var reader = _command.ExecuteNonQuery();
                     }
                     catch (SqlException ex)
                     {
@@ -642,8 +647,9 @@ namespace Assigments_School
                     }
                     finally
                     {
-                        connection.Close();
+                        _connection.Close();
                     }
+                    #endregion
                     return email;
                 }
                 else
@@ -666,20 +672,49 @@ namespace Assigments_School
         // Edit Course
         private static void EditCourse()
         {
-            Console.WriteLine("\n");
             GetAllCourses();
-            Console.Write("Select Course By Id: ");
-            int id = int.Parse(Console.ReadLine())-1;
-            string course_title;
-            if(id >= 0 && id < courses.Count)
+            Console.Write("\nSelect Course By Id: ");
+            int id = int.Parse(Console.ReadLine());
+            string course_title = "";
+            string conntact_email = "";
+            string title = "";
+            string choice = "";
+            if (id >= 0 && id < courses.Count)
             {
-                course_title = courses[id];
+                #region "Get Course By Id  (course_title = title)"
+                _query = $"EXEC GetCourseById {id};";
+                try
+                {
+                    _command = new SqlCommand(_query, _connection);
+                    _connection.Open();
+
+                    SqlDataReader reader = _command.ExecuteReader();
+                    students.Clear();
+                    while (reader.Read())
+                    {
+                        course_title = reader["Title"].ToString().Trim();
+                    }
+
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    _connection.Close();
+                }
+                #endregion
                 Console.WriteLine("\n");
                 while (true)
                 {
                     Console.Write("Quit(stop) ? Edit MainImfo(main) ? ADD/REMOVE Students(st) ? ADD/REMOVE Trainers(tr) ? " +
                         "ADD/REMOVE Assignments(ass) ? Delete this Course(del): ");
-                    string choice = Console.ReadLine();
+                    choice = Console.ReadLine();
                     if (choice.Equals("stop"))
                     {
                         break;
@@ -691,23 +726,22 @@ namespace Assigments_School
                             case "main": // Main Imformations
                                 Console.WriteLine("\n");
                                 Console.Write("Edit Title(t) ? EndDate(date) ? Description(d): ");
-                                string e_choice = Console.ReadLine();
-                                switch (e_choice)
+                                choice = Console.ReadLine();
+                                switch (choice)
                                 {
                                     case "t":
                                         Console.WriteLine("\n");
                                         Console.Write("Enter new Title: ");
-                                        string title = Console.ReadLine();
+                                        title = Console.ReadLine();
                                         if(title.Length > 0)
                                         {
-                                            // Update DATABASE
-                                            string sql_query = $"EXEC UpdateCourseTitle '{title}', '{course_title}';";
-                                            SqlConnection connection = new SqlConnection(DB_connection_string);
+                                            #region "Update Title"
+                                            _query = $"EXEC UpdateCourseTitle '{title}', '{course_title}';";
                                             try
                                             {
-                                                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                                connection.Open();
-                                                var reader = cmd.ExecuteNonQuery();
+                                                _command = new SqlCommand(_query, _connection);
+                                                _connection.Open();
+                                                var reader = _command.ExecuteNonQuery();
                                             }
                                             catch (SqlException ex)
                                             {
@@ -715,9 +749,11 @@ namespace Assigments_School
                                             }
                                             finally
                                             {
-                                                connection.Close();
+                                                _connection.Close();
                                             }
+                                            #endregion
                                         }
+                                        title = "";
                                         break;
                                     case "date":
                                         Console.WriteLine("\n");
@@ -725,14 +761,13 @@ namespace Assigments_School
                                         string enddate = Console.ReadLine();
                                         if(enddate.Length > 0)
                                         {
-                                            // Update DATABASE
-                                            string sql_query = $"EXEC UpdateCourseEndDate '{enddate}', '{course_title}';";
-                                            SqlConnection connection = new SqlConnection(DB_connection_string);
+                                            #region "Update EndDate"
+                                            _query = $"EXEC UpdateCourseEndDate '{enddate}', '{course_title}';";
                                             try
                                             {
-                                                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                                connection.Open();
-                                                var reader = cmd.ExecuteNonQuery();
+                                                _command = new SqlCommand(_query, _connection);
+                                                _connection.Open();
+                                                var reader = _command.ExecuteNonQuery();
                                             }
                                             catch (SqlException ex)
                                             {
@@ -740,8 +775,9 @@ namespace Assigments_School
                                             }
                                             finally
                                             {
-                                                connection.Close();
+                                                _connection.Close();
                                             }
+                                            #endregion
                                         }
                                         break;
                                     case "d":
@@ -750,14 +786,13 @@ namespace Assigments_School
                                         string description = Console.ReadLine();
                                         if (description.Length > 0)
                                         {
-                                            // Update DATABASE
-                                            string sql_query = $"EXEC UpdateCourseEndDescription '{description}', '{course_title}';";
-                                            SqlConnection connection = new SqlConnection(DB_connection_string);
+                                            #region "Update Description"
+                                            _query = $"EXEC UpdateCourseEndDescription '{description}', '{course_title}';";
                                             try
                                             {
-                                                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                                connection.Open();
-                                                var reader = cmd.ExecuteNonQuery();
+                                                _command = new SqlCommand(_query, _connection);
+                                                _connection.Open();
+                                                var reader = _command.ExecuteNonQuery();
                                             }
                                             catch (SqlException ex)
                                             {
@@ -765,8 +800,9 @@ namespace Assigments_School
                                             }
                                             finally
                                             {
-                                                connection.Close();
+                                                _connection.Close();
                                             }
+                                            #endregion
                                         }
                                         break;
                                     default:
@@ -776,35 +812,32 @@ namespace Assigments_School
                             case "st": // Edit Students
                                 Console.WriteLine("\n");
                                 Console.Write("Add(add) ? Remove(del): ");
-                                string st_choice = Console.ReadLine();
-                                switch (st_choice)
+                                choice = Console.ReadLine();
+                                switch (choice)
                                 {
-                                    case "add":
-                                        // Add Students To Course
+                                    case "add": // Add Student
                                         Console.WriteLine("\n");
                                         while (true)
                                         {
                                             Console.Write("Stop(stop) ? Add New Student(new) ? Add Existing Student(ex): ");
-                                            string st_choice_2 = Console.ReadLine();
-                                            if (st_choice_2.Equals("stop"))
+                                            choice = Console.ReadLine();
+                                            if (choice.Equals("stop"))
                                             {
                                                 break;
                                             }
                                             else
                                             {
-                                                string student_email_2;
-                                                switch (st_choice_2)
+                                                switch (choice)
                                                 {
-                                                    case "new":
-                                                        student_email_2 = AddStudent();
-                                                        // Add Trainer To DataBase
-                                                        string sql_query_2 = $"EXEC AddStudentToCourse '{course_title}', '{student_email_2}';";
-                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
+                                                    case "new": // New Student
+                                                        conntact_email = AddStudent();
+                                                        #region "Add Student To Course"
+                                                        _query = $"EXEC AddStudentToCourse '{course_title}', '{conntact_email}';";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
-                                                            connection_2.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -812,23 +845,50 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_2.Close();
+                                                            _connection.Close();
                                                         }
+                                                        #endregion
                                                         break;
-                                                    case "ex":
-                                                        string my_id_2;
-                                                        Console.WriteLine("Select Student By Id(3): ");
+                                                    case "ex": // Existing Student
+                                                        Console.WriteLine("Select Student By Id(3):\n");
                                                         GetAllStudents();
-                                                        my_id_2 = Console.ReadLine();
-                                                        student_email_2 = students[int.Parse(my_id_2)-1];
-                                                        // Add Trainer To DataBase
-                                                        sql_query_2 = $"EXEC AddStudentToCourse '{course_title}', '{student_email_2}';";
-                                                        connection_2 = new SqlConnection(DB_connection_string);
+                                                        Console.WriteLine("Enter Id: ");
+                                                        id = int.Parse(Console.ReadLine());
+                                                        #region "Get setelected Student Email from DB (student_email_2 = Email)"
+                                                        _query = $"GetStudentById {id};";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
-                                                            connection_2.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+
+                                                            SqlDataReader reader = _command.ExecuteReader();
+                                                            students.Clear();
+                                                            while (reader.Read())
+                                                            {
+                                                                conntact_email = reader["Email"].ToString().Trim();
+                                                            }
+
+                                                        }
+                                                        catch (SqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            _connection.Close();
+                                                        }
+                                                        #endregion
+                                                        #region "Add Student To Course"
+                                                        _query = $"EXEC AddStudentToCourse '{course_title}', '{conntact_email}';";
+                                                        try
+                                                        {
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -836,8 +896,9 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_2.Close();
+                                                            _connection.Close();
                                                         }
+                                                        #endregion
                                                         break;
                                                     default:
                                                         Console.WriteLine("Enter A Valid Choice!");
@@ -845,22 +906,48 @@ namespace Assigments_School
                                                 }
                                             }
                                         }
-                                        students.Clear();
+                                        conntact_email = "";
                                         break;
-                                    case "del":
-                                        string my_id;
-                                        Console.WriteLine("Select Student By Id(3): ");
+                                    case "del": // Delete Student
+                                        Console.WriteLine("Select Student By Id(3):\n");
                                         GetAllStudentsOnCourseByTitle(course_title);
-                                        my_id = Console.ReadLine();
-                                        string student_email = students[int.Parse(my_id)-1];
-                                        // Add Trainer To DataBase
-                                        string sql_query = $"EXEC DeleteStudentToCourse '{course_title}', '{student_email}';";
-                                        SqlConnection connection = new SqlConnection(DB_connection_string);
+                                        Console.WriteLine("\nEnter Id: ");
+                                        id = int.Parse(Console.ReadLine());
+                                        #region "Get setelected Student Email from DB (student_email_2 = Email)"
+                                        _query = $"GetStudentById {id};";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                            connection.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+
+                                            SqlDataReader reader = _command.ExecuteReader();
+                                            students.Clear();
+                                            while (reader.Read())
+                                            {
+                                                conntact_email = reader["Email"].ToString().Trim();
+                                            }
+
+                                        }
+                                        catch (SqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            _connection.Close();
+                                        }
+                                        #endregion
+                                        #region "Delete Student"
+                                        _query = $"EXEC DeleteStudentToCourse '{course_title}', '{conntact_email}';";
+                                        try
+                                        {
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -868,10 +955,13 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection.Close();
+                                            _connection.Close();
                                         }
+                                        #endregion
+                                        conntact_email = "";
                                         break;
                                     default:
+                                        conntact_email = "";
                                         Console.WriteLine("Enter A Valid Choice!");
                                         break;
                                 }
@@ -879,35 +969,32 @@ namespace Assigments_School
                             case "tr": // Edit Trainers
                                 Console.WriteLine("\n");
                                 Console.Write("Add(add) ? Remove(del): ");
-                                string tr_choice = Console.ReadLine();
-                                switch (tr_choice)
+                                choice = Console.ReadLine();
+                                switch (choice)
                                 {
-                                    case "add":
-                                        // Add Trainers To Course
+                                    case "add": // Add Trainer
                                         Console.WriteLine("\n");
                                         while (true)
                                         {
                                             Console.Write("Stop(stop) ? Add New Trainer(new) ? Add Existing Trainer(ex): ");
-                                            string tr_choice_2 = Console.ReadLine();
-                                            if (tr_choice_2.Equals("stop"))
+                                            choice = Console.ReadLine();
+                                            if (choice.Equals("stop"))
                                             {
                                                 break;
                                             }
                                             else
                                             {
-                                                string trainer_email;
-                                                switch (tr_choice_2)
+                                                switch (choice)
                                                 {
-                                                    case "new":
-                                                        trainer_email = AddTrainer();
-                                                        // Add Trainer To DataBase
-                                                        string sql_query_2 = $"EXEC AddTrainerToCourse '{course_title}', '{trainer_email}';";
-                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
+                                                    case "new": // New Trainer
+                                                        conntact_email = AddTrainer();
+                                                        #region "Add Trainer To DB"
+                                                        _query = $"EXEC AddTrainerToCourse '{course_title}', '{conntact_email}';";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
-                                                            connection_2.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -915,23 +1002,50 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_2.Close();
+                                                            _connection.Close();
                                                         }
+                                                        #endregion
                                                         break;
-                                                    case "ex":
-                                                        string my_id_3;
-                                                        Console.WriteLine("Select Trainer By Id(3): ");
+                                                    case "ex": // Existing Trainer
+                                                        Console.WriteLine("Select Trainer By Id(3):\n");
                                                         GetAllTrainers();
-                                                        my_id_3 = Console.ReadLine();
-                                                        trainer_email = trainers[int.Parse(my_id_3)-1];
-                                                        // Add Trainer To DataBase
-                                                        string sql_query_3 = $"EXEC AddTrainerToCourse '{course_title}', '{trainer_email}';";
-                                                        SqlConnection connection_3 = new SqlConnection(DB_connection_string);
+                                                        Console.Write("\nEnter Id: ");
+                                                        id = int.Parse(Console.ReadLine());
+                                                        #region "Get setelected Trainer Email from DB (trainer_email = Email)"
+                                                        _query = $"GetTrainerById {id};";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_3, connection_3);
-                                                            connection_3.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+
+                                                            SqlDataReader reader = _command.ExecuteReader();
+                                                            students.Clear();
+                                                            while (reader.Read())
+                                                            {
+                                                                conntact_email = reader["Email"].ToString().Trim();
+                                                            }
+
+                                                        }
+                                                        catch (SqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            _connection.Close();
+                                                        }
+                                                        #endregion
+                                                        #region "Add Trainer To DB"
+                                                        _query = $"EXEC AddTrainerToCourse '{course_title}', '{conntact_email}';";
+                                                        try
+                                                        {
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -939,8 +1053,9 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_3.Close();
+                                                            _connection.Close();
                                                         }
+                                                        #endregion
                                                         break;
                                                     default:
                                                         Console.WriteLine("Enter A Valid Choice!");
@@ -948,22 +1063,48 @@ namespace Assigments_School
                                                 }
                                             }
                                         }
-                                        trainers.Clear();
+                                        conntact_email = "";
                                         break;
-                                    case "del":
-                                        string my_id_2;
-                                        Console.WriteLine("Select Trainer By Id(3): ");
+                                    case "del": // Delete Trainer
+                                        Console.WriteLine("Select Trainer By Id(3):\n");
                                         GetAllTrainersOnCourse(course_title);
-                                        my_id_2 = Console.ReadLine();
-                                        string student_email = students[int.Parse(my_id_2)-1];
-                                        // Add Trainer To DataBase
-                                        string sql_query = $"EXEC DeleteTrainerToCourse '{course_title}', '{student_email}';";
-                                        SqlConnection connection = new SqlConnection(DB_connection_string);
+                                        Console.Write("\nExter Id: ");
+                                        id = int.Parse(Console.ReadLine());
+                                        #region "Get setelected Trainer Email from DB (trainer_email = Email)"
+                                        _query = $"GetTrainerById {id};";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                            connection.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+
+                                            SqlDataReader reader = _command.ExecuteReader();
+                                            students.Clear();
+                                            while (reader.Read())
+                                            {
+                                                conntact_email = reader["Email"].ToString().Trim();
+                                            }
+
+                                        }
+                                        catch (SqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            _connection.Close();
+                                        }
+                                        #endregion
+                                        #region "Delete Trainer"
+                                        _query = $"EXEC DeleteTrainerToCourse '{course_title}', '{conntact_email}';";
+                                        try
+                                        {
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -971,8 +1112,10 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection.Close();
+                                            _connection.Close();
                                         }
+                                        #endregion
+                                        conntact_email = "";
                                         break;
                                     default:
                                         Console.WriteLine("Enter A Valid Choice!");
@@ -980,38 +1123,34 @@ namespace Assigments_School
                                 }
                                 break;
                             case "ass": // Edit Assignments
-                                // TODO: [EditCourse()]: Edit Assignment Line 985
                                 Console.WriteLine("\n");
                                 Console.Write("Add(add) ? Remove(del): ");
-                                string as_choice = Console.ReadLine();
-                                string ass_title;
-                                switch (as_choice)
+                                choice = Console.ReadLine();
+                                switch (choice)
                                 {
-                                    case "add":
-                                        // Add Assignments To Course
+                                    case "add": // Add Assignments
                                         Console.WriteLine("\n");
                                         while (true)
                                         {
                                             Console.Write("Stop(stop) ? Add New Assignment(new) ? Add Existing Assignment(ex): ");
-                                            string tr_choice_2 = Console.ReadLine();
-                                            if (tr_choice_2.Equals("stop"))
+                                            choice = Console.ReadLine();
+                                            if (choice.Equals("stop"))
                                             {
                                                 break;
                                             }
                                             else
                                             {
-                                                switch (tr_choice_2)
+                                                switch (choice)
                                                 {
                                                     case "new":
-                                                        ass_title = AddAssignment();
-                                                        // Add Assignment To DataBase
-                                                        string sql_query_2 = $"EXEC AddAssignmentToCourse '{course_title}', '{ass_title}';";
-                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
+                                                        title = AddAssignment();
+                                                        #region "Add Assignment"
+                                                        _query = $"EXEC AddAssignmentToCourse '{course_title}', '{title}';";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
-                                                            connection_2.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -1019,23 +1158,50 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_2.Close();
+                                                            _connection.Close();
                                                         }
+                                                        #endregion
                                                         break;
                                                     case "ex":
-                                                        string my_id_3;
-                                                        Console.WriteLine("Select Assignment By Id(3): ");
+                                                        Console.WriteLine("Select Assignment By Id(3):\n");
                                                         GetAllAssignments();
-                                                        my_id_3 = Console.ReadLine();
-                                                        ass_title = assignments[int.Parse(my_id_3)-1];
-                                                        // Add Assignment To DataBase
-                                                        string sql_query_3 = $"EXEC AddAssignmentToCourse '{course_title}', '{ass_title}';";
-                                                        SqlConnection connection_3 = new SqlConnection(DB_connection_string);
+                                                        Console.Write("\nEnter Id: ");
+                                                        id = int.Parse(Console.ReadLine());
+                                                        #region "Get setelected Assignment From DB"
+                                                        _query = $"GetAssignmentById {id};";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_3, connection_3);
-                                                            connection_3.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+
+                                                            SqlDataReader reader = _command.ExecuteReader();
+                                                            students.Clear();
+                                                            while (reader.Read())
+                                                            {
+                                                                title = reader["Title"].ToString().Trim();
+                                                            }
+
+                                                        }
+                                                        catch (SqlException ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine($"Exception: {ex.Message}");
+                                                        }
+                                                        finally
+                                                        {
+                                                            _connection.Close();
+                                                        }
+                                                        #endregion
+                                                        #region "Add Assignment"
+                                                        _query = $"EXEC AddAssignmentToCourse '{course_title}', '{title}';";
+                                                        try
+                                                        {
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -1043,8 +1209,9 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_3.Close();
+                                                            _connection.Close();
                                                         }
+                                                        #endregion
                                                         break;
                                                     default:
                                                         Console.WriteLine("Enter A Valid Choice!");
@@ -1052,22 +1219,47 @@ namespace Assigments_School
                                                 }
                                             }
                                         }
-                                        trainers.Clear();
+                                        title = "";
                                         break;
                                     case "del":
-                                        string my_id_2;
                                         Console.WriteLine("Select Assignment By Id(3): ");
                                         GetAllAssignmentsPerCourse(course_title);
-                                        my_id_2 = Console.ReadLine();
-                                        ass_title = assignments[int.Parse(my_id_2)-1];
-                                        // Add Trainer To DataBase
-                                        string sql_query = $"EXEC DeleteAssignmentFromCourse '{course_title}', '{ass_title}';";
-                                        SqlConnection connection = new SqlConnection(DB_connection_string);
+                                        id = int.Parse(Console.ReadLine());
+                                        #region "Get setelected Assignment From DB"
+                                        _query = $"GetAssignmentById {id};";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                            connection.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+
+                                            SqlDataReader reader = _command.ExecuteReader();
+                                            students.Clear();
+                                            while (reader.Read())
+                                            {
+                                                title = reader["Title"].ToString().Trim();
+                                            }
+
+                                        }
+                                        catch (SqlException ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine($"Exception: {ex.Message}");
+                                        }
+                                        finally
+                                        {
+                                            _connection.Close();
+                                        }
+                                        #endregion
+                                        #region "Delete Assignment"
+                                        _query = $"EXEC DeleteAssignmentFromCourse '{course_title}', '{title}';";
+                                        try
+                                        {
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -1075,8 +1267,9 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection.Close();
+                                            _connection.Close();
                                         }
+                                        #endregion
                                         break;
                                     default:
                                         Console.WriteLine("Enter A Valid Choice!");
@@ -1144,13 +1337,12 @@ namespace Assigments_School
                                                     if(title.Length > 0)
                                                     {
                                                         // Enter Title To Database
-                                                        string sql_query_0 = $"EXEC UpdateAssignmentsTitle '{title}', '{assignment_title}';";
-                                                        SqlConnection connection_0 = new SqlConnection(DB_connection_string);
+                                                        _query = $"EXEC UpdateAssignmentsTitle '{title}', '{assignment_title}';";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_0, connection_0);
-                                                            connection_0.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -1158,7 +1350,7 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_0.Close();
+                                                            _connection.Close();
                                                         }
                                                     }
                                                     else
@@ -1172,13 +1364,12 @@ namespace Assigments_School
                                                     if(enddate.Length > 0)
                                                     {
                                                         // Enter Ende Date To Database
-                                                        string sql_query_1 = $"EXEC UpdateAssignmentsDate '{enddate}', '{assignment_title}'; ";
-                                                        SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                        _query = $"EXEC UpdateAssignmentsDate '{enddate}', '{assignment_title}'; ";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                            connection_1.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -1186,7 +1377,7 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_1.Close();
+                                                            _connection.Close();
                                                         }
                                                     }
                                                     else
@@ -1200,13 +1391,12 @@ namespace Assigments_School
                                                     if(description.Length > 0)
                                                     {
                                                         // Enter Description To Database
-                                                        string sql_query_2 = $"EXEC UpdateAssignmentsDescription '{description}', '{assignment_title}';";
-                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
+                                                        _query = $"EXEC UpdateAssignmentsDescription '{description}', '{assignment_title}';";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
-                                                            connection_2.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -1214,7 +1404,7 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_2.Close();
+                                                            _connection.Close();
                                                         }
                                                     }
                                                     else
@@ -1258,13 +1448,12 @@ namespace Assigments_School
                                                         my_id_2 = Console.ReadLine();
                                                         student_email_2 = students[int.Parse(my_id_2)-1];
                                                         // Add Student To DataBase
-                                                        string sql_query_2 = $"EXEC InsertStudentToAssignment '{student_email_2}', '{assignment_title}';";
-                                                        SqlConnection connection_2 = new SqlConnection(DB_connection_string);
+                                                        _query = $"EXEC InsertStudentToAssignment '{student_email_2}', '{assignment_title}';";
                                                         try
                                                         {
-                                                            SqlCommand cmd = new SqlCommand(sql_query_2, connection_2);
-                                                            connection_2.Open();
-                                                            var reader = cmd.ExecuteNonQuery();
+                                                            _command = new SqlCommand(_query, _connection);
+                                                            _connection.Open();
+                                                            var reader = _command.ExecuteNonQuery();
                                                         }
                                                         catch (SqlException ex)
                                                         {
@@ -1272,7 +1461,7 @@ namespace Assigments_School
                                                         }
                                                         finally
                                                         {
-                                                            connection_2.Close();
+                                                            _connection.Close();
                                                         }
                                                         break;
                                                     default:
@@ -1293,13 +1482,12 @@ namespace Assigments_School
                                         my_id = Console.ReadLine();
                                         string student_email = students[int.Parse(my_id)-1];
                                         // Delete This Student On This Assignment
-                                        string sql_query_3 = $"EXEC DeleteStudentFromAssignment '{student_email}', '{assignment_title}';";
-                                        SqlConnection connection_3 = new SqlConnection(DB_connection_string);
+                                        _query = $"EXEC DeleteStudentFromAssignment '{student_email}', '{assignment_title}';";
                                         try
                                         {
-                                            SqlCommand cmd = new SqlCommand(sql_query_3, connection_3);
-                                            connection_3.Open();
-                                            var reader = cmd.ExecuteNonQuery();
+                                            _command = new SqlCommand(_query, _connection);
+                                            _connection.Open();
+                                            var reader = _command.ExecuteNonQuery();
                                         }
                                         catch (SqlException ex)
                                         {
@@ -1307,7 +1495,7 @@ namespace Assigments_School
                                         }
                                         finally
                                         {
-                                            connection_3.Close();
+                                            _connection.Close();
                                         }
                                         break;
                                     default:
@@ -1317,13 +1505,12 @@ namespace Assigments_School
                                 break;
                             case "del": // Delete Assignment
                                 // Delete All Assignments And All Related Records
-                                string sql_query = $"EXEC DeleteAssignment '{assignment_title}';";
-                                SqlConnection connection = new SqlConnection(DB_connection_string);
+                                _query = $"EXEC DeleteAssignment '{assignment_title}';";
                                 try
                                 {
-                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                    connection.Open();
-                                    var reader = cmd.ExecuteNonQuery();
+                                    _command = new SqlCommand(_query, _connection);
+                                    _connection.Open();
+                                    var reader = _command.ExecuteNonQuery();
                                 }
                                 catch (SqlException ex)
                                 {
@@ -1331,7 +1518,7 @@ namespace Assigments_School
                                 }
                                 finally
                                 {
-                                    connection.Close();
+                                    _connection.Close();
                                 }
                                 break;
                             default:
@@ -1385,13 +1572,12 @@ namespace Assigments_School
                                             if(firstname.Length > 0)
                                             {
                                                 // Update FirstName
-                                                string sql_query_1 = $"EXEC UpdateTrainerFirstName '{firstname}', '{trainer_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateTrainerFirstName '{firstname}', '{trainer_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1399,7 +1585,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1414,13 +1600,12 @@ namespace Assigments_School
                                             if (lastname.Length > 0)
                                             {
                                                 // Update LastName
-                                                string sql_query_1 = $"EXEC UpdateTrainerLastName '{lastname}', '{trainer_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateTrainerLastName '{lastname}', '{trainer_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1428,7 +1613,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1443,13 +1628,12 @@ namespace Assigments_School
                                             if (age.Length > 0)
                                             {
                                                 // Update Age
-                                                string sql_query_1 = $"EXEC UpdateTrainerAge '{age}', '{trainer_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateTrainerAge '{age}', '{trainer_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1457,7 +1641,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1472,13 +1656,12 @@ namespace Assigments_School
                                             if (gender.Length > 0)
                                             {
                                                 // Update Gender
-                                                string sql_query_1 = $"EXEC UpdateTrainerGender '{gender}', '{trainer_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateTrainerGender '{gender}', '{trainer_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1486,7 +1669,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1501,13 +1684,12 @@ namespace Assigments_School
                                             if (email.Length > 0)
                                             {
                                                 // Update Email
-                                                string sql_query_1 = $"EXEC UpdateTrainerEmail '{email}', '{trainer_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateTrainerEmail '{email}', '{trainer_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1515,7 +1697,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1531,13 +1713,12 @@ namespace Assigments_School
                                             if (phone.Length > 0)
                                             {
                                                 // Update Phone
-                                                string sql_query_1 = $"EXEC UpdateTrainerPhone '{phone}', '{trainer_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateTrainerPhone '{phone}', '{trainer_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1545,7 +1726,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1565,13 +1746,12 @@ namespace Assigments_School
                                 break;
                             case "del":
                                 // Delete All Trainer Courses With This Trainer
-                                string sql_query = $"EXEC DeleteTrainer '{trainer_email}';";
-                                SqlConnection connection = new SqlConnection(DB_connection_string);
+                                _query = $"EXEC DeleteTrainer '{trainer_email}';";
                                 try
                                 {
-                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                    connection.Open();
-                                    var reader = cmd.ExecuteNonQuery();
+                                    _command = new SqlCommand(_query, _connection);
+                                    _connection.Open();
+                                    var reader = _command.ExecuteNonQuery();
                                 }
                                 catch (SqlException ex)
                                 {
@@ -1579,7 +1759,7 @@ namespace Assigments_School
                                 }
                                 finally
                                 {
-                                    connection.Close();
+                                    _connection.Close();
                                 }
                                 break;
                             default:
@@ -1633,13 +1813,12 @@ namespace Assigments_School
                                             if (firstname.Length > 0)
                                             {
                                                 // Update FirstName
-                                                string sql_query_1 = $"EXEC UpdateStudentFirstName '{firstname}', '{student_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateStudentFirstName '{firstname}', '{student_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1647,7 +1826,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1662,13 +1841,12 @@ namespace Assigments_School
                                             if (lastname.Length > 0)
                                             {
                                                 // Update LastName
-                                                string sql_query_1 = $"EXEC UpdateStudentLastName '{lastname}', '{student_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateStudentLastName '{lastname}', '{student_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1676,7 +1854,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1691,13 +1869,12 @@ namespace Assigments_School
                                             if (age.Length > 0)
                                             {
                                                 // Update Age
-                                                string sql_query_1 = $"EXEC UpdateStudentAge '{age}', '{student_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateStudentAge '{age}', '{student_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1705,7 +1882,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1720,13 +1897,12 @@ namespace Assigments_School
                                             if (gender.Length > 0)
                                             {
                                                 // Update Gender
-                                                string sql_query_1 = $"EXEC UpdateStudentGender '{gender}', '{student_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateStudentGender '{gender}', '{student_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1734,7 +1910,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1749,13 +1925,12 @@ namespace Assigments_School
                                             if (email.Length > 0)
                                             {
                                                 // Update Email
-                                                string sql_query_1 = $"EXEC UpdateStudentEmail '{email}', '{student_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateStudentEmail '{email}', '{student_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1763,7 +1938,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1779,13 +1954,12 @@ namespace Assigments_School
                                             if (phone.Length > 0)
                                             {
                                                 // Update Phone
-                                                string sql_query_1 = $"EXEC UpdateStudentPhone '{phone}', '{student_email}';";
-                                                SqlConnection connection_1 = new SqlConnection(DB_connection_string);
+                                                _query = $"EXEC UpdateStudentPhone '{phone}', '{student_email}';";
                                                 try
                                                 {
-                                                    SqlCommand cmd = new SqlCommand(sql_query_1, connection_1);
-                                                    connection_1.Open();
-                                                    var reader = cmd.ExecuteNonQuery();
+                                                    _command = new SqlCommand(_query, _connection);
+                                                    _connection.Open();
+                                                    var reader = _command.ExecuteNonQuery();
                                                 }
                                                 catch (SqlException ex)
                                                 {
@@ -1793,7 +1967,7 @@ namespace Assigments_School
                                                 }
                                                 finally
                                                 {
-                                                    connection_1.Close();
+                                                    _connection.Close();
                                                 }
                                             }
                                             else
@@ -1813,13 +1987,12 @@ namespace Assigments_School
                                 break;
                             case "del":
                                 // Delete All Student Courses With This Student
-                                string sql_query = $"EXEC DeleteStudent '{student_email}';";
-                                SqlConnection connection = new SqlConnection(DB_connection_string);
+                                _query = $"EXEC DeleteStudent '{student_email}';";
                                 try
                                 {
-                                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                                    connection.Open();
-                                    var reader = cmd.ExecuteNonQuery();
+                                    _command = new SqlCommand(_query, _connection);
+                                    _connection.Open();
+                                    var reader = _command.ExecuteNonQuery();
                                 }
                                 catch (SqlException ex)
                                 {
@@ -1827,7 +2000,7 @@ namespace Assigments_School
                                 }
                                 finally
                                 {
-                                    connection.Close();
+                                    _connection.Close();
                                 }
                                 break;
                             default:
@@ -1851,15 +2024,13 @@ namespace Assigments_School
         // Get All Students From DB
         private static void GetAllStudents()
         {
-            Console.WriteLine("\n");
-            string sql_query = "EXEC GetAllStudents;";
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            _query = "EXEC GetAllStudents;";
             try
             {
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
 
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = _command.ExecuteReader();
                 students.Clear();
                 while (reader.Read())
                 {
@@ -1880,21 +2051,19 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Trainers From DB
         private static void GetAllTrainers()
         {
-            Console.WriteLine("\n");
-            string sql_query = "EXEC GetAllTrainers;";
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            _query = "EXEC GetAllTrainers;";
             try
             {
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
 
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = _command.ExecuteReader();
                 trainers.Clear();
                 while (reader.Read())
                 {
@@ -1915,21 +2084,19 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Assignments FromDB
         private static void GetAllAssignments()
         {
-            Console.WriteLine("\n");
-            string sql_query = "EXEC GetAllAssignments;";
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            _query = "EXEC GetAllAssignments;";
             try
             {
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
 
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = _command.ExecuteReader();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
@@ -1948,20 +2115,18 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Courses FromDB
         private static void GetAllCourses()
         {
-            Console.WriteLine("\n");
-            string sql_query = "EXEC GetAllCourses;";
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            _query = "EXEC GetAllCourses;";
             try
             {
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+                SqlDataReader reader = _command.ExecuteReader();
                 courses.Clear();
                 while (reader.Read())
                 {
@@ -1981,25 +2146,24 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Students Per Course
         private static void GetAllStudentsOnCourse()
         {
-            Console.WriteLine("\n");
             Console.Write("Select Course By Id: ");
-            GetAllCourses();
             Console.WriteLine("\n");
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            GetAllCourses();
+            Console.Write("\nEnter Id: ");
             try
             {
                 int id = int.Parse(Console.ReadLine());
                 Console.WriteLine("\n");
-                string sql_query = $"EXEC GetAllStudentsOfCourseById '{id}';";
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                _query = $"EXEC GetAllStudentsOfCourseById '{id}';";
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+                SqlDataReader reader = _command.ExecuteReader();
                 students.Clear();
                 while (reader.Read())
                 {
@@ -2019,19 +2183,18 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Students Per Course
         private static void GetAllStudentsOnCourseByTitle(string title)
         {
-            string sql_query = $"EXEC GetAllStudentsOfCourses '{title}';";
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            _query = $"EXEC GetAllStudentsOfCourses '{title}';";
             try
             {
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+                SqlDataReader reader = _command.ExecuteReader();
                 students.Clear();
                 while (reader.Read())
                 {
@@ -2051,25 +2214,24 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Trainers Per Course
         private static void GetAllTrainersOnCourse()
         {
-            Console.WriteLine("\n");
             Console.Write("Select Course By Id: ");
-            GetAllCourses();
             Console.WriteLine("\n");
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            GetAllCourses();
+            Console.Write("\nEnter Id: ");
             try
             {
                 int id = int.Parse(Console.ReadLine());
                 Console.WriteLine("\n");
-                string sql_query = $"EXEC GetAllTrainersOfCourseById '{id}';";
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                _query = $"EXEC GetAllTrainersOfCourseById '{id}';";
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+                SqlDataReader reader = _command.ExecuteReader();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
@@ -2087,7 +2249,7 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Trainers Per Course
@@ -2096,14 +2258,13 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (title.Length > 0)
             {
-                string sql_query = $"EXEC GetAllTrainersOfCourses '{title}';";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
+                _query = $"EXEC GetAllTrainersOfCourses '{title}';";
                 try
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
+                    _command = new SqlCommand(_query, _connection);
+                    _connection.Open();
 
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = _command.ExecuteReader();
                     while (reader.Read())
                     {
                         Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
@@ -2121,7 +2282,7 @@ namespace Assigments_School
                 }
                 finally
                 {
-                    connection.Close();
+                    _connection.Close();
                 }
             }
             else
@@ -2132,19 +2293,18 @@ namespace Assigments_School
         // Get All Assignments Per Course
         private static void GetAllAssignmentsPerCourse()
         {
-            Console.WriteLine("\n");
             Console.Write("Select Course By Id: ");
-            GetAllAssignments();
             Console.WriteLine("\n");
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            GetAllAssignments();
+            Console.Write("\nEnter Id: ");
             try
             {
                 int id = int.Parse(Console.ReadLine());
                 Console.WriteLine("\n");
-                string sql_query = $"EXEC GetAllAssignmentsOfCourseById {id};";
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                _query = $"EXEC GetAllAssignmentsOfCourseById {id};";
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+                SqlDataReader reader = _command.ExecuteReader();
                 assignments.Clear();
                 while (reader.Read())
                 {
@@ -2164,7 +2324,7 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Assignments Per Course
@@ -2173,14 +2333,13 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if (title.Length > 0)
             {
-                string sql_query = $"EXEC GetAllAssignmentsOfCourses '{title}';";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
+                _query = $"EXEC GetAllAssignmentsOfCourses '{title}';";
                 try
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
+                    _command = new SqlCommand(_query, _connection);
+                    _connection.Open();
 
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = _command.ExecuteReader();
                     assignments.Clear();
                     while (reader.Read())
                     {
@@ -2200,7 +2359,7 @@ namespace Assigments_School
                 }
                 finally
                 {
-                    connection.Close();
+                    _connection.Close();
                 }
             }
             else
@@ -2213,13 +2372,12 @@ namespace Assigments_School
         {
             if (title.Length > 0)
             {
-                string sql_query = $"EXEC GetAllStudentsOfAssignment '{title}';";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
+                _query = $"EXEC GetAllStudentsOfAssignment '{title}';";
                 try
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    _command = new SqlCommand(_query, _connection);
+                    _connection.Open();
+                    SqlDataReader reader = _command.ExecuteReader();
                     assignments.Clear();
                     while (reader.Read())
                     {
@@ -2238,7 +2396,7 @@ namespace Assigments_School
                 }
                 finally
                 {
-                    connection.Close();
+                    _connection.Close();
                 }
             }
             else
@@ -2252,13 +2410,12 @@ namespace Assigments_School
             if(title.Length > 0)
             {
                 // Get Title Of This Course
-                string query = $"EXEC GetCourseTitleByAssignmentTitle '{title}';";
-                SqlConnection connection_2 = new SqlConnection(DB_connection_string);
+                _query = $"EXEC GetCourseTitleByAssignmentTitle '{title}';";
                 try
                 {
-                    SqlCommand cmd = new SqlCommand(query, connection_2);
-                    connection_2.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    _command = new SqlCommand(_query, _connection);
+                    _connection.Open();
+                    SqlDataReader reader = _command.ExecuteReader();
                     string course_title = "";
                     while (reader.Read())
                     {
@@ -2273,7 +2430,7 @@ namespace Assigments_School
                 }
                 finally
                 {
-                    connection_2.Close();
+                    _connection.Close();
                 }
             }
             else
@@ -2284,19 +2441,18 @@ namespace Assigments_School
         // Get All Assignments Per Student
         private static void GetAllAssignmentsPerStudent()
         {
-            Console.WriteLine("\n");
             Console.Write("Select Course By Id: ");
-            GetAllAssignments();
             Console.WriteLine("\n");
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            GetAllAssignments();
+            Console.Write("\nEnter Id: ");
             try
             {
                 int id = int.Parse(Console.ReadLine());
                 Console.WriteLine("\n");
-                string sql_query = $"EXEC GetAllAssignmentsOfStudentById '{id}';";
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                _query = $"EXEC GetAllAssignmentsOfStudentById '{id}';";
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+                SqlDataReader reader = _command.ExecuteReader();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Assignment: {reader["Title"].ToString().Trim()}  " +
@@ -2313,20 +2469,19 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Students That Belong To More That One Course
         private static void GetAllStudentsThatBelongToMoreThatOneCourse()
         {
             Console.WriteLine("\n");
-            string sql_query = $"EXEC GetAllStudentsThatBelongMoreToOneCourse;";
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            _query = $"EXEC GetAllStudentsThatBelongMoreToOneCourse;";
             try
             {
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+                SqlDataReader reader = _command.ExecuteReader();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Student: {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
@@ -2345,28 +2500,29 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Assignments Per Course And Student
         private static void GetAllAssignmentsPerCourseAndStudent()
         {
-            SqlConnection connection = new SqlConnection(DB_connection_string);
             try
             {
-                Console.WriteLine("\n");
                 Console.Write("Select Course By Id: ");
-                GetAllCourses();
-                int c_id = int.Parse(Console.ReadLine());
                 Console.WriteLine("\n");
+                GetAllCourses();
+                Console.Write("\nEnter Id: ");
+                int c_id = int.Parse(Console.ReadLine());
                 Console.Write("Select Student By Id: ");
+                Console.WriteLine("\n");
                 GetAllStudents();
+                Console.Write("\nEnter Id: ");
                 int s_id = int.Parse(Console.ReadLine());
                 Console.WriteLine("\n");
-                string sql_query = $"EXEC GetAllAssignmentsPerCourseAndStudentByIds {c_id}, {s_id};";
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                _query = $"EXEC GetAllAssignmentsPerCourseAndStudentByIds {c_id}, {s_id};";
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+                SqlDataReader reader = _command.ExecuteReader();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Assignment: {reader["Title"].ToString().Trim()}  " +
@@ -2383,21 +2539,20 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Students Who Need To Submit AssigNments On The Same Week
         private static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
         {
             Console.WriteLine("\n");
-            string sql_query = $"EXEC GetAllStudentsSubmitsAssOnSameWeek;";
-            SqlConnection connection = new SqlConnection(DB_connection_string);
+            _query = $"EXEC GetAllStudentsSubmitsAssOnSameWeek;";
             try
             {
-                SqlCommand cmd = new SqlCommand(sql_query, connection);
-                connection.Open();
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
 
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = _command.ExecuteReader();
                 while (reader.Read())
                 {
                     Console.WriteLine($"Student: {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
@@ -2415,7 +2570,7 @@ namespace Assigments_School
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
         }
         // Get All Students Who Need To Submeet An Assignment On The Same Week As The Date
@@ -2427,13 +2582,12 @@ namespace Assigments_School
             Console.WriteLine("\n");
             if(date.Length > 0)
             {
-                string sql_query = $"EXEC GetAllStudentsSubmitsAssOnSameWeekAsDate '{date}'";
-                SqlConnection connection = new SqlConnection(DB_connection_string);
+                _query = $"EXEC GetAllStudentsSubmitsAssOnSameWeekAsDate '{date}'";
                 try
                 {
-                    SqlCommand cmd = new SqlCommand(sql_query, connection);
-                    connection.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    _command = new SqlCommand(_query, _connection);
+                    _connection.Open();
+                    SqlDataReader reader = _command.ExecuteReader();
                     while (reader.Read())
                     {
                         Console.WriteLine($"Student: {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
@@ -2451,7 +2605,7 @@ namespace Assigments_School
                 }
                 finally
                 {
-                    connection.Close();
+                    _connection.Close();
                 }
             }
         }
