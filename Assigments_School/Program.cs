@@ -672,8 +672,9 @@ namespace Assigments_School
         // Edit Course
         private static void EditCourse()
         {
+            Console.WriteLine("Select Course By Id:\n");
             GetAllCourses();
-            Console.Write("\nSelect Course By Id: ");
+            Console.Write("\nEnter Id: ");
             int id = -1;
             try
             {
@@ -1316,7 +1317,7 @@ namespace Assigments_School
         // Edit Assignment
         private static void EditAssignment()
         {
-            Console.Write("Select Assignment By Id:\n\n");
+            Console.WriteLine("Select Assignment By Id:\n");
             GetAllAssignments();
             Console.Write("\nEnter Id: ");
             int id = -1;
@@ -1665,8 +1666,9 @@ namespace Assigments_School
         // Edit Trainer
         private static void EditTrainer()
         {
+            Console.WriteLine("Select Trainer By Id:\n");
             GetAllTrainers();
-            Console.Write("Select Trainer By Id:\n");
+            Console.Write("\nEnter Id: ");
             int id = -1;
             try
             {
@@ -1948,7 +1950,7 @@ namespace Assigments_School
         // Edit Student
         private static void EditStudent()
         {
-            Console.Write("Select Student By Id:\n");
+            Console.WriteLine("Select Student By Id:\n");
             GetAllStudents();
             Console.Write("\nEnter Id: ");
             int id = -1;
