@@ -71,8 +71,9 @@
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="Database_Queries.sql" />
+    <Content Include="Diagram\Diagram_1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
