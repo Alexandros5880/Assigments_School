@@ -860,7 +860,7 @@ namespace Assigments_School
                                                     case "ex": // Existing Student
                                                         Console.WriteLine("Select Student By Id(3):\n");
                                                         GetAllStudents();
-                                                        Console.WriteLine("Enter Id: ");
+                                                        Console.WriteLine("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
                                                         #region "Get setelected Student Email from DB (student_email_2 = Email)"
                                                         _query = $"GetStudentById {id};";
@@ -1312,7 +1312,6 @@ namespace Assigments_School
             {
                 Console.WriteLine("Enter a valid ID!");
             }
-
         }
         // Edit Assignment
         private static void EditAssignment()
@@ -1523,7 +1522,7 @@ namespace Assigments_School
                                                         case "ex": // Existing Student
                                                             Console.WriteLine("Select Student By Id(3):\n");
                                                             GetAllStudents();
-                                                            Console.WriteLine("Enter Id: ");
+                                                            Console.WriteLine("\nEnter Id: ");
                                                             id = int.Parse(Console.ReadLine());
                                                             #region "Get setelected Student Email"
                                                             _query = $"GetStudentById {id};";
@@ -1575,7 +1574,6 @@ namespace Assigments_School
                                                     }
                                                 }
                                         }
-                                        students.Clear();
                                         break;
                                     case "del": // Delete Student From Assignment
                                         // Get Parents Course Title;
@@ -1667,19 +1665,54 @@ namespace Assigments_School
         // Edit Trainer
         private static void EditTrainer()
         {
-            Console.WriteLine("\n");
             GetAllTrainers();
-            Console.Write("Select Trainer By Id: ");
-            int id = int.Parse(Console.ReadLine())-1;
-            string trainer_email;
-            if (id >= 0 && id < trainers.Count)
+            Console.Write("Select Trainer By Id:\n");
+            int id = -1;
+            try
             {
-                trainer_email = trainers[id];
+                id = int.Parse(Console.ReadLine()) - 1;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Enter a valid ID!");
+            }
+            string trainer_email = "";
+            #region "Get Trainer By Id"
+            _query = $"EXEC GetTrainerById {id};";
+            try
+            {
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+
+                SqlDataReader reader = _command.ExecuteReader();
+                students.Clear();
+                while (reader.Read())
+                {
+                    trainer_email = reader["Email"].ToString().Trim();
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            #endregion
+            if (id != -1)
+            {
+                string choice = "";
                 Console.WriteLine("\n");
                 while (true)
                 {
                     Console.Write("Quit(stop) ? Edit MainImfo(main) ? Delete This Trainer(del): ");
-                    string choice = Console.ReadLine();
+                    choice = Console.ReadLine();
                     if (choice.Equals("stop"))
                     {
                         break;
@@ -1691,10 +1724,10 @@ namespace Assigments_School
                             case "main":
                                 Console.WriteLine("\n");
                                 Console.Write("Edit FirstName(fn) ? LastName(ln) ? Age(a) ? Gender(g) ? Email(e) ? Phone(ph): ");
-                                string tr_choice_2 = Console.ReadLine();
-                                if(tr_choice_2.Length > 0)
+                                choice = Console.ReadLine();
+                                if(choice.Length > 0)
                                 {
-                                    switch (tr_choice_2)
+                                    switch (choice)
                                     {
                                         case "fn": // Edit FistName
                                             Console.WriteLine("\n");
@@ -1702,7 +1735,7 @@ namespace Assigments_School
                                             string firstname = Console.ReadLine();
                                             if(firstname.Length > 0)
                                             {
-                                                // Update FirstName
+                                                #region "Update FirstName"
                                                 _query = $"EXEC UpdateTrainerFirstName '{firstname}', '{trainer_email}';";
                                                 try
                                                 {
@@ -1718,6 +1751,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -1730,7 +1764,7 @@ namespace Assigments_School
                                             string lastname = Console.ReadLine();
                                             if (lastname.Length > 0)
                                             {
-                                                // Update LastName
+                                                #region "Update LastName"
                                                 _query = $"EXEC UpdateTrainerLastName '{lastname}', '{trainer_email}';";
                                                 try
                                                 {
@@ -1746,6 +1780,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -1758,7 +1793,7 @@ namespace Assigments_School
                                             string age = Console.ReadLine();
                                             if (age.Length > 0)
                                             {
-                                                // Update Age
+                                                #region "Update Age"
                                                 _query = $"EXEC UpdateTrainerAge '{age}', '{trainer_email}';";
                                                 try
                                                 {
@@ -1774,6 +1809,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -1786,7 +1822,7 @@ namespace Assigments_School
                                             string gender = Console.ReadLine();
                                             if (gender.Length > 0)
                                             {
-                                                // Update Gender
+                                                #region "Update Gender"
                                                 _query = $"EXEC UpdateTrainerGender '{gender}', '{trainer_email}';";
                                                 try
                                                 {
@@ -1802,6 +1838,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -1814,7 +1851,7 @@ namespace Assigments_School
                                             string email = Console.ReadLine();
                                             if (email.Length > 0)
                                             {
-                                                // Update Email
+                                                #region "Update Email"
                                                 _query = $"EXEC UpdateTrainerEmail '{email}', '{trainer_email}';";
                                                 try
                                                 {
@@ -1830,6 +1867,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -1843,7 +1881,7 @@ namespace Assigments_School
                                             string phone = Console.ReadLine();
                                             if (phone.Length > 0)
                                             {
-                                                // Update Phone
+                                                #region "Update Phone"
                                                 _query = $"EXEC UpdateTrainerPhone '{phone}', '{trainer_email}';";
                                                 try
                                                 {
@@ -1859,6 +1897,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -1876,7 +1915,7 @@ namespace Assigments_School
                                 }
                                 break;
                             case "del":
-                                // Delete All Trainer Courses With This Trainer
+                                #region "Delete Trainer"
                                 _query = $"EXEC DeleteTrainer '{trainer_email}';";
                                 try
                                 {
@@ -1892,6 +1931,7 @@ namespace Assigments_School
                                 {
                                     _connection.Close();
                                 }
+                                #endregion
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
@@ -1908,14 +1948,47 @@ namespace Assigments_School
         // Edit Student
         private static void EditStudent()
         {
-            Console.WriteLine("\n");
+            Console.Write("Select Student By Id:\n");
             GetAllStudents();
-            Console.Write("Select Student By Id: ");
-            int id = int.Parse(Console.ReadLine())-1;
-            string student_email;
-            if (id >= 0 && id < students.Count)
+            Console.Write("\nEnter Id: ");
+            int id = -1;
+            try
             {
-                student_email = students[id];
+                id = int.Parse(Console.ReadLine()) - 1;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Enter a valid ID!");
+            }
+            if (id != -1)
+            {
+                string student_email = "";
+                #region "Get Student By Id"
+                _query = $"EXEC GetStudentById {id};";
+                try
+                {
+                    _command = new SqlCommand(_query, _connection);
+                    _connection.Open();
+                    SqlDataReader reader = _command.ExecuteReader();
+                    students.Clear();
+                    while (reader.Read())
+                    {
+                        student_email = reader["Email"].ToString().Trim();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+                finally
+                {
+                    _connection.Close();
+                }
+                #endregion
                 Console.WriteLine("\n");
                 while (true)
                 {
@@ -1943,7 +2016,7 @@ namespace Assigments_School
                                             string firstname = Console.ReadLine();
                                             if (firstname.Length > 0)
                                             {
-                                                // Update FirstName
+                                                #region "Update FirstName"
                                                 _query = $"EXEC UpdateStudentFirstName '{firstname}', '{student_email}';";
                                                 try
                                                 {
@@ -1959,6 +2032,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -1971,7 +2045,7 @@ namespace Assigments_School
                                             string lastname = Console.ReadLine();
                                             if (lastname.Length > 0)
                                             {
-                                                // Update LastName
+                                                #region "Update LastName"
                                                 _query = $"EXEC UpdateStudentLastName '{lastname}', '{student_email}';";
                                                 try
                                                 {
@@ -1987,6 +2061,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -1999,7 +2074,7 @@ namespace Assigments_School
                                             string age = Console.ReadLine();
                                             if (age.Length > 0)
                                             {
-                                                // Update Age
+                                                #region "Update Age"
                                                 _query = $"EXEC UpdateStudentAge '{age}', '{student_email}';";
                                                 try
                                                 {
@@ -2015,6 +2090,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -2027,7 +2103,7 @@ namespace Assigments_School
                                             string gender = Console.ReadLine();
                                             if (gender.Length > 0)
                                             {
-                                                // Update Gender
+                                                #region "Update Gender"
                                                 _query = $"EXEC UpdateStudentGender '{gender}', '{student_email}';";
                                                 try
                                                 {
@@ -2043,6 +2119,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -2055,7 +2132,7 @@ namespace Assigments_School
                                             string email = Console.ReadLine();
                                             if (email.Length > 0)
                                             {
-                                                // Update Email
+                                                #region "Update Email"
                                                 _query = $"EXEC UpdateStudentEmail '{email}', '{student_email}';";
                                                 try
                                                 {
@@ -2071,6 +2148,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -2084,7 +2162,7 @@ namespace Assigments_School
                                             string phone = Console.ReadLine();
                                             if (phone.Length > 0)
                                             {
-                                                // Update Phone
+                                                #region "Update Phone"
                                                 _query = $"EXEC UpdateStudentPhone '{phone}', '{student_email}';";
                                                 try
                                                 {
@@ -2100,6 +2178,7 @@ namespace Assigments_School
                                                 {
                                                     _connection.Close();
                                                 }
+                                                #endregion
                                             }
                                             else
                                             {
@@ -2117,7 +2196,7 @@ namespace Assigments_School
                                 }
                                 break;
                             case "del":
-                                // Delete All Student Courses With This Student
+                                #region "Delete Student"
                                 _query = $"EXEC DeleteStudent '{student_email}';";
                                 try
                                 {
@@ -2133,6 +2212,7 @@ namespace Assigments_School
                                 {
                                     _connection.Close();
                                 }
+                                #endregion
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
