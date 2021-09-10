@@ -1,4 +1,6 @@
-﻿CREATE PROCEDURE AddStudentToCourse @coursetitle VARCHAR(100), @studentemail VARCHAR(100)
+﻿CREATE PROCEDURE AddStudentToCourse 
+@coursetitle VARCHAR(100), 
+@studentemail VARCHAR(100)
 AS
 BEGIN
 DECLARE @course AS VARCHAR(100) = (SELECT Title FROM Courses WHERE Title = @coursetitle),
