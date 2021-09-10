@@ -132,6 +132,11 @@
     <Build Include="Procedures\GetAllAssignmentsPerCourseAndStudentByIds.sql" />
     <Build Include="Procedures\GetTrainerById.sql" />
     <Build Include="Procedures\GetAssignmentById.sql" />
+    <Build Include="Procedures\GetAssignmentByTitle.sql" />
+    <Build Include="Procedures\DeleteAllAssignmentsFromCourse.sql" />
+    <Build Include="Procedures\DeleteAllStudentsFromCourse.sql" />
+    <Build Include="Procedures\DeleteAllTrainersFromCourse.sql" />
+    <Build Include="Procedures\GetCourseByTitle.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="AfterPublishScript\Script.PostDeployment1.sql" />

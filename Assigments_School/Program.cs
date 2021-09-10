@@ -1231,14 +1231,12 @@ namespace Assigments_School
                                         {
                                             _command = new SqlCommand(_query, _connection);
                                             _connection.Open();
-
                                             SqlDataReader reader = _command.ExecuteReader();
                                             students.Clear();
                                             while (reader.Read())
                                             {
                                                 title = reader["Title"].ToString().Trim();
                                             }
-
                                         }
                                         catch (SqlException ex)
                                         {
@@ -1277,7 +1275,23 @@ namespace Assigments_School
                                 }
                                 break;
                             case "del": // Delete This Course
-                                // TODO: [EditCourse()]: Delete This Course Line 998
+                                #region "Delete Course"
+                                _query = $"DeleteCourse '{course_title}';";
+                                try
+                                {
+                                    _command = new SqlCommand(_query, _connection);
+                                    _connection.Open();
+                                    var reader = _command.ExecuteNonQuery();
+                                }
+                                catch (SqlException ex)
+                                {
+                                    Console.WriteLine($"Exception: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    _connection.Close();
+                                }
+                                #endregion
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
