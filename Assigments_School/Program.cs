@@ -674,13 +674,21 @@ namespace Assigments_School
         {
             GetAllCourses();
             Console.Write("\nSelect Course By Id: ");
-            int id = int.Parse(Console.ReadLine());
-            string course_title = "";
-            string conntact_email = "";
-            string title = "";
-            string choice = "";
-            if (id >= 0 && id < courses.Count)
+            int id = -1;
+            try
             {
+                id = int.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Enter a valid id!");
+            }
+            if (id != -1)
+            {
+                string course_title = "";
+                string conntact_email = "";
+                string title = "";
+                string choice = "";
                 #region "Get Course By Id  (course_title = title)"
                 _query = $"EXEC GetCourseById {id};";
                 try
@@ -733,7 +741,7 @@ namespace Assigments_School
                                         Console.WriteLine("\n");
                                         Console.Write("Enter new Title: ");
                                         title = Console.ReadLine();
-                                        if(title.Length > 0)
+                                        if (title.Length > 0)
                                         {
                                             #region "Update Title"
                                             _query = $"EXEC UpdateCourseTitle '{title}', '{course_title}';";
@@ -759,7 +767,7 @@ namespace Assigments_School
                                         Console.WriteLine("\n");
                                         Console.Write($"Enter New EndDate Like ({DateTime.Today.ToString("dd/MM/yyy", CultureInfo.CreateSpecificCulture("es-ES"))}): ");
                                         string enddate = Console.ReadLine();
-                                        if(enddate.Length > 0)
+                                        if (enddate.Length > 0)
                                         {
                                             #region "Update EndDate"
                                             _query = $"EXEC UpdateCourseEndDate '{enddate}', '{course_title}';";
@@ -942,7 +950,7 @@ namespace Assigments_School
                                         }
                                         #endregion
                                         #region "Delete Student"
-                                        _query = $"EXEC DeleteStudentToCourse '{course_title}', '{conntact_email}';";
+                                        _query = $"EXEC DeleteStudentFromCourse '{course_title}', '{conntact_email}';";
                                         try
                                         {
                                             _command = new SqlCommand(_query, _connection);
@@ -1099,7 +1107,7 @@ namespace Assigments_School
                                         }
                                         #endregion
                                         #region "Delete Trainer"
-                                        _query = $"EXEC DeleteTrainerToCourse '{course_title}', '{conntact_email}';";
+                                        _query = $"EXEC DeleteTrainerFromCourse '{course_title}', '{conntact_email}';";
                                         try
                                         {
                                             _command = new SqlCommand(_query, _connection);
@@ -1302,17 +1310,50 @@ namespace Assigments_School
             }
             else
             {
-                Console.WriteLine("Enter A Valid Id!");
+                Console.WriteLine("Enter a valid ID!");
             }
+
         }
         // Edit Assignment
         private static void EditAssignment()
         {
-            Console.WriteLine("\n");
+            Console.Write("Select Assignment By Id:\n\n");
             GetAllAssignments();
-            Console.Write("Select Assignment By Id: ");
+            Console.Write("\nEnter Id: ");
             int id = int.Parse(Console.ReadLine())-1;
             string assignment_title;
+
+            /*
+            #region "Get setelected Student Email from DB (student_email_2 = Email)"
+            _query = $"GetStudentById {id};";
+            try
+            {
+                _command = new SqlCommand(_query, _connection);
+                _connection.Open();
+
+                SqlDataReader reader = _command.ExecuteReader();
+                students.Clear();
+                while (reader.Read())
+                {
+                    conntact_email = reader["Email"].ToString().Trim();
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            #endregion
+            */
+
             if (id >= 0 && id < assignments.Count)
             {
                 assignment_title = assignments[id];
@@ -1350,7 +1391,7 @@ namespace Assigments_School
                                                     string title = Console.ReadLine();
                                                     if(title.Length > 0)
                                                     {
-                                                        // Enter Title To Database
+                                                        #region "Enter Title To Database"
                                                         _query = $"EXEC UpdateAssignmentsTitle '{title}', '{assignment_title}';";
                                                         try
                                                         {
@@ -1366,6 +1407,7 @@ namespace Assigments_School
                                                         {
                                                             _connection.Close();
                                                         }
+                                                        #endregion
                                                     }
                                                     else
                                                     {
@@ -1377,7 +1419,7 @@ namespace Assigments_School
                                                     string enddate = Console.ReadLine();
                                                     if(enddate.Length > 0)
                                                     {
-                                                        // Enter Ende Date To Database
+                                                        #region "Enter Ende Date To Database"
                                                         _query = $"EXEC UpdateAssignmentsDate '{enddate}', '{assignment_title}'; ";
                                                         try
                                                         {
@@ -1393,6 +1435,7 @@ namespace Assigments_School
                                                         {
                                                             _connection.Close();
                                                         }
+                                                        #endregion
                                                     }
                                                     else
                                                     {
@@ -1404,7 +1447,7 @@ namespace Assigments_School
                                                     string description = Console.ReadLine();
                                                     if(description.Length > 0)
                                                     {
-                                                        // Enter Description To Database
+                                                        #region "Enter Description To Database"
                                                         _query = $"EXEC UpdateAssignmentsDescription '{description}', '{assignment_title}';";
                                                         try
                                                         {
@@ -1420,6 +1463,7 @@ namespace Assigments_School
                                                         {
                                                             _connection.Close();
                                                         }
+                                                        #endregion
                                                     }
                                                     else
                                                     {
