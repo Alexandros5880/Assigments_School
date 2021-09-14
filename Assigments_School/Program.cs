@@ -17,11 +17,12 @@ namespace Assigments_School
         private static SqlCommand _command;
         private static string _query = "";
 
+        /*
         public static List<string> trainers = new List<string>();
         public static List<string> students = new List<string>();
         public static List<string> courses = new List<string>();
         public static List<string> assignments = new List<string>();
-
+        */
         static void Main(string[] args)
         {
             
@@ -31,10 +32,12 @@ namespace Assigments_School
 
             while (true)
             {
+                /*
                 trainers.Clear();
                 students.Clear();
                 courses.Clear();
                 assignments.Clear();
+                */
                 Console.WriteLine("Import(i) ? Export(e) ? Edit(ed) ? Quit(q):");
                 string choice = Console.ReadLine();
                 Console.WriteLine("\n");
