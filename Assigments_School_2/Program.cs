@@ -595,7 +595,6 @@ namespace Assigments_School_2
                                                 {
                                                     case "new": // New Trainer
                                                         conntact_email = AddTrainer();
-                                                        #region "Add Trainer To DB"
                                                         school.AddTrainerToCourse(course_title, conntact_email);
                                                         school.SaveChanges();
                                                         break;
@@ -604,8 +603,8 @@ namespace Assigments_School_2
                                                         GetAllTrainers();
                                                         Console.Write("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
-                                                        ObjectResult<GetTrainerById_Result> result_2 = school.GetTrainerById(id);
-                                                        conntact_email = result_2.ToString();
+                                                        ObjectResult<GetTrainerById_Result> result_3 = school.GetTrainerById(id);
+                                                        conntact_email = result_3.ToString();
                                                         school.AddTrainerToCourse(course_title, conntact_email);
                                                         school.SaveChanges();
                                                         break;
@@ -662,8 +661,8 @@ namespace Assigments_School_2
                                                         GetAllAssignments();
                                                         Console.Write("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
-                                                        ObjectResult<GetAssignmentById_Result> result_2 = school.GetAssignmentById(id);
-                                                        title = result_2.ToString();
+                                                        ObjectResult<GetAssignmentById_Result> result_3 = school.GetAssignmentById(id);
+                                                        title = result_3.ToString();
                                                         school.AddAssignmentToCourse(course_title, title);
                                                         school.SaveChanges();
                                                         break;
@@ -833,8 +832,8 @@ namespace Assigments_School_2
                                                         GetAllStudents();
                                                         Console.WriteLine("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
-                                                        ObjectResult<GetStudentById_Result> result_2 = school.GetStudentById(id);
-                                                        conntact_email = result_2.ToString();
+                                                        ObjectResult<GetStudentById_Result> result_3 = school.GetStudentById(id);
+                                                        conntact_email = result_3.ToString();
                                                         school.AddStudentToAssignment(assignment_title, conntact_email);
                                                         school.SaveChanges();
                                                         break;
