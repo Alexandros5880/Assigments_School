@@ -893,35 +893,7 @@ namespace Assigments_School_2
             {
                 Console.WriteLine("Enter a valid ID!");
             }
-            string trainer_email = "";
-            #region "Get Trainer By Id"
-            _query = $"EXEC GetTrainerById {id};";
-            try
-            {
-                _command = new SqlCommand(_query, _connection);
-                _connection.Open();
-
-                SqlDataReader reader = _command.ExecuteReader();
-                students.Clear();
-                while (reader.Read())
-                {
-                    trainer_email = reader["Email"].ToString().Trim();
-                }
-
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            finally
-            {
-                _connection.Close();
-            }
-            #endregion
+            string trainer_email = school.GetTrainerById(id).ToString();
             if (id != -1)
             {
                 string choice = "";
@@ -952,23 +924,8 @@ namespace Assigments_School_2
                                             string firstname = Console.ReadLine();
                                             if (firstname.Length > 0)
                                             {
-                                                #region "Update FirstName"
-                                                _query = $"EXEC UpdateTrainerFirstName '{firstname}', '{trainer_email}';";
-                                                try
-                                                {
-                                                    _command = new SqlCommand(_query, _connection);
-                                                    _connection.Open();
-                                                    var reader = _command.ExecuteNonQuery();
-                                                }
-                                                catch (SqlException ex)
-                                                {
-                                                    Console.WriteLine($"Exception: {ex.Message}");
-                                                }
-                                                finally
-                                                {
-                                                    _connection.Close();
-                                                }
-                                                #endregion
+                                                school.UpdateTrainerFirstName(firstname, trainer_email);
+                                                school.SaveChanges();
                                             }
                                             else
                                             {
@@ -981,23 +938,8 @@ namespace Assigments_School_2
                                             string lastname = Console.ReadLine();
                                             if (lastname.Length > 0)
                                             {
-                                                #region "Update LastName"
-                                                _query = $"EXEC UpdateTrainerLastName '{lastname}', '{trainer_email}';";
-                                                try
-                                                {
-                                                    _command = new SqlCommand(_query, _connection);
-                                                    _connection.Open();
-                                                    var reader = _command.ExecuteNonQuery();
-                                                }
-                                                catch (SqlException ex)
-                                                {
-                                                    Console.WriteLine($"Exception: {ex.Message}");
-                                                }
-                                                finally
-                                                {
-                                                    _connection.Close();
-                                                }
-                                                #endregion
+                                                school.UpdateTrainerLastName(lastname, trainer_email);
+                                                school.SaveChanges();
                                             }
                                             else
                                             {
@@ -1010,23 +952,8 @@ namespace Assigments_School_2
                                             string age = Console.ReadLine();
                                             if (age.Length > 0)
                                             {
-                                                #region "Update Age"
-                                                _query = $"EXEC UpdateTrainerAge '{age}', '{trainer_email}';";
-                                                try
-                                                {
-                                                    _command = new SqlCommand(_query, _connection);
-                                                    _connection.Open();
-                                                    var reader = _command.ExecuteNonQuery();
-                                                }
-                                                catch (SqlException ex)
-                                                {
-                                                    Console.WriteLine($"Exception: {ex.Message}");
-                                                }
-                                                finally
-                                                {
-                                                    _connection.Close();
-                                                }
-                                                #endregion
+                                                school.UpdateTrainerAge(age, trainer_email);
+                                                school.SaveChanges();
                                             }
                                             else
                                             {
@@ -1039,23 +966,8 @@ namespace Assigments_School_2
                                             string gender = Console.ReadLine();
                                             if (gender.Length > 0)
                                             {
-                                                #region "Update Gender"
-                                                _query = $"EXEC UpdateTrainerGender '{gender}', '{trainer_email}';";
-                                                try
-                                                {
-                                                    _command = new SqlCommand(_query, _connection);
-                                                    _connection.Open();
-                                                    var reader = _command.ExecuteNonQuery();
-                                                }
-                                                catch (SqlException ex)
-                                                {
-                                                    Console.WriteLine($"Exception: {ex.Message}");
-                                                }
-                                                finally
-                                                {
-                                                    _connection.Close();
-                                                }
-                                                #endregion
+                                                school.UpdateTrainerGender(gender, trainer_email);
+                                                school.SaveChanges();
                                             }
                                             else
                                             {
@@ -1068,23 +980,8 @@ namespace Assigments_School_2
                                             string email = Console.ReadLine();
                                             if (email.Length > 0)
                                             {
-                                                #region "Update Email"
-                                                _query = $"EXEC UpdateTrainerEmail '{email}', '{trainer_email}';";
-                                                try
-                                                {
-                                                    _command = new SqlCommand(_query, _connection);
-                                                    _connection.Open();
-                                                    var reader = _command.ExecuteNonQuery();
-                                                }
-                                                catch (SqlException ex)
-                                                {
-                                                    Console.WriteLine($"Exception: {ex.Message}");
-                                                }
-                                                finally
-                                                {
-                                                    _connection.Close();
-                                                }
-                                                #endregion
+                                                school.UpdateTrainerEmail(email, trainer_email);
+                                                school.SaveChanges();
                                             }
                                             else
                                             {
@@ -1098,23 +995,8 @@ namespace Assigments_School_2
                                             string phone = Console.ReadLine();
                                             if (phone.Length > 0)
                                             {
-                                                #region "Update Phone"
-                                                _query = $"EXEC UpdateTrainerPhone '{phone}', '{trainer_email}';";
-                                                try
-                                                {
-                                                    _command = new SqlCommand(_query, _connection);
-                                                    _connection.Open();
-                                                    var reader = _command.ExecuteNonQuery();
-                                                }
-                                                catch (SqlException ex)
-                                                {
-                                                    Console.WriteLine($"Exception: {ex.Message}");
-                                                }
-                                                finally
-                                                {
-                                                    _connection.Close();
-                                                }
-                                                #endregion
+                                                school.UpdateTrainerPhone(phone, trainer_email);
+                                                school.SaveChanges();
                                             }
                                             else
                                             {
@@ -1132,23 +1014,8 @@ namespace Assigments_School_2
                                 }
                                 break;
                             case "del":
-                                #region "Delete Trainer"
-                                _query = $"EXEC DeleteTrainer '{trainer_email}';";
-                                try
-                                {
-                                    _command = new SqlCommand(_query, _connection);
-                                    _connection.Open();
-                                    var reader = _command.ExecuteNonQuery();
-                                }
-                                catch (SqlException ex)
-                                {
-                                    Console.WriteLine($"Exception: {ex.Message}");
-                                }
-                                finally
-                                {
-                                    _connection.Close();
-                                }
-                                #endregion
+                                school.DeleteTrainer(trainer_email);
+                                school.SaveChanges();
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
