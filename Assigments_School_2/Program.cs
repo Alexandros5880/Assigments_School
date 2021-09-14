@@ -726,34 +726,8 @@ namespace Assigments_School_2
                 string conntact_email = "";
                 string title = "";
                 string choice = "";
-                #region "Get Assignment By Id (assignment_title = Title)."
-                _query = $"GetAssignmentById {id};";
-                try
-                {
-                    _command = new SqlCommand(_query, _connection);
-                    _connection.Open();
-
-                    SqlDataReader reader = _command.ExecuteReader();
-                    students.Clear();
-                    while (reader.Read())
-                    {
-                        assignment_title = reader["Title"].ToString().Trim();
-                    }
-
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    _connection.Close();
-                }
-                #endregion
+                ObjectResult<GetAssignmentById_Result> result_1 = school.GetAssignmentById(id);
+                assignment_title = result_1.ToString();
                 while (true)
                 {
                     Console.Write("Quit(stop) ? Edit MainImfo(main) ? ADD/REMOVE Students(st) ? Delete This Assignment(del): ");
@@ -787,23 +761,8 @@ namespace Assigments_School_2
                                                     title = Console.ReadLine();
                                                     if (title.Length > 0)
                                                     {
-                                                        #region "Enter Title To Database"
-                                                        _query = $"EXEC UpdateAssignmentsTitle '{title}', '{assignment_title}';";
-                                                        try
-                                                        {
-                                                            _command = new SqlCommand(_query, _connection);
-                                                            _connection.Open();
-                                                            var reader = _command.ExecuteNonQuery();
-                                                        }
-                                                        catch (SqlException ex)
-                                                        {
-                                                            Console.WriteLine($"Exception: {ex.Message}");
-                                                        }
-                                                        finally
-                                                        {
-                                                            _connection.Close();
-                                                        }
-                                                        #endregion
+                                                        school.UpdateAssignmentsTitle(title, assignment_title);
+                                                        school.SaveChanges();
                                                     }
                                                     else
                                                     {
@@ -815,23 +774,8 @@ namespace Assigments_School_2
                                                     string enddate = Console.ReadLine();
                                                     if (enddate.Length > 0)
                                                     {
-                                                        #region "Enter Ende Date To Database"
-                                                        _query = $"EXEC UpdateAssignmentsDate '{enddate}', '{assignment_title}'; ";
-                                                        try
-                                                        {
-                                                            _command = new SqlCommand(_query, _connection);
-                                                            _connection.Open();
-                                                            var reader = _command.ExecuteNonQuery();
-                                                        }
-                                                        catch (SqlException ex)
-                                                        {
-                                                            Console.WriteLine($"Exception: {ex.Message}");
-                                                        }
-                                                        finally
-                                                        {
-                                                            _connection.Close();
-                                                        }
-                                                        #endregion
+                                                        school.UpdateAssignmentsDate(enddate, assignment_title);
+                                                        school.SaveChanges();
                                                     }
                                                     else
                                                     {
@@ -843,28 +787,16 @@ namespace Assigments_School_2
                                                     string description = Console.ReadLine();
                                                     if (description.Length > 0)
                                                     {
-                                                        #region "Enter Description To Database"
-                                                        _query = $"EXEC UpdateAssignmentsDescription '{description}', '{assignment_title}';";
-                                                        try
-                                                        {
-                                                            _command = new SqlCommand(_query, _connection);
-                                                            _connection.Open();
-                                                            var reader = _command.ExecuteNonQuery();
-                                                        }
-                                                        catch (SqlException ex)
-                                                        {
-                                                            Console.WriteLine($"Exception: {ex.Message}");
-                                                        }
-                                                        finally
-                                                        {
-                                                            _connection.Close();
-                                                        }
-                                                        #endregion
+                                                        school.UpdateAssignmentsDescription(description, assignment_title);
+                                                        school.SaveChanges();
                                                     }
                                                     else
                                                     {
                                                         Console.WriteLine("Enter A Valid Description!");
                                                     }
+                                                    break;
+                                                default:
+                                                    Console.WriteLine("No Valid Choice!");
                                                     break;
                                             }
                                         }
@@ -893,72 +825,18 @@ namespace Assigments_School_2
                                                 {
                                                     case "new": // New Student
                                                         conntact_email = AddStudent();
-                                                        #region "Add Student To Assignment"
-                                                        _query = $"EXEC AddStudentToAssignment '{assignment_title}', '{conntact_email}';";
-                                                        try
-                                                        {
-                                                            _command = new SqlCommand(_query, _connection);
-                                                            _connection.Open();
-                                                            var reader = _command.ExecuteNonQuery();
-                                                        }
-                                                        catch (SqlException ex)
-                                                        {
-                                                            Console.WriteLine($"Exception: {ex.Message}");
-                                                        }
-                                                        finally
-                                                        {
-                                                            _connection.Close();
-                                                        }
-                                                        #endregion
+                                                        school.AddStudentToAssignment(assignment_title, conntact_email);
+                                                        school.SaveChanges();
                                                         break;
                                                     case "ex": // Existing Student
                                                         Console.WriteLine("Select Student By Id(3):\n");
                                                         GetAllStudents();
                                                         Console.WriteLine("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
-                                                        #region "Get setelected Student Email"
-                                                        _query = $"GetStudentById {id};";
-                                                        try
-                                                        {
-                                                            _command = new SqlCommand(_query, _connection);
-                                                            _connection.Open();
-                                                            SqlDataReader reader = _command.ExecuteReader();
-                                                            students.Clear();
-                                                            while (reader.Read())
-                                                            {
-                                                                conntact_email = reader["Email"].ToString().Trim();
-                                                            }
-                                                        }
-                                                        catch (SqlException ex)
-                                                        {
-                                                            Console.WriteLine($"Exception: {ex.Message}");
-                                                        }
-                                                        catch (Exception ex)
-                                                        {
-                                                            Console.WriteLine($"Exception: {ex.Message}");
-                                                        }
-                                                        finally
-                                                        {
-                                                            _connection.Close();
-                                                        }
-                                                        #endregion
-                                                        #region "Add Student To Course"
-                                                        _query = $"EXEC AddStudentToAssignment '{assignment_title}', '{conntact_email}';";
-                                                        try
-                                                        {
-                                                            _command = new SqlCommand(_query, _connection);
-                                                            _connection.Open();
-                                                            var reader = _command.ExecuteNonQuery();
-                                                        }
-                                                        catch (SqlException ex)
-                                                        {
-                                                            Console.WriteLine($"Exception: {ex.Message}");
-                                                        }
-                                                        finally
-                                                        {
-                                                            _connection.Close();
-                                                        }
-                                                        #endregion
+                                                        ObjectResult<GetStudentById_Result> result_2 = school.GetStudentById(id);
+                                                        conntact_email = result_2.ToString();
+                                                        school.AddStudentToAssignment(assignment_title, conntact_email);
+                                                        school.SaveChanges();
                                                         break;
                                                     default:
                                                         Console.WriteLine("Enter A Valid Choice!");
@@ -974,49 +852,10 @@ namespace Assigments_School_2
                                         Console.WriteLine("Select Student By Id(3): ");
                                         GetAllStudentsOnAssignment(title);
                                         id = int.Parse(Console.ReadLine());
-                                        #region "Get Selected Student"
-                                        _query = $"GetStudentById {id};";
-                                        try
-                                        {
-                                            _command = new SqlCommand(_query, _connection);
-                                            _connection.Open();
-                                            SqlDataReader reader = _command.ExecuteReader();
-                                            while (reader.Read())
-                                            {
-                                                conntact_email = reader["Email"].ToString().Trim();
-                                            }
-
-                                        }
-                                        catch (SqlException ex)
-                                        {
-                                            Console.WriteLine($"Exception: {ex.Message}");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            Console.WriteLine($"Exception: {ex.Message}");
-                                        }
-                                        finally
-                                        {
-                                            _connection.Close();
-                                        }
-                                        #endregion
-                                        #region "Delete This Student On This Assignment"
-                                        _query = $"EXEC DeleteStudentFromAssignment '{conntact_email}', '{assignment_title}';";
-                                        try
-                                        {
-                                            _command = new SqlCommand(_query, _connection);
-                                            _connection.Open();
-                                            var reader = _command.ExecuteNonQuery();
-                                        }
-                                        catch (SqlException ex)
-                                        {
-                                            Console.WriteLine($"Exception: {ex.Message}");
-                                        }
-                                        finally
-                                        {
-                                            _connection.Close();
-                                        }
-                                        #endregion
+                                        ObjectResult<GetStudentById_Result> result_2 = school.GetStudentById(id);
+                                        conntact_email = result_2.ToString();
+                                        school.DeleteStudentFromAssignment(conntact_email, assignment_title);
+                                        school.SaveChanges();
                                         break;
                                     default:
                                         Console.WriteLine("Enter A Valid Choice!");
@@ -1024,23 +863,8 @@ namespace Assigments_School_2
                                 }
                                 break;
                             case "del": // Delete Assignment
-                                #region "Delete All Assignments And All Related Records"
-                                _query = $"EXEC DeleteAssignment '{title}';";
-                                try
-                                {
-                                    _command = new SqlCommand(_query, _connection);
-                                    _connection.Open();
-                                    var reader = _command.ExecuteNonQuery();
-                                }
-                                catch (SqlException ex)
-                                {
-                                    Console.WriteLine($"Exception: {ex.Message}");
-                                }
-                                finally
-                                {
-                                    _connection.Close();
-                                }
-                                #endregion
+                                school.DeleteAssignment(assignment_title);
+                                school.SaveChanges();
                                 break;
                             default:
                                 Console.WriteLine("Enter A Valid Choice!");
