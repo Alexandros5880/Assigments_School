@@ -1271,7 +1271,7 @@ namespace Assigments_School_2
         {
             Console.Write("Select Course By Id: ");
             Console.WriteLine("\n");
-            GetAllAssignments();
+            GetAllCourses();
             Console.Write("\nEnter Id: ");
             int id = int.Parse(Console.ReadLine());
             foreach (var r in school.GetAllAssignmentsOfCourseById(id))
