@@ -347,21 +347,19 @@ namespace Assigments_School_2
                 return "";
             }
         }
-        
         // Import Students
         private static string AddStudent()
         {
             try
             {
                 Console.WriteLine("\n");
-                string firstname = "", lastname = "", gender = "", startdate = "", email = "", phone = "";
-                int age = 0;
+                string firstname = "", lastname = "", age="", gender = "", startdate = "", email = "", phone = "";
                 Console.Write("FirstName: ");
                 firstname = Console.ReadLine();
                 Console.Write("LastName: ");
                 lastname = Console.ReadLine();
                 Console.Write("Age: ");
-                age = int.Parse(Console.ReadLine());
+                age = Console.ReadLine();
                 Console.Write("Gender (Male)?(Female): ");
                 gender = Console.ReadLine();
                 Console.Write("Email: ");
@@ -369,26 +367,12 @@ namespace Assigments_School_2
                 Console.Write("Phone: ");
                 phone = Console.ReadLine();
                 startdate = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-ES"));
-                if (firstname.Length > 0 && lastname.Length > 0 && age > 0 &&
+                if (firstname.Length > 0 && lastname.Length > 0 && int.Parse(age) > 0 && int.Parse(age) < 133 &&
                     email.Length > 0 && phone.Length > 0 && gender.Length > 0)
                 {
-                    #region "Insert Student"
-                    _query = $"EXEC InsertStudent '{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}';";
-                    try
-                    {
-                        _command = new SqlCommand(_query, _connection);
-                        _connection.Open();
-                        var reader = _command.ExecuteNonQuery();
-                    }
-                    catch (SqlException ex)
-                    {
-                        Console.WriteLine($"Exception: {ex.Message}");
-                    }
-                    finally
-                    {
-                        _connection.Close();
-                    }
-                    #endregion
+                    // Insert Student
+                    school.InsertStudent(firstname, lastname, age, gender, startdate, email, phone);
+                    school.SaveChanges();
                     return email;
                 }
                 else
@@ -409,14 +393,13 @@ namespace Assigments_School_2
             try
             {
                 Console.WriteLine("\n");
-                string firstname = "", lastname = "", gender = "", startdate = "", email = "", phone = "";
-                int age = 0;
+                string firstname = "", lastname = "", gender = "", age="", startdate = "", email = "", phone = "";
                 Console.Write("FirstName: ");
                 firstname = Console.ReadLine();
                 Console.Write("LastName: ");
                 lastname = Console.ReadLine();
                 Console.Write("Age: ");
-                age = int.Parse(Console.ReadLine());
+                age = Console.ReadLine();
                 Console.Write("Gender (Male)?(Female): ");
                 gender = Console.ReadLine();
                 Console.Write("Email: ");
@@ -424,26 +407,11 @@ namespace Assigments_School_2
                 Console.Write("Phone: ");
                 phone = Console.ReadLine();
                 startdate = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-ES"));
-                if (firstname.Length > 0 && lastname.Length > 0 && age > 0 &&
+                if (firstname.Length > 0 && lastname.Length > 0 && int.Parse(age) > 0 && int.Parse(age) < 133 &&
                     email.Length > 0 && phone.Length > 0 && gender.Length > 0)
                 {
-                    #region "Insert Trainer"
-                    _query = $"EXEC InsertTrainer '{firstname}', '{lastname}', '{age}', '{gender}', '{startdate}', '{email}', '{phone}';";
-                    try
-                    {
-                        _command = new SqlCommand(_query, _connection);
-                        _connection.Open();
-                        var reader = _command.ExecuteNonQuery();
-                    }
-                    catch (SqlException ex)
-                    {
-                        Console.WriteLine($"Exception: {ex.Message}");
-                    }
-                    finally
-                    {
-                        _connection.Close();
-                    }
-                    #endregion
+                    // Insert Trainer
+                    school.InsertTrainer(firstname, lastname, age, gender, startdate, email, phone);
                     return email;
                 }
                 else
