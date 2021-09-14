@@ -1187,129 +1187,33 @@ namespace Assigments_School_2
         // Get All Students From DB
         private static void GetAllStudents()
         {
-            _query = "EXEC GetAllStudents;";
-            try
+            foreach(var r in school.GetAllStudents())
             {
-                _command = new SqlCommand(_query, _connection);
-                _connection.Open();
-
-                SqlDataReader reader = _command.ExecuteReader();
-                students.Clear();
-                while (reader.Read())
-                {
-                    Console.WriteLine($"Student: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
-                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
-                                      $"{reader["Gender"].ToString().Trim()}");
-                    students.Add(reader["Email"].ToString().Trim());
-                }
-
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            finally
-            {
-                _connection.Close();
+                Console.WriteLine($"Student: id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
             }
         }
         // Get All Trainers From DB
         private static void GetAllTrainers()
         {
-            _query = "EXEC GetAllTrainers;";
-            try
+            foreach (var r in school.GetAllTrainers())
             {
-                _command = new SqlCommand(_query, _connection);
-                _connection.Open();
-
-                SqlDataReader reader = _command.ExecuteReader();
-                trainers.Clear();
-                while (reader.Read())
-                {
-                    Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
-                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
-                                      $"{reader["Gender"].ToString().Trim()}");
-                    trainers.Add(reader["Email"].ToString());
-                }
-
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            finally
-            {
-                _connection.Close();
+                Console.WriteLine($"Trainer: id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
             }
         }
         // Get All Assignments FromDB
         private static void GetAllAssignments()
         {
-            _query = "EXEC GetAllAssignments;";
-            try
+            foreach (var r in school.GetAllAssignments())
             {
-                _command = new SqlCommand(_query, _connection);
-                _connection.Open();
-
-                SqlDataReader reader = _command.ExecuteReader();
-                while (reader.Read())
-                {
-                    Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
-                        $"{reader["StartDate"].ToString().Trim()} {reader["EndDate"].ToString().Trim()}");
-                    assignments.Add(reader["Title"].ToString().Trim());
-                }
-
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            finally
-            {
-                _connection.Close();
+                Console.WriteLine($"Assignment: id={r.Id} {r.Title} {r.StartDate} {r.EndDate}");
             }
         }
         // Get All Courses FromDB
         private static void GetAllCourses()
         {
-            _query = "EXEC GetAllCourses;";
-            try
+            foreach (var r in school.GetAllCourses())
             {
-                _command = new SqlCommand(_query, _connection);
-                _connection.Open();
-                SqlDataReader reader = _command.ExecuteReader();
-                courses.Clear();
-                while (reader.Read())
-                {
-                    Console.WriteLine($"Course: id={reader["Id"].ToString().Trim()} Title: {reader["Title"].ToString().Trim()} " +
-                        $"{reader["StartDate"].ToString().Trim()} {reader["EndDate"].ToString().Trim()}");
-                    courses.Add(reader["Title"].ToString().Trim());
-                }
-
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            finally
-            {
-                _connection.Close();
+                Console.WriteLine($"Course: id={r.Id} {r.Title} {r.StartDate} {r.EndDate}");
             }
         }
         // Get All Students Per Course
