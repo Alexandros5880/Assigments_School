@@ -1188,7 +1188,8 @@ namespace Assigments_School_2
         {
             foreach(var r in school.GetAllStudents())
             {
-                Console.WriteLine($"Student: id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get All Trainers From DB
@@ -1196,7 +1197,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllTrainers())
             {
-                Console.WriteLine($"Trainer: id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Trainer: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get All Assignments FromDB
@@ -1204,7 +1206,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllAssignments())
             {
-                Console.WriteLine($"Assignment: id={r.Id} {r.Title} {r.StartDate} {r.EndDate}");
+                Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
+                    $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
             }
         }
         // Get All Courses FromDB
@@ -1212,7 +1215,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllCourses())
             {
-                Console.WriteLine($"Course: id={r.Id} {r.Title} {r.StartDate} {r.EndDate}");
+                Console.WriteLine($"Course: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
+                    $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
             }
         }
         // Get All Students Per Course
@@ -1226,7 +1230,8 @@ namespace Assigments_School_2
             Console.WriteLine("\n");
             foreach (var r in school.GetAllStudentsOfCourseById(id))
             {
-                Console.WriteLine($"Student: Id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get All Students Per Course
@@ -1234,7 +1239,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllStudentsOfCourses(title))
             {
-                Console.WriteLine($"Student: Id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get All Trainers Per Course
@@ -1247,7 +1253,8 @@ namespace Assigments_School_2
             int id = int.Parse(Console.ReadLine());
             foreach (var r in school.GetAllTrainersOfCourseById(id))
             {
-                Console.WriteLine($"Trainer: id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Trainer: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get All Trainers Per Course
@@ -1255,7 +1262,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllTrainersOfCourses(title))
             {
-                Console.WriteLine($"Trainer: Id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Trainer: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get All Assignments Per Course
@@ -1268,7 +1276,8 @@ namespace Assigments_School_2
             int id = int.Parse(Console.ReadLine());
             foreach (var r in school.GetAllAssignmentsOfCourseById(id))
             {
-                Console.WriteLine($"Assignment: id={r.Id} {r.Title} {r.StartDate} {r.EndDate}");
+                Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
+                    $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
             }
         }
         // Get All Assignments Per Course
@@ -1276,7 +1285,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllAssignmentsOfCourses(title))
             {
-                Console.WriteLine($"Assignment: id={r.Id} {r.Title}  {r.StartDate}  {r.EndDate}");
+                Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
+                    $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
             }
         }
         // Get All Students On Assignment
@@ -1284,7 +1294,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllStudentsOfAssignment(title))
             {
-                Console.WriteLine($"Student: Id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get The Parent Courses Title Of An Assignment
@@ -1301,7 +1312,8 @@ namespace Assigments_School_2
             int id = int.Parse(Console.ReadLine());
             foreach (var r in school.GetAllAssignmentsOfStudentById(id))
             {
-                Console.WriteLine($"Assignment: id={r.Id} {r.Title} {r.StartDate} {r.EndDate}");
+                Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
+                    $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
             }
         }
         // Get All Students That Belong To More That One Course
@@ -1309,7 +1321,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllStudentsThatBelongMoreToOneCourse())
             {
-                Console.WriteLine($"Student: id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get All Assignments Per Course And Student
@@ -1328,7 +1341,8 @@ namespace Assigments_School_2
             Console.WriteLine("\n");
             foreach (var r in school.GetAllAssignmentsPerCourseAndStudentByIds(c_id, s_id))
             {
-                Console.WriteLine($"Assignment: id={r.Id} {r.Title} {r.StartDate} {r.EndDate}");
+                Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
+                    $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
             }
 
         }
@@ -1337,7 +1351,8 @@ namespace Assigments_School_2
         {
             foreach (var r in school.GetAllStudentsSubmitsAssOnSameWeek())
             {
-                Console.WriteLine($"Student: id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
         // Get All Students Who Need To Submeet An Assignment On The Same Week As The Date
@@ -1349,7 +1364,8 @@ namespace Assigments_School_2
             Console.WriteLine("\n");
             foreach (var r in school.GetAllStudentsSubmitsAssOnSameWeekAsDate(date))
             {
-                Console.WriteLine($"Student: id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
 
