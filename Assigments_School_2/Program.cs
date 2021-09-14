@@ -1223,65 +1223,19 @@ namespace Assigments_School_2
             Console.WriteLine("\n");
             GetAllCourses();
             Console.Write("\nEnter Id: ");
-            try
+            int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("\n");
+            foreach (var r in school.GetAllStudentsOfCourseById(id))
             {
-                int id = int.Parse(Console.ReadLine());
-                Console.WriteLine("\n");
-                _query = $"EXEC GetAllStudentsOfCourseById '{id}';";
-                _command = new SqlCommand(_query, _connection);
-                _connection.Open();
-                SqlDataReader reader = _command.ExecuteReader();
-                students.Clear();
-                while (reader.Read())
-                {
-                    Console.WriteLine($"Student: Id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
-                                    $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
-                                    $"{reader["Gender"].ToString().Trim()}");
-                    students.Add(reader["Email"].ToString().Trim());
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            finally
-            {
-                _connection.Close();
+                Console.WriteLine($"Student: Id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
             }
         }
         // Get All Students Per Course
         private static void GetAllStudentsOnCourseByTitle(string title)
         {
-            _query = $"EXEC GetAllStudentsOfCourses '{title}';";
-            try
+            foreach (var r in school.GetAllStudentsOfCourses(title))
             {
-                _command = new SqlCommand(_query, _connection);
-                _connection.Open();
-                SqlDataReader reader = _command.ExecuteReader();
-                students.Clear();
-                while (reader.Read())
-                {
-                    Console.WriteLine($"Student: Id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
-                                  $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
-                                  $"{reader["Gender"].ToString().Trim()}");
-                    students.Add(reader["Email"].ToString().Trim());
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            finally
-            {
-                _connection.Close();
+                Console.WriteLine($"Student: Id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
             }
         }
         // Get All Trainers Per Course
@@ -1322,39 +1276,9 @@ namespace Assigments_School_2
         // Get All Trainers Per Course
         private static void GetAllTrainersOnCourse(string title)
         {
-            Console.WriteLine("\n");
-            if (title.Length > 0)
+            foreach (var r in school.GetAllTrainersOfCourses(title))
             {
-                _query = $"EXEC GetAllTrainersOfCourses '{title}';";
-                try
-                {
-                    _command = new SqlCommand(_query, _connection);
-                    _connection.Open();
-
-                    SqlDataReader reader = _command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"Trainer: id={reader["Id"].ToString().Trim()} {reader["FirstName"].ToString().Trim()}  {reader["LastName"].ToString().Trim()}  " +
-                                      $"{reader["Email"].ToString().Trim()}  {reader["Phone"].ToString().Trim()}  {reader["Age"].ToString().Trim()} " +
-                                      $"{reader["Gender"].ToString().Trim()}");
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    _connection.Close();
-                }
-            }
-            else
-            {
-                Console.WriteLine("Please Enter A Valid Title!");
+                Console.WriteLine($"Trainer: Id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
             }
         }
         // Get All Assignments Per Course
@@ -1397,113 +1321,23 @@ namespace Assigments_School_2
         // Get All Assignments Per Course
         private static void GetAllAssignmentsPerCourse(string title)
         {
-            Console.WriteLine("\n");
-            if (title.Length > 0)
+            foreach (var r in school.GetAllAssignmentsOfCourses(title))
             {
-                _query = $"EXEC GetAllAssignmentsOfCourses '{title}';";
-                try
-                {
-                    _command = new SqlCommand(_query, _connection);
-                    _connection.Open();
-
-                    SqlDataReader reader = _command.ExecuteReader();
-                    assignments.Clear();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
-                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
-                        assignments.Add(reader["Title"].ToString().Trim());
-                    }
-
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    _connection.Close();
-                }
-            }
-            else
-            {
-                Console.WriteLine("Please Enter A Valid Title!");
+                Console.WriteLine($"Assignment: id={r.Id} {r.Title}  {r.StartDate}  {r.EndDate}");
             }
         }
         // Get All Students On Assignment
         private static void GetAllStudentsOnAssignment(string title)
         {
-            if (title.Length > 0)
+            foreach (var r in school.GetAllStudentsOfAssignment(title))
             {
-                _query = $"EXEC GetAllStudentsOfAssignment '{title}';";
-                try
-                {
-                    _command = new SqlCommand(_query, _connection);
-                    _connection.Open();
-                    SqlDataReader reader = _command.ExecuteReader();
-                    assignments.Clear();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"Assignment: id={reader["Id"].ToString().Trim()} {reader["Title"].ToString().Trim()}  " +
-                            $"{reader["StartDate"].ToString().Trim()}  {reader["EndDate"].ToString().Trim()}");
-                        assignments.Add(reader["Title"].ToString());
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
-                finally
-                {
-                    _connection.Close();
-                }
-            }
-            else
-            {
-                Console.WriteLine("Please Enter A Valid Title!");
+                Console.WriteLine($"Student: Id={r.Id} {r.FirstName}  {r.LastName}  {r.Email}  {r.Phone}  {r.Age}  {r.Gender}");
             }
         }
         // Get The Parent Courses Title Of An Assignment
         private static string GetCourseTitleByAssignmentTitle(string title)
         {
-            if (title.Length > 0)
-            {
-                // Get Title Of This Course
-                _query = $"EXEC GetCourseTitleByAssignmentTitle '{title}';";
-                try
-                {
-                    _command = new SqlCommand(_query, _connection);
-                    _connection.Open();
-                    SqlDataReader reader = _command.ExecuteReader();
-                    string course_title = "";
-                    while (reader.Read())
-                    {
-                        course_title = reader["CourseTitle"].ToString().Trim();
-                    }
-                    return course_title;
-                }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                    return "";
-                }
-                finally
-                {
-                    _connection.Close();
-                }
-            }
-            else
-            {
-                return "";
-            }
+            return school.GetCourseTitleByAssignmentTitle(title).ToString();
         }
         // Get All Assignments Per Student
         private static void GetAllAssignmentsPerStudent()
