@@ -1237,6 +1237,7 @@ namespace Assigments_School_2
         // Get All Students Per Course
         private static void GetAllStudentsOnCourseByTitle(string title)
         {
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllStudentsOfCourses(title))
             {
                 Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
@@ -1251,6 +1252,7 @@ namespace Assigments_School_2
             GetAllCourses();
             Console.Write("\nEnter Id: ");
             int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllTrainersOfCourseById(id))
             {
                 Console.WriteLine($"Trainer: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
@@ -1260,6 +1262,7 @@ namespace Assigments_School_2
         // Get All Trainers Per Course
         private static void GetAllTrainersOnCourse(string title)
         {
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllTrainersOfCourses(title))
             {
                 Console.WriteLine($"Trainer: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
@@ -1274,6 +1277,7 @@ namespace Assigments_School_2
             GetAllCourses();
             Console.Write("\nEnter Id: ");
             int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllAssignmentsOfCourseById(id))
             {
                 Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
@@ -1283,6 +1287,7 @@ namespace Assigments_School_2
         // Get All Assignments Per Course
         private static void GetAllAssignmentsPerCourse(string title)
         {
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllAssignmentsOfCourses(title))
             {
                 Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
@@ -1292,6 +1297,7 @@ namespace Assigments_School_2
         // Get All Students On Assignment
         private static void GetAllStudentsOnAssignment(string title)
         {
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllStudentsOfAssignment(title))
             {
                 Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
@@ -1310,6 +1316,7 @@ namespace Assigments_School_2
             Console.WriteLine("\n");
             GetAllStudents();
             int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllAssignmentsOfStudentById(id))
             {
                 Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
@@ -1319,6 +1326,7 @@ namespace Assigments_School_2
         // Get All Students That Belong To More That One Course
         private static void GetAllStudentsThatBelongToMoreThatOneCourse()
         {
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllStudentsThatBelongMoreToOneCourse())
             {
                 Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
@@ -1349,6 +1357,7 @@ namespace Assigments_School_2
         // Get All Students Who Need To Submit AssigNments On The Same Week
         private static void GetAllStudentsWhoNeedToSubmitAssigNmentsOnTheSameWeek()
         {
+            Console.WriteLine("\n");
             foreach (var r in school.GetAllStudentsSubmitsAssOnSameWeek())
             {
                 Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
