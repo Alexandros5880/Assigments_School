@@ -278,6 +278,8 @@ namespace Assigments_School_2
         {
             try
             {
+                int id = -1;
+                string email = "";
                 string course_title = "";
                 Console.WriteLine("\n");
                 string title = "", startdate = "", enddate = "", description = "";
@@ -290,180 +292,46 @@ namespace Assigments_School_2
                 description = Console.ReadLine();
                 if (title.Length > 0 && startdate.Length > 0 && enddate.Length > 0 && description.Length > 0)
                 {
-                    #region "Add Assignment"
-                    _query = $"EXEC InsertAssignment '{title}', '{startdate}', '{enddate}', '{description}';";
-                    try
-                    {
-                        _command = new SqlCommand(_query, _connection);
-                        _connection.Open();
-                        var reader = _command.ExecuteNonQuery();
-                    }
-                    catch (SqlException ex)
-                    {
-                        Console.WriteLine($"Exception: {ex.Message}");
-                    }
-                    finally
-                    {
-                        _connection.Close();
-                    }
-                    #endregion
+                    // Add Assignment 
+                    school.InsertAssignment(title, startdate, enddate, description);
+                    school.SaveChanges();
                     // Add Assignment to Course
                     Console.WriteLine("\n");
-                    while (true)
+                    Console.WriteLine("Select Course By Id(3): ");
+                    GetAllCourses();
+                    try { id = int.Parse(Console.ReadLine()); } catch(Exception) { }
+                    if(id != -1)
                     {
-                        Console.Write("Add New Course(new) ? Add Existing Course(ex) ? Stop(stop): ");
-                        string ass_course_choice = Console.ReadLine();
-                        if (ass_course_choice.Equals("stop"))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            switch (ass_course_choice)
-                            {
-                                case "new":
-                                    course_title = AddCourse();
-                                    if (course_title.Length > 0)
-                                    {
-                                        #region "Add To AssignmentsCourse DataBase"
-                                        _query = $"EXEC AddAssignmentToCourse '{title}', '{course_title}';";
-                                        try
-                                        {
-                                            _command = new SqlCommand(_query, _connection);
-                                            _connection.Open();
-                                            var reader = _command.ExecuteNonQuery();
-                                        }
-                                        catch (SqlException ex)
-                                        {
-                                            Console.WriteLine($"Exception: {ex.Message}");
-                                        }
-                                        finally
-                                        {
-                                            _connection.Close();
-                                        }
-                                        #endregion
-                                    }
-                                    break;
-                                case "ex":
-                                    Console.WriteLine("Select Course By Id(3): ");
-                                    GetAllCourses();
-                                    string my_id = Console.ReadLine();
-                                    course_title = courses[int.Parse(my_id) - 1];
-                                    if (course_title.Length > 0)
-                                    {
-                                        #region "Add To AssignmentsCourse DataBase"
-                                        _query = $"EXEC AddAssignmentToCourse '{title}', '{course_title}';";
-                                        try
-                                        {
-                                            _command = new SqlCommand(_query, _connection);
-                                            _connection.Open();
-                                            var reader = _command.ExecuteNonQuery();
-                                        }
-                                        catch (SqlException ex)
-                                        {
-                                            Console.WriteLine($"Exception: {ex.Message}");
-                                        }
-                                        finally
-                                        {
-                                            _connection.Close();
-                                        }
-                                        #endregion
-                                    }
-                                    break;
-                                default:
-                                    Console.WriteLine("Enter A Valid Choice!");
-                                    break;
-                            }
-                        }
+                        ObjectResult<GetCourseById_Result> result = school.GetCourseById(id);
+                        course_title = result.ToString();
+                        school.AddAssignmentToCourse(course_title, title);
                     }
-                    // Get From Course All Students And Select Students To Add Them To Assignment
-                    Console.WriteLine("\n");
-                    while (true)
+                    if(course_title != "")
                     {
-                        Console.Write("Add New Student(new) ? Add Existing Student(ex) ? Stop(stop): ");
-                        string ass_course_choice = Console.ReadLine();
-                        if (ass_course_choice.Equals("stop"))
+                        do
                         {
-                            break;
-                        }
-                        else
-                        {
-                            string student_email = "";
-                            switch (ass_course_choice)
+                            // Get From Course All Students And Select Students To Add Them To Assignment
+                            Console.WriteLine("\n");
+                            Console.WriteLine("Select Student By Id(3): ");
+                            // Get All Students Of This Course
+                            GetAllStudentsOnCourseByTitle(course_title);
+                            // Create Assignment To Student Record
+                            try { id = int.Parse(Console.ReadLine()); } catch (Exception) { }
+                            if (id != -1)
                             {
-                                case "new":
-                                    student_email = AddStudent();
-                                    if (student_email.Length > 0)
-                                    {
-                                        #region "Add New Student To This Course"
-                                        _query = $"EXEC AddStudentToCourse '{course_title}', '{student_email}';";
-                                        try
-                                        {
-                                            _command = new SqlCommand(_query, _connection);
-                                            _connection.Open();
-                                            var reader = _command.ExecuteNonQuery();
-                                        }
-                                        catch (SqlException ex)
-                                        {
-                                            Console.WriteLine($"Exception: {ex.Message}");
-                                        }
-                                        finally
-                                        {
-                                            _connection.Close();
-                                        }
-                                        #endregion
-                                        #region "Add To AssignmentsStudents On DataBase"
-                                        _query = $"EXEC InsertStudentToAssignment '{student_email}', '{title}';";
-                                        try
-                                        {
-                                            _command = new SqlCommand(_query, _connection);
-                                            _connection.Open();
-                                            var reader = _command.ExecuteNonQuery();
-                                        }
-                                        catch (SqlException ex)
-                                        {
-                                            Console.WriteLine($"Exception: {ex.Message}");
-                                        }
-                                        finally
-                                        {
-                                            _connection.Close();
-                                        }
-                                        #endregion
-                                    }
-                                    break;
-                                case "ex":
-                                    Console.WriteLine("Select Student By Id(3): ");
-                                    // Get All Students Of This Course
-                                    GetAllStudentsOnCourseByTitle(course_title);
-                                    // Create Assignment To Student Record
-                                    string my_id = Console.ReadLine();
-                                    student_email = students[int.Parse(my_id) - 1];
-                                    if (student_email.Length > 0)
-                                    {
-                                        #region "Add To AssignmentsStudents DataBase"
-                                        _query = $"EXEC InsertStudentToAssignment '{student_email}', '{title}';";
-                                        try
-                                        {
-                                            _command = new SqlCommand(_query, _connection);
-                                            _connection.Open();
-                                            var reader = _command.ExecuteNonQuery();
-                                        }
-                                        catch (SqlException ex)
-                                        {
-                                            Console.WriteLine($"Exception: {ex.Message}");
-                                        }
-                                        finally
-                                        {
-                                            _connection.Close();
-                                        }
-                                        #endregion
-                                    }
-                                    break;
-                                default:
-                                    Console.WriteLine("Enter A Valid Choice!");
-                                    break;
+                                ObjectResult<GetStudentById_Result> result = school.GetStudentById(id);
+                                email = result.ToString();
                             }
-                        }
+                            if (email.Length > 0)
+                            {
+                                // Add To AssignmentsStudents DataBase
+                                school.AddStudentToAssignment(title, email);
+                                school.SaveChanges();
+                            }
+                            Console.WriteLine("Add More Students: yes(y) - no(n)");
+                            string choice = Console.ReadLine();
+                            if (choice.Equals("no")) { break; }
+                        } while (true);
                     }
                     return title;
                 }
@@ -479,6 +347,7 @@ namespace Assigments_School_2
                 return "";
             }
         }
+        
         // Import Students
         private static string AddStudent()
         {
