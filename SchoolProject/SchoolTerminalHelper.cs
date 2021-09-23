@@ -552,8 +552,7 @@ namespace SchoolProject
                                                         GetAllAssignments();
                                                         Console.Write("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
-                                                        ObjectResult<GetAssignmentById_Result> result_3 = this.school.GetAssignmentById(id); // TODO 2)    GetAssignmentTitleById
-                                                        title = result_3.ToString();
+                                                        title = this.school.GetAssignmentById(id).FirstOrDefault().Title;
                                                         this.school.AddAssignmentToCourse(course_title, title);
                                                         this.school.SaveChanges();
                                                         Console.WriteLine("");
@@ -570,8 +569,7 @@ namespace SchoolProject
                                         Console.WriteLine("Select Assignment By Id(3): ");
                                         GetAllAssignmentsPerCourse(course_title);
                                         id = int.Parse(Console.ReadLine());
-                                        ObjectResult<GetAssignmentById_Result> result_2 = this.school.GetAssignmentById(id); // TODO 3)    GetAssignmentTitleById
-                                        title = result_2.ToString();
+                                        title = this.school.GetAssignmentById(id).FirstOrDefault().Title;
                                         this.school.DeleteAssignmentFromCourse(course_title, title);
                                         this.school.SaveChanges();
                                         Console.WriteLine("");
