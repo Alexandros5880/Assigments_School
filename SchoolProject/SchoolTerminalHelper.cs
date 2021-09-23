@@ -1180,7 +1180,7 @@ namespace SchoolProject
         public void GetTrainersThaNotBelongToCourse(string title)
         {
             Console.WriteLine("\n");
-            foreach (var r in this.school.GetAllTrainersOfCourses(title))
+            foreach (var r in this.school.GetTrainersThaNotBelongToCourse(title))
             {
                 Console.WriteLine($"Trainer: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
                     $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
