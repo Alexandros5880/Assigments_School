@@ -60,6 +60,7 @@
     <Folder Include="Procedures" />
     <Folder Include="AfterPublishScript" />
     <Folder Include="Diagram" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Courses.sql" />
@@ -138,6 +139,10 @@
     <Build Include="Procedures\DeleteAllTrainersFromCourse.sql" />
     <Build Include="Procedures\GetCourseByTitle.sql" />
     <Build Include="Procedures\AddStudentToAssignment.sql" />
+    <Build Include="Procedures\GetTrainersEmailById.sql" />
+    <Build Include="Procedures\GetStudentsEmailById.sql" />
+    <Build Include="Views\ViewCourseTrainersStudentsAll.sql" />
+    <Build Include="Views\ViewAssignmentsStudentsAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="AfterPublishScript\Script.PostDeployment1.sql" />

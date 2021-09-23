@@ -144,38 +144,33 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SchoolDBModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>SchoolDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>SchoolDBModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="SchoolTerminalHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <EntityDeploy Include="SchoolDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SchoolDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="packages.config" />
     <None Include="SchoolDBModel.edmx.diagram">
       <DependentUpon>SchoolDBModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="SchoolDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SchoolDBModel.Context.cs</LastGenOutput>
       <DependentUpon>SchoolDBModel.edmx</DependentUpon>
+      <LastGenOutput>SchoolDBModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="SchoolDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SchoolDBModel.edmx</DependentUpon>
       <LastGenOutput>SchoolDBModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
