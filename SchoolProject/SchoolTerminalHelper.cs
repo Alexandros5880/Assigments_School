@@ -321,6 +321,7 @@ namespace SchoolProject
             }
         }
 
+        //TODO 1).   Edit Functions.
         //////////////////////////////////////////  EDITING RECORDS FUNCTIONS /////////////////////////////////////////////////////////
         // Edit Course
         public void EditCourse()
@@ -353,6 +354,7 @@ namespace SchoolProject
                     choice = Console.ReadLine();
                     if (choice.Equals("stop"))
                     {
+                        Console.WriteLine("");
                         break;
                     }
                     else
@@ -431,11 +433,12 @@ namespace SchoolProject
                                                     case "ex": // Existing Student
                                                         Console.WriteLine("Select Student By Id(3):\n");
                                                         GetAllStudents();
-                                                        Console.WriteLine("\nEnter Id: ");
+                                                        Console.Write("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
                                                         conntact_email = this.school.GetStudentsEmailById(id).FirstOrDefault();
                                                         this.school.AddStudentToCourse(course_title, conntact_email);
                                                         this.school.SaveChanges();
+                                                        Console.WriteLine("");
                                                         break;
                                                     default:
                                                         Console.WriteLine("Enter A Valid Choice!");
@@ -448,12 +451,12 @@ namespace SchoolProject
                                     case "del": // Delete Student
                                         Console.WriteLine("Select Student By Id(3):\n");
                                         GetAllStudentsOnCourseByTitle(course_title);
-                                        Console.WriteLine("\nEnter Id: ");
+                                        Console.Write("\nEnter Id: ");
                                         id = int.Parse(Console.ReadLine());
-                                        ObjectResult<GetStudentById_Result> result_2 = this.school.GetStudentById(id);
-                                        conntact_email = result_2.ToString();
+                                        conntact_email = this.school.GetStudentsEmailById(id).FirstOrDefault();
                                         this.school.DeleteStudentFromCourse(course_title, conntact_email);
                                         this.school.SaveChanges();
+                                        Console.WriteLine("");
                                         break;
                                     default:
                                         conntact_email = "";
@@ -494,6 +497,7 @@ namespace SchoolProject
                                                         conntact_email = this.school.GetTrainersEmailById(id).FirstOrDefault();
                                                         this.school.AddTrainerToCourse(course_title, conntact_email);
                                                         this.school.SaveChanges();
+                                                        Console.WriteLine("");
                                                         break;
                                                     default:
                                                         Console.WriteLine("Enter A Valid Choice!");
@@ -508,10 +512,10 @@ namespace SchoolProject
                                         GetAllTrainersOnCourse(course_title);
                                         Console.Write("\nExter Id: ");
                                         id = int.Parse(Console.ReadLine());
-                                        ObjectResult<GetTrainerById_Result> result_2 = this.school.GetTrainerById(id);
-                                        conntact_email = result_2.ToString();
+                                        conntact_email = this.school.GetTrainersEmailById(id).FirstOrDefault();
                                         this.school.DeleteTrainerFromCourse(course_title, conntact_email);
                                         this.school.SaveChanges();
+                                        Console.WriteLine("");
                                         break;
                                     default:
                                         Console.WriteLine("Enter A Valid Choice!");
@@ -548,10 +552,11 @@ namespace SchoolProject
                                                         GetAllAssignments();
                                                         Console.Write("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
-                                                        ObjectResult<GetAssignmentById_Result> result_3 = this.school.GetAssignmentById(id);
+                                                        ObjectResult<GetAssignmentById_Result> result_3 = this.school.GetAssignmentById(id); // TODO 2)    GetAssignmentTitleById
                                                         title = result_3.ToString();
                                                         this.school.AddAssignmentToCourse(course_title, title);
                                                         this.school.SaveChanges();
+                                                        Console.WriteLine("");
                                                         break;
                                                     default:
                                                         Console.WriteLine("Enter A Valid Choice!");
@@ -565,10 +570,11 @@ namespace SchoolProject
                                         Console.WriteLine("Select Assignment By Id(3): ");
                                         GetAllAssignmentsPerCourse(course_title);
                                         id = int.Parse(Console.ReadLine());
-                                        ObjectResult<GetAssignmentById_Result> result_2 = this.school.GetAssignmentById(id);
+                                        ObjectResult<GetAssignmentById_Result> result_2 = this.school.GetAssignmentById(id); // TODO 3)    GetAssignmentTitleById
                                         title = result_2.ToString();
                                         this.school.DeleteAssignmentFromCourse(course_title, title);
                                         this.school.SaveChanges();
+                                        Console.WriteLine("");
                                         break;
                                     default:
                                         Console.WriteLine("Enter A Valid Choice!");
