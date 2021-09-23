@@ -905,5 +905,59 @@ namespace SchoolProject
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrainerPhone", phoneParameter, searchemailParameter);
         }
+    
+        public virtual ObjectResult<GetAllTrainersThaNotBelongToCourse_Result> GetAllTrainersThaNotBelongToCourse(string title)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllTrainersThaNotBelongToCourse_Result>("GetAllTrainersThaNotBelongToCourse", titleParameter);
+        }
+    
+        public virtual ObjectResult<GetAssignmentThatNotBelongToCourse_Result> GetAssignmentThatNotBelongToCourse(string title)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssignmentThatNotBelongToCourse_Result>("GetAssignmentThatNotBelongToCourse", titleParameter);
+        }
+    
+        public virtual ObjectResult<GetStudentsThatNotBelongToCourse_Result> GetStudentsThatNotBelongToCourse(string title)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStudentsThatNotBelongToCourse_Result>("GetStudentsThatNotBelongToCourse", titleParameter);
+        }
+    
+        public virtual ObjectResult<GetCoursesThatNotBelongToAssignment_Result> GetCoursesThatNotBelongToAssignment(string title)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCoursesThatNotBelongToAssignment_Result>("GetCoursesThatNotBelongToAssignment", titleParameter);
+        }
+    
+        public virtual ObjectResult<GetTrainersThaNotBelongToCourse_Result> GetTrainersThaNotBelongToCourse(string title)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTrainersThaNotBelongToCourse_Result>("GetTrainersThaNotBelongToCourse", titleParameter);
+        }
+    
+        public virtual ObjectResult<GetStudentsThatNotBelongToAssignment_Result> GetStudentsThatNotBelongToAssignment(string title)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStudentsThatNotBelongToAssignment_Result>("GetStudentsThatNotBelongToAssignment", titleParameter);
+        }
     }
 }

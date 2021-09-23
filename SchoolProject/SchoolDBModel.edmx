@@ -112,10 +112,16 @@
         <Function Name="GetAssignmentByTitle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="title" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetAssignmentThatNotBelongToCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="title" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetCourseById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="GetCourseByTitle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="title" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetCoursesThatNotBelongToAssignment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="title" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetCourseTitleByAssignmentTitle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -127,11 +133,20 @@
         <Function Name="GetStudentsEmailById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetStudentsThatNotBelongToAssignment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="title" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetStudentsThatNotBelongToCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="title" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetTrainerById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="GetTrainersEmailById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetTrainersThaNotBelongToCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="title" Type="varchar" Mode="In" />
         </Function>
         <Function Name="InsertAssignment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="title" Type="varchar" Mode="In" />
@@ -543,6 +558,24 @@
             <Parameter Name="phone" Mode="In" Type="String" />
             <Parameter Name="searchemail" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetAllTrainersThaNotBelongToCourse" ReturnType="Collection(SchoolDBModel.GetAllTrainersThaNotBelongToCourse_Result)">
+            <Parameter Name="title" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAssignmentThatNotBelongToCourse" ReturnType="Collection(SchoolDBModel.GetAssignmentThatNotBelongToCourse_Result)">
+          <Parameter Name="title" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetStudentsThatNotBelongToCourse" ReturnType="Collection(SchoolDBModel.GetStudentsThatNotBelongToCourse_Result)">
+          <Parameter Name="title" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCoursesThatNotBelongToAssignment" ReturnType="Collection(SchoolDBModel.GetCoursesThatNotBelongToAssignment_Result)">
+          <Parameter Name="title" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTrainersThaNotBelongToCourse" ReturnType="Collection(SchoolDBModel.GetTrainersThaNotBelongToCourse_Result)">
+          <Parameter Name="title" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetStudentsThatNotBelongToAssignment" ReturnType="Collection(SchoolDBModel.GetStudentsThatNotBelongToAssignment_Result)">
+            <Parameter Name="title" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllAssignments_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -746,6 +779,60 @@
           <Property Type="String" Name="Phone" Nullable="true" MaxLength="255" />
         </ComplexType>
         <ComplexType Name="GetTrainerById_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StartDate" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetAllTrainersThaNotBelongToCourse_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StartDate" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetAssignmentThatNotBelongToCourse_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="StartDate" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="EndDate" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="GetStudentsThatNotBelongToCourse_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StartDate" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetCoursesThatNotBelongToAssignment_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="StartDate" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="EndDate" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="GetTrainersThaNotBelongToCourse_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StartDate" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetStudentsThatNotBelongToAssignment_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
@@ -1117,6 +1204,70 @@
           <FunctionImportMapping FunctionImportName="UpdateTrainerGender" FunctionName="SchoolDBModel.Store.UpdateTrainerGender" />
           <FunctionImportMapping FunctionImportName="UpdateTrainerLastName" FunctionName="SchoolDBModel.Store.UpdateTrainerLastName" />
           <FunctionImportMapping FunctionImportName="UpdateTrainerPhone" FunctionName="SchoolDBModel.Store.UpdateTrainerPhone" />
+          <FunctionImportMapping FunctionImportName="GetAssignmentThatNotBelongToCourse" FunctionName="SchoolDBModel.Store.GetAssignmentThatNotBelongToCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolDBModel.GetAssignmentThatNotBelongToCourse_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStudentsThatNotBelongToCourse" FunctionName="SchoolDBModel.Store.GetStudentsThatNotBelongToCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolDBModel.GetStudentsThatNotBelongToCourse_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCoursesThatNotBelongToAssignment" FunctionName="SchoolDBModel.Store.GetCoursesThatNotBelongToAssignment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolDBModel.GetCoursesThatNotBelongToAssignment_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTrainersThaNotBelongToCourse" FunctionName="SchoolDBModel.Store.GetTrainersThaNotBelongToCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolDBModel.GetTrainersThaNotBelongToCourse_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStudentsThatNotBelongToAssignment" FunctionName="SchoolDBModel.Store.GetStudentsThatNotBelongToAssignment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolDBModel.GetStudentsThatNotBelongToAssignment_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

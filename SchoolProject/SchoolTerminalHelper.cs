@@ -12,7 +12,7 @@ namespace SchoolProject
     {
         internal SchoolsDBEntities school = new SchoolsDBEntities();
 
-        ///////////////////////////////////////////  IMPORTING FUNCTIONS /////////////////////////////////////////////////////////
+        //  IMPORTING FUNCTIONS
         // Import Course
         public string AddCourse()
         {
@@ -55,7 +55,7 @@ namespace SchoolProject
                                     break;
                                 case "ex":
                                     Console.WriteLine("Select Trainer By Id(3):\n");
-                                    GetAllTrainers();
+                                    GetTrainersThaNotBelongToCourse(title);
                                     Console.Write("\nEnter Id: ");
                                     try 
                                     { 
@@ -113,7 +113,7 @@ namespace SchoolProject
                                     break;
                                 case "ex":
                                     Console.WriteLine("Select Student By Id(3):\n");
-                                    GetAllStudents();
+                                    GetStudentsThatNotBelongToCourseByTitle(title);
                                     Console.Write("\nEnter Id: ");
                                     try
                                     {
@@ -179,7 +179,7 @@ namespace SchoolProject
                     // Add Assignment to Course
                     Console.WriteLine("\n");
                     Console.WriteLine("Select Course By Id(3):\n");
-                    GetAllCourses();
+                    GetAllCoursesThaNotBelongToAssignment(title);
                     Console.Write("\nEnter Id: ");
                     try 
                     {
@@ -321,8 +321,7 @@ namespace SchoolProject
             }
         }
 
-        //TODO 1).   Edit Functions.
-        //////////////////////////////////////////  EDITING RECORDS FUNCTIONS /////////////////////////////////////////////////////////
+        //  EDITING RECORDS FUNCTIONS
         // Edit Course
         public void EditCourse()
         {
@@ -432,7 +431,7 @@ namespace SchoolProject
                                                         break;
                                                     case "ex": // Existing Student
                                                         Console.WriteLine("Select Student By Id(3):\n");
-                                                        GetAllStudents();
+                                                        GetStudentsThatNotBelongToCourseByTitle(course_title);
                                                         Console.Write("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
                                                         conntact_email = this.school.GetStudentsEmailById(id).FirstOrDefault();
@@ -491,7 +490,7 @@ namespace SchoolProject
                                                         break;
                                                     case "ex": // Existing Trainer
                                                         Console.WriteLine("Select Trainer By Id(3):\n");
-                                                        GetAllTrainers();
+                                                        GetTrainersThaNotBelongToCourse(course_title);
                                                         Console.Write("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
                                                         conntact_email = this.school.GetTrainersEmailById(id).FirstOrDefault();
@@ -549,7 +548,7 @@ namespace SchoolProject
                                                         break;
                                                     case "ex":
                                                         Console.WriteLine("Select Assignment By Id(3):\n");
-                                                        GetAllAssignments();
+                                                        GetAssignmentsThaNotBelongToCourse(course_title);
                                                         Console.Write("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
                                                         title = this.school.GetAssignmentById(id).FirstOrDefault().Title;
@@ -568,6 +567,7 @@ namespace SchoolProject
                                     case "del":
                                         Console.WriteLine("Select Assignment By Id(3): ");
                                         GetAllAssignmentsPerCourse(course_title);
+                                        Console.Write("\nEnter Id: ");
                                         id = int.Parse(Console.ReadLine());
                                         title = this.school.GetAssignmentById(id).FirstOrDefault().Title;
                                         this.school.DeleteAssignmentFromCourse(course_title, title);
@@ -720,7 +720,7 @@ namespace SchoolProject
                                                         break;
                                                     case "ex": // Existing Student
                                                         Console.WriteLine("Select Student By Id(3):\n");
-                                                        GetAllStudents();
+                                                        GetStudentsThatNotBelongToAssignmentByTitle(assignment_title);
                                                         Console.WriteLine("\nEnter Id: ");
                                                         id = int.Parse(Console.ReadLine());
                                                         ObjectResult<GetStudentById_Result> result_3 = this.school.GetStudentById(id);
@@ -1069,7 +1069,7 @@ namespace SchoolProject
             }
         }
 
-        //////////////////////////////////////////  EXPORTING FUNCTIONS /////////////////////////////////////////////////////////
+        //  EXPORTING FUNCTIONS
         // Get All Students From DB
         public void GetAllStudents()
         {
@@ -1131,6 +1131,26 @@ namespace SchoolProject
                     $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
             }
         }
+        // Get All Students That Not Belong To Course
+        public void GetStudentsThatNotBelongToCourseByTitle(string title)
+        {
+            Console.WriteLine("\n");
+            foreach (var r in this.school.GetStudentsThatNotBelongToCourse(title))
+            {
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
+            }
+        }
+        // Get All Students That Not Belong To Assignment
+        public void GetStudentsThatNotBelongToAssignmentByTitle(string title)
+        {
+            Console.WriteLine("\n");
+            foreach (var r in this.school.GetStudentsThatNotBelongToAssignment(title))
+            {
+                Console.WriteLine($"Student: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
+            }
+        }
         // Get All Trainers Per Course
         public void GetAllTrainersOnCourse()
         {
@@ -1148,6 +1168,16 @@ namespace SchoolProject
         }
         // Get All Trainers Per Course
         public void GetAllTrainersOnCourse(string title)
+        {
+            Console.WriteLine("\n");
+            foreach (var r in this.school.GetAllTrainersOfCourses(title))
+            {
+                Console.WriteLine($"Trainer: id={r.Id.ToString().Trim()} {r.FirstName.ToString().Trim()}  {r.LastName.ToString().Trim()}  " +
+                    $"{r.Email.ToString().Trim()}  {r.Phone.ToString().Trim()}  {r.Age.ToString().Trim()}  {r.Gender.ToString().Trim()}");
+            }
+        }
+        // Get All Trainers That Not Belong To Course
+        public void GetTrainersThaNotBelongToCourse(string title)
         {
             Console.WriteLine("\n");
             foreach (var r in this.school.GetAllTrainersOfCourses(title))
@@ -1178,6 +1208,25 @@ namespace SchoolProject
             foreach (var r in this.school.GetAllAssignmentsOfCourses(title))
             {
                 Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
+                    $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
+            }
+        }
+        // Get All Assignments That Not Belong To Course
+        public void GetAssignmentsThaNotBelongToCourse(string title)
+        {
+            Console.WriteLine("\n");
+            foreach (var r in this.school.GetAssignmentThatNotBelongToCourse(title))
+            {
+                Console.WriteLine($"Assignment: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
+                    $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
+            }
+        }
+        // Get All Courses That Not Belong To Assignment
+        public void GetAllCoursesThaNotBelongToAssignment(string title)
+        {
+            foreach (var r in this.school.GetCoursesThatNotBelongToAssignment(title))
+            {
+                Console.WriteLine($"Course: id={r.Id.ToString().Trim()} {r.Title.ToString().Trim()} " +
                     $"{r.StartDate.ToString().Trim()} {r.EndDate.ToString().Trim()}");
             }
         }

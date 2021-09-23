@@ -106,6 +106,9 @@
     <Compile Include="GetAllTrainersOfCourses_Result.cs">
       <DependentUpon>SchoolDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAllTrainersThaNotBelongToCourse_Result.cs">
+      <DependentUpon>SchoolDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetAllTrainers_Result.cs">
       <DependentUpon>SchoolDBModel.tt</DependentUpon>
     </Compile>
@@ -115,16 +118,31 @@
     <Compile Include="GetAssignmentByTitle_Result.cs">
       <DependentUpon>SchoolDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAssignmentThatNotBelongToCourse_Result.cs">
+      <DependentUpon>SchoolDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetCourseById_Result.cs">
       <DependentUpon>SchoolDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetCourseByTitle_Result.cs">
       <DependentUpon>SchoolDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetCoursesThatNotBelongToAssignment_Result.cs">
+      <DependentUpon>SchoolDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetStudentById_Result.cs">
       <DependentUpon>SchoolDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetStudentsThatNotBelongToAssignment_Result.cs">
+      <DependentUpon>SchoolDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStudentsThatNotBelongToCourse_Result.cs">
+      <DependentUpon>SchoolDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetTrainerById_Result.cs">
+      <DependentUpon>SchoolDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTrainersThaNotBelongToCourse_Result.cs">
       <DependentUpon>SchoolDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />

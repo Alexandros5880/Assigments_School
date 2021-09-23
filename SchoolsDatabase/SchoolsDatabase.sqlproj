@@ -143,6 +143,11 @@
     <Build Include="Procedures\GetStudentsEmailById.sql" />
     <Build Include="Views\ViewCourseTrainersStudentsAll.sql" />
     <Build Include="Views\ViewAssignmentsStudentsAll.sql" />
+    <Build Include="Procedures\GetAssignmentThatNotBelongToCourse.sql" />
+    <Build Include="Procedures\GetStudentsThatNotBelongToCourse.sql" />
+    <Build Include="Procedures\GetTrainersThaNotBelongToCourse.sql" />
+    <Build Include="Procedures\GetCoursesThatNotBelongToAssignment.sql" />
+    <Build Include="Procedures\GetStudentsThatNotBelongToAssignment.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="AfterPublishScript\Script.PostDeployment1.sql" />
