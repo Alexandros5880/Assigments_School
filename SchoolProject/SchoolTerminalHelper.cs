@@ -242,52 +242,11 @@ namespace SchoolProject
                 return "";
             }
         }
-        // Import Students
-        public string AddStudent()
-        {
-            try
-            {
-                Console.WriteLine("\n");
-                string firstname = "", lastname = "", age = "", gender = "", startdate = "", email = "", phone = "";
-                Console.Write("FirstName: ");
-                firstname = Console.ReadLine();
-                Console.Write("LastName: ");
-                lastname = Console.ReadLine();
-                Console.Write("Age: ");
-                age = Console.ReadLine();
-                Console.Write("Gender (Male)?(Female): ");
-                gender = Console.ReadLine();
-                Console.Write("Email: ");
-                email = Console.ReadLine();
-                Console.Write("Phone: ");
-                phone = Console.ReadLine();
-                startdate = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-ES"));
-                if (firstname.Length > 0 && lastname.Length > 0 && int.Parse(age) > 0 && int.Parse(age) < 133 &&
-                    email.Length > 0 && phone.Length > 0 && gender.Length > 0)
-                {
-                    // Insert Student
-                    this.school.InsertStudent(firstname, lastname, age, gender, startdate, email, phone);
-                    this.school.SaveChanges();
-                    return email;
-                }
-                else
-                {
-                    Console.WriteLine("Please Fill All Fields!");
-                    return "";
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-                return "";
-            }
-        }
         // Import Trainers
         public string AddTrainer()
         {
             try
             {
-                Console.WriteLine("\n");
                 string firstname = "", lastname = "", gender = "", age = "", startdate = "", email = "", phone = "";
                 Console.Write("FirstName: ");
                 firstname = Console.ReadLine();
@@ -307,6 +266,45 @@ namespace SchoolProject
                 {
                     // Insert Trainer
                     this.school.InsertTrainer(firstname, lastname, age, gender, startdate, email, phone);
+                    this.school.SaveChanges();
+                    return email;
+                }
+                else
+                {
+                    Console.WriteLine("Please Fill All Fields!");
+                    return "";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return "";
+            }
+        }
+        // Import Students
+        public string AddStudent()
+        {
+            try
+            {
+                string firstname = "", lastname = "", age = "", gender = "", startdate = "", email = "", phone = "";
+                Console.Write("FirstName: ");
+                firstname = Console.ReadLine();
+                Console.Write("LastName: ");
+                lastname = Console.ReadLine();
+                Console.Write("Age: ");
+                age = Console.ReadLine();
+                Console.Write("Gender (Male)?(Female): ");
+                gender = Console.ReadLine();
+                Console.Write("Email: ");
+                email = Console.ReadLine();
+                Console.Write("Phone: ");
+                phone = Console.ReadLine();
+                startdate = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-ES"));
+                if (firstname.Length > 0 && lastname.Length > 0 && int.Parse(age) > 0 && int.Parse(age) < 133 &&
+                    email.Length > 0 && phone.Length > 0 && gender.Length > 0)
+                {
+                    // Insert Student
+                    this.school.InsertStudent(firstname, lastname, age, gender, startdate, email, phone);
                     this.school.SaveChanges();
                     return email;
                 }
